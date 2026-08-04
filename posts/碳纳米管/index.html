@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="zh"
+  x-data
+  :class="$store.darkMode.isDark() ? 'dark' : 'light'"
+  :data-theme="$store.darkMode.theme()">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>碳纳米管 | ElusiveKaze&#39;s Blog</title>
+
+    <head>  
+  
+    
+      <link href="/favicon.png" rel="icon" type="image/x-icon" />
+    
+  
+  
+  <link rel="canonical" href="https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/" />
+  
+  
+  
+  <meta name="author" content="ElusiveKaze" />
+  <meta name="description" content="碳纳米管 碳纳米管（carbon nanotube）根据对称性分为非手性（achiral）和手性（chiral）。
+非手性碳纳米管的镜像结构与原始碳纳米管完全相同。非手性碳纳米管只有两种情况：扶手椅型（armchair）和锯齿型（zigzag）碳纳米管，扶手椅型和锯齿型的名称来自于横截面的形状，如图3.1中纳米管的边缘所示。
+手性纳米管（Chiral nanotubes）具有螺旋对称性（spiral symmetry），其镜像不能叠加到原始纳米管上，这种结构在化学命名中被称为轴手性（axially chiral）。轴手性通常与光学活性联系在一起讨论。
+碳纳米管的C-C键长度为 $1.44\text{\AA}$，
+晶格常数（lattice constant） $a=1.44\text{\AA}\times \sqrt{3} =2.49\text{\AA}$
+手性矢量（Chiral Vector）：
+$$ C_{h} =na_{1} &#43;ma_{2} \equiv (n,m),\quad \quad (n,m为整数,0\le \left|m\right| \le n) $$
+$$ L=\left|C_{h} \right|=a\sqrt{n^{2}&#43; m^{2}&#43;nm} $$ 碳纳米管的直径： $$ d_{t} =\frac{L}{\pi } =\frac{\left|C_{h} \right| }{\pi } = \frac{a\sqrt{n^{2}&#43; m^{2}&#43;nm} }{\pi } $$ 平移矢量 T 定义为一维碳纳米管的单位向量，矢量 T 平行于纳米管轴，并且与未卷曲的蜂窝晶格中的手性矢量 $C_{h}$ 垂直。
+$$ T=t_{1} a_{1}&#43;t_{2}a_{2}\equiv (t_{1},t_{2}) \quad \quad t_{1},t_{2} \in \mathbb{Z} $$
+" />
+  
+  
+  <meta name="keywords" content="石墨烯">
+  
+  
+  
+  <meta name="generator" content="Hugo 0.164.0">
+  
+  
+  <meta property="og:url" content="https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/">
+	<meta property="og:site_name" content="ElusiveKaze&#39;s Blog">
+	<meta property="og:title" content="碳纳米管">
+	<meta property="og:description" content="碳纳米管 碳纳米管（carbon nanotube）根据对称性分为非手性（achiral）和手性（chiral）。
+非手性碳纳米管的镜像结构与原始碳纳米管完全相同。非手性碳纳米管只有两种情况：扶手椅型（armchair）和锯齿型（zigzag）碳纳米管，扶手椅型和锯齿型的名称来自于横截面的形状，如图3.1中纳米管的边缘所示。
+手性纳米管（Chiral nanotubes）具有螺旋对称性（spiral symmetry），其镜像不能叠加到原始纳米管上，这种结构在化学命名中被称为轴手性（axially chiral）。轴手性通常与光学活性联系在一起讨论。
+碳纳米管的C-C键长度为 $1.44\text{\AA}$，
+晶格常数（lattice constant） $a=1.44\text{\AA}\times \sqrt{3} =2.49\text{\AA}$
+手性矢量（Chiral Vector）：
+$$ C_{h} =na_{1} &#43;ma_{2} \equiv (n,m),\quad \quad (n,m为整数,0\le \left|m\right| \le n) $$
+$$ L=\left|C_{h} \right|=a\sqrt{n^{2}&#43; m^{2}&#43;nm} $$ 碳纳米管的直径： $$ d_{t} =\frac{L}{\pi } =\frac{\left|C_{h} \right| }{\pi } = \frac{a\sqrt{n^{2}&#43; m^{2}&#43;nm} }{\pi } $$ 平移矢量 T 定义为一维碳纳米管的单位向量，矢量 T 平行于纳米管轴，并且与未卷曲的蜂窝晶格中的手性矢量 $C_{h}$ 垂直。
+$$ T=t_{1} a_{1}&#43;t_{2}a_{2}\equiv (t_{1},t_{2}) \quad \quad t_{1},t_{2} \in \mathbb{Z} $$">
+	<meta property="og:locale" content="zh">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-08-04T00:00:00+08:00">
+		<meta property="article:modified_time" content="2026-08-04T00:00:00+08:00">
+		<meta property="article:tag" content="石墨烯">
+
+  
+  
+  
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="碳纳米管">
+	<meta name="twitter:description" content="碳纳米管 碳纳米管（carbon nanotube）根据对称性分为非手性（achiral）和手性（chiral）。
+非手性碳纳米管的镜像结构与原始碳纳米管完全相同。非手性碳纳米管只有两种情况：扶手椅型（armchair）和锯齿型（zigzag）碳纳米管，扶手椅型和锯齿型的名称来自于横截面的形状，如图3.1中纳米管的边缘所示。
+手性纳米管（Chiral nanotubes）具有螺旋对称性（spiral symmetry），其镜像不能叠加到原始纳米管上，这种结构在化学命名中被称为轴手性（axially chiral）。轴手性通常与光学活性联系在一起讨论。
+碳纳米管的C-C键长度为 $1.44\text{\AA}$，
+晶格常数（lattice constant） $a=1.44\text{\AA}\times \sqrt{3} =2.49\text{\AA}$
+手性矢量（Chiral Vector）：
+$$ C_{h} =na_{1} &#43;ma_{2} \equiv (n,m),\quad \quad (n,m为整数,0\le \left|m\right| \le n) $$
+$$ L=\left|C_{h} \right|=a\sqrt{n^{2}&#43; m^{2}&#43;nm} $$ 碳纳米管的直径： $$ d_{t} =\frac{L}{\pi } =\frac{\left|C_{h} \right| }{\pi } = \frac{a\sqrt{n^{2}&#43; m^{2}&#43;nm} }{\pi } $$ 平移矢量 T 定义为一维碳纳米管的单位向量，矢量 T 平行于纳米管轴，并且与未卷曲的蜂窝晶格中的手性矢量 $C_{h}$ 垂直。
+$$ T=t_{1} a_{1}&#43;t_{2}a_{2}\equiv (t_{1},t_{2}) \quad \quad t_{1},t_{2} \in \mathbb{Z} $$">
+
+  
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/output.min.css" />
+  
+  
+  
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"],
+      ],
+      displayMath: [
+        ["$$", "$$"],
+        ["\\[", "\\]"],
+      ],
+      processEscapes: true,
+      processEnvironments: true,
+    },
+    options: {
+      skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"],
+    },
+  };
+
+  window.addEventListener("load", (event) => {
+    document.querySelectorAll("mjx-container").forEach(function (x) {
+      x.parentElement.classList += "has-jax";
+    });
+  });
+</script>
+<script
+  type="text/javascript"
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+></script>
+
+</head>
+<style>
+    code.has-jax {
+      -webkit-font-smoothing: antialiased;
+      background: inherit !important;
+      border: none !important;
+      font-size: 100%;
+    }
+</style>
+
+
+    
+
+
+<style>
+  pre {
+    padding: 1em;
+    overflow: auto;
+  }
+</style>
+
+
+
+
+
+
+
+
+
+    
+
+    <script>
+      window.lightTheme = 'emerald'
+      window.darkTheme = 'forest'
+
+      ;(function() {
+        const isDark = ('hugo-theme-dream-is-dark' in localStorage)
+          ? window.localStorage.getItem('hugo-theme-dream-is-dark') === 'y'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+        const theme = isDark ? window.darkTheme : window.lightTheme
+
+        document.documentElement.setAttribute('data-theme', theme)
+      })()
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.12/dist/cdn.min.js" integrity="sha256-V7N9fK6aJ9ll/a5K3MhEJF39xAfmVa7oXc//OggDaj8=" crossorigin="anonymous"></script>
+  </head>
+
+  <body x-data="{
+    flip: false,
+  }">
+    
+
+    
+<nav x-data="{ isSticky: false }"
+  x-init="window.addEventListener('scroll', () => { isSticky = window.scrollY > 30 })"
+  class="sticky top-0 z-30 mt-4 lg:mt-8 py-4"
+  :class="{ 'bg-base-100 shadow-lg dark:border-b dark:border-base-content/30': isSticky }">
+
+  
+  <div class="container flex justify-between px-4">
+  
+    <section class="flex items-center gap-2">
+      <div class="avatar cursor-pointer hover:avatar-online" @click="flip = !flip" title="翻转一下！">
+        <div class="w-12 h-12 rounded-full select-none">
+          <img src="/img/avatar.jpg" alt="ElusiveKaze&#39;s Blog" />
+        </div>
+      </div>
+
+      
+      <div>
+        
+        <a href="https://elusivekaze.github.io/" class="text-lg font-semibold cursor-pointer">
+          ElusiveKaze&#39;s Blog
+        </a>
+        
+        
+        <div class="text-base-content/60 text-sm">向远方</div>
+        
+      </div>
+      
+    </section>
+
+    
+    
+      
+    
+
+    <div class="dropdown dropdown-end sm:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="Select an option">
+        <ion-icon name="menu" class="text-2xl"></ion-icon>
+      </div>
+      <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-10 shadow-md">
+        
+
+
+
+
+
+
+
+<li>
+  <div role="link" tabindex="0" class="inline-flex items-center p-2 cursor-pointer" @click="flip = !flip" title="关于">
+    <ion-icon name="information-circle"></ion-icon>关于</div>
+</li>
+
+
+
+
+
+
+
+<li>
+  <a class="group inline-flex items-center p-2 cursor-pointer" href="/search" title="搜索">
+    <ion-icon name="search"></ion-icon>
+    搜索
+  </a>
+</li>
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/index.xml" title="RSS">
+    <ion-icon name="logo-rss"></ion-icon>
+    RSS
+  </a>
+</li>
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="归档">
+    <ion-icon name="archive"></ion-icon>
+    归档
+  </a>
+</li>
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/categories" title="所有分类">
+    <ion-icon name="grid"></ion-icon>
+    所有分类
+  </a>
+</li>
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/tags" title="所有标签">
+    <ion-icon name="pricetags"></ion-icon>
+    所有标签
+  </a>
+</li>
+
+
+
+
+
+
+      </ul>
+    </div>
+    <section class="hidden sm:flex sm:items-center sm:gap-2 md:gap-4">
+      
+
+      
+      
+      
+      
+
+
+
+
+<div role="link" tabindex="0" class="text-sm font-semibold cursor-pointer hover:underline" @click="flip = !flip" title="关于">关于</div>
+
+
+
+
+
+      
+      
+<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/search" title="搜索">
+  <ion-icon class="group-hover:text-primary-content" name="search"></ion-icon>
+</a>
+
+
+      
+      
+<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/index.xml" title="RSS">
+  <ion-icon class="group-hover:text-primary-content" name="logo-rss"></ion-icon>
+</a>
+
+
+      
+
+      <div class="dropdown dropdown-end dropdown-hover">
+        <div tabindex="0" role="button" class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" aria-label="Select an option">
+          <ion-icon class="group-hover:text-primary-content text-xl" name="menu"></ion-icon>
+        </div>
+        <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-10 shadow-xl">
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="归档">
+    <ion-icon name="archive"></ion-icon>
+    归档
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/categories" title="所有分类">
+    <ion-icon name="grid"></ion-icon>
+    所有分类
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/tags" title="所有标签">
+    <ion-icon name="pricetags"></ion-icon>
+    所有标签
+  </a>
+</li>
+
+
+          
+
+          
+        </ul>
+      </div>
+      
+    </section>
+  </div>
+</nav>
+
+
+    <div class="flip-container" :class="{ 'flip-it': flip }">
+      <div class="flipper">
+        <div class="front">
+          <div class="container">
+            
+<div class="lg:grid lg:grid-cols-4 gap-4 mt-4 px-4">
+  <div class="hidden lg:block">
+    
+  </div>
+
+  <div class="lg:col-span-2">
+    <article class="mx-auto prose prose-quoteless dark:prose-invert" id="dream-single-post-main" itemscope itemtype="http://schema.org/Article">
+      
+	<meta itemprop="name" content="碳纳米管">
+	<meta itemprop="description" content="碳纳米管 碳纳米管（carbon nanotube）根据对称性分为非手性（achiral）和手性（chiral）。
+非手性碳纳米管的镜像结构与原始碳纳米管完全相同。非手性碳纳米管只有两种情况：扶手椅型（armchair）和锯齿型（zigzag）碳纳米管，扶手椅型和锯齿型的名称来自于横截面的形状，如图3.1中纳米管的边缘所示。
+手性纳米管（Chiral nanotubes）具有螺旋对称性（spiral symmetry），其镜像不能叠加到原始纳米管上，这种结构在化学命名中被称为轴手性（axially chiral）。轴手性通常与光学活性联系在一起讨论。
+碳纳米管的C-C键长度为 $1.44\text{\AA}$，
+晶格常数（lattice constant） $a=1.44\text{\AA}\times \sqrt{3} =2.49\text{\AA}$
+手性矢量（Chiral Vector）：
+$$ C_{h} =na_{1} &#43;ma_{2} \equiv (n,m),\quad \quad (n,m为整数,0\le \left|m\right| \le n) $$
+$$ L=\left|C_{h} \right|=a\sqrt{n^{2}&#43; m^{2}&#43;nm} $$ 碳纳米管的直径： $$ d_{t} =\frac{L}{\pi } =\frac{\left|C_{h} \right| }{\pi } = \frac{a\sqrt{n^{2}&#43; m^{2}&#43;nm} }{\pi } $$ 平移矢量 T 定义为一维碳纳米管的单位向量，矢量 T 平行于纳米管轴，并且与未卷曲的蜂窝晶格中的手性矢量 $C_{h}$ 垂直。
+$$ T=t_{1} a_{1}&#43;t_{2}a_{2}\equiv (t_{1},t_{2}) \quad \quad t_{1},t_{2} \in \mathbb{Z} $$">
+	<meta itemprop="datePublished" content="2026-08-04T00:00:00+08:00">
+	<meta itemprop="dateModified" content="2026-08-04T00:00:00+08:00">
+	<meta itemprop="wordCount" content="485">
+	<meta itemprop="keywords" content="石墨烯">
+
+      <header>
+        <h1 itemprop="headline">碳纳米管</h1>
+        <p class="text-sm">
+          
+            星期二, 8月 4, 2026
+          
+
+          | <span>3分钟阅读</span>
+
+          
+            | <span>更新于
+              
+                星期二, 8月 4, 2026
+              
+            </span>
+          
+        </p>
+
+        
+        <div class="flex justify-between">
+          
+            <div class="flex items-center">
+  
+  <span>@</span>
+  
+
+  <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+  
+    
+      <span itemprop="name">ElusiveKaze</span>
+    
+  
+  </span>
+</div>
+
+          
+
+          <div class="flex items-center gap-2">
+  
+  
+
+  
+  
+  
+  
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://x.com/intent/post?text=%e7%a2%b3%e7%ba%b3%e7%b1%b3%e7%ae%a1&amp;url=https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/" target="_blank" rel="noopener noreferrer"
+      title="Share on X">
+      <ion-icon class="group-hover:text-primary-content" name="logo-x"></ion-icon>
+    </a>
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://facebook.com/sharer/sharer.php?u=https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/" target="_blank" rel="noopener noreferrer"
+      title="Share on Facebook">
+      <ion-icon class="group-hover:text-primary-content" name="logo-facebook"></ion-icon>
+    </a>
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://wa.me/?text=%e7%a2%b3%e7%ba%b3%e7%b1%b3%e7%ae%a1%20https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/" target="_blank" rel="noopener noreferrer"
+      title="Share on WhatsApp">
+      <ion-icon class="group-hover:text-primary-content" name="logo-whatsapp"></ion-icon>
+    </a>
+  
+
+  
+  
+</div>
+
+        </div>
+      </header>
+
+      <section id="dream-single-post-content" itemprop="articleBody">
+        
+          <figure>
+            <img class="z-30" src="/img/traveler.jpg" alt="碳纳米管" />
+            
+          </figure>
+        
+
+        <h1 id="碳纳米管">碳纳米管</h1>
+<p>碳纳米管（carbon nanotube）根据对称性分为非手性（achiral）和手性（chiral）。</p>
+<p>非手性碳纳米管的镜像结构与原始碳纳米管完全相同。非手性碳纳米管只有两种情况：扶手椅型（armchair）和锯齿型（zigzag）碳纳米管，扶手椅型和锯齿型的名称来自于横截面的形状，如图3.1中纳米管的边缘所示。</p>
+<p>手性纳米管（Chiral nanotubes）具有螺旋对称性（spiral symmetry），其镜像不能叠加到原始纳米管上，这种结构在化学命名中被称为轴手性（axially chiral）。轴手性通常与光学活性联系在一起讨论。</p>
+<p><img src="%e7%a2%b3%e7%ba%b3%e7%b1%b3%e7%ae%a1.assets/figure-01.png" alt="图 01"></p>
+<p>碳纳米管的C-C键长度为 $1.44\text{\AA}$，</p>
+<p>晶格常数（lattice constant） $a=1.44\text{\AA}\times \sqrt{3} =2.49\text{\AA}$</p>
+<p><img src="%e7%a2%b3%e7%ba%b3%e7%b1%b3%e7%ae%a1.assets/figure-02.png" alt="图 02"></p>
+<p>手性矢量（Chiral Vector）：</p>
+<p>$$
+C_{h} =na_{1} +ma_{2} \equiv (n,m),\quad \quad (n,m为整数,0\le \left|m\right| \le n)
+$$</p>
+<p>$$
+L=\left|C_{h} \right|=a\sqrt{n^{2}+ m^{2}+nm}
+$$
+碳纳米管的直径：
+$$
+d_{t} =\frac{L}{\pi } =\frac{\left|C_{h} \right| }{\pi } = \frac{a\sqrt{n^{2}+ m^{2}+nm} }{\pi }
+$$
+平移矢量 T 定义为一维碳纳米管的单位向量，矢量 T 平行于纳米管轴，并且与未卷曲的蜂窝晶格中的手性矢量 $C_{h}$ 垂直。</p>
+<p>$$
+T=t_{1} a_{1}+t_{2}a_{2}\equiv (t_{1},t_{2}) \quad \quad t_{1},t_{2} \in \mathbb{Z}
+$$</p>
+<p>$$
+t_{1}=\frac{2m+n}{d_{R} }, \quad t_{2}=-\frac{2n+m}{d_{R} }
+$$
+$$
+d_{R} =\begin{cases}d
+&amp; \text{n-m 不是 3d 的倍数} \3d
+&amp; \text{n-m 是 3d 的倍数}
+\end{cases}
+$$</p>
+<p>$$
+d=\gcd(n,m)
+$$
+$$
+\left|T\right| =\frac{\sqrt{3} L}{d_{R} }
+$$</p>
+<p>一维碳纳米管的单胞是由向量 $C_{h}$ 和 $T$ 定义的矩形 $OA{B}&rsquo; B$，而向量 $a_{1}$ 和 $a_{2}$ 定义了单胞的面积。单胞的六边形个数N：</p>
+<p>$$
+N=\frac{\left|C_{h} \times T\right|}{\left|a_{1} \times a_{2}\right| }
+=\frac{2(m^{2} +n^{2}+nm)}{d_{R}}
+=\frac{2L^{2}}{a^{2}d_{R}}
+$$</p>
+<p>每个六边形都包含两个碳原子，因此碳纳米管的每个晶胞中都有 $2N$ 个碳原子(或 $2N$ 个 $2p_{z}$ 轨道)。</p>
+<p><img src="%e7%a2%b3%e7%ba%b3%e7%b1%b3%e7%ae%a1.assets/figure-03.png" alt="图 03"></p>
+<p>手征角 $\theta$ 定义为矢量 $C_{h}$ 与 $a_{1}$ 的夹角。由于六重旋转对称性，$0 \le\left|\theta\right| \le 30^{\circ}$</p>
+<p>$$
+\cos\theta = \frac{C_{h}\cdot a_{1}}{\left|C_{h}\right| \left|a_{1}\right| } =\frac{2n+m}{2\sqrt{n^{2}+ m^{2}+nm} }
+$$</p>
+<p><img src="%e7%a2%b3%e7%ba%b3%e7%b1%b3%e7%ae%a1.assets/figure-04.png" alt="图 04"></p>
+<p>定义对称矢量 $R$ 为在 $C_{h}$ 方向上分量最小的非零格矢。碳纳米管中碳原子位矢为 $iR$ （$i=1,\ldots,N$），跑出单胞后折回。$i$ 从 $1$ 到 $N$ 遍历 $N$ 个不等价碳原子。
+$p$ 和 $q$ 互质，$\gcd(p,q)=1$
+$$
+R=pa_{1}+qa_{2}\equiv (p,q) \quad \quad p,q \in \mathbb{Z}
+$$</p>
+<p>$$
+\begin{aligned}
+T\times R &amp;= (t_{1}a_{1}+t_{2}a_{2})(pa_{1}+qa_{2}) \
+&amp;=(t_{1}q-t_{2}p)(a_{1} \times a_{2})
+\end{aligned}
+$$
+由于 $R$ 在单胞中，因此有：</p>
+<p>$$
+0&lt;\frac{R\cdot T}{T^{2}}
+=\frac{\left|C_{h} \times R\right|}{LT }
+= \frac{mp-nq}{N} \le 1
+$$</p>
+<p>$$
+0&lt;\frac{R\cdot C_{h}}{L^{2}}
+=\frac{\left|R \times T\right|}{LT }
+= \frac{t_{1}q-t_{2}p}{N} \le 1
+$$
+$(t_{1}q-t_{2}p)$ 为整数。我们选取 $R$ 中的 $p$ 和 $q$ 构成最小的位置矢量( $i = 1$ )，使得：</p>
+<p>$$
+t_{1}q-t_{2}p=1,\quad 0&lt;mp-nq \le N
+$$</p>
+<p>推广为：</p>
+<p>$$
+t_{1}q-t_{2}p=Q,\quad 1 \le Q \le N
+$$</p>
+<p>矢量 $R$ 由绕纳米管轴线旋转角度 $\psi$ 和沿轴线方向平移 $\tau$ 组成，反映了手性纳米管的基本空间群对称操作，记为 $R=(\psi | \tau)$。$R$ 在 $C_{h}$ 上投影为 $\psi$，在 $T$ 上投影为 $\tau$。
+对称操作 $(\psi | \tau)$ 作用于 $(0,0)$，得到 $R$ 的坐标 $(p,q)$。重复作用 $N$ 次：$(\psi | \tau)^{2}$，$(\psi | \tau)^{3},&hellip;(\psi | \tau)^{N}$，遍历单胞内 $N$ 个不等价碳原子，$N$ 次后回到原点。
+$$
+\begin{aligned}
+\tau &amp;= \frac{\left|R \times C_{h}\right|}{L}
+\ &amp;=\frac{(mp-nq)\left|a_{1} \times a_{2}\right|}{L}
+\ &amp;=(mp-nq) \frac{\sqrt{3} a^{2}}{2L}
+\ &amp;=\frac{(mp-nq)T}{N}
+\ \ \psi &amp;= \frac{\left|T \times R\right|}{T} \frac{2 \pi}{L}
+\ &amp;=(t_{1}q-t_{2}p) \frac{\sqrt{3} a^{2}}{2} \frac{d_{R}}{\sqrt{3}L} \frac{2 \pi}{L}
+\ &amp;=\frac{\pi a^{2} d_{R}}{L^{2}}
+\ &amp;=\frac{2 \pi}{N}
+\end{aligned}
+$$</p>
+<p><img src="%e7%a2%b3%e7%ba%b3%e7%b1%b3%e7%ae%a1.assets/figure-05.png" alt="图 05"></p>
+<p>对称算子 $(\psi | \tau)^{N}$ 将格点 $O$ 带到一个等价格点 $C$：</p>
+<p>$$
+\begin{aligned}
+NR &amp;= C_{h}+MT
+\ M &amp;\equiv mp-nq
+\end{aligned}
+$$</p>
+<p><img src="%e7%a2%b3%e7%ba%b3%e7%b1%b3%e7%ae%a1.assets/figure-06.png" alt="图 06"></p>
+<p><img src="%e7%a2%b3%e7%ba%b3%e7%b1%b3%e7%ae%a1.assets/figure-07.png" alt="图 07"></p>
+<p><img src="%e7%a2%b3%e7%ba%b3%e7%b1%b3%e7%ae%a1.assets/figure-08.png" alt="图 08"></p>
+<p>$K_{1}$、$K_{2}$ 分别是 $C_{h}$、$T$ 相对应的倒格矢：</p>
+<p>$$
+\begin{aligned}
+C_{h} \cdot K_{1} &amp;= 2\pi, &amp; T \cdot K_{1} &amp;= 0
+\ C_{h} \cdot K_{2} &amp;= 0, &amp; T \cdot K_{2} &amp;= 2\pi
+\end{aligned}
+$$</p>
+<p>可以得到 $K_{1}$、$K_{2}$ 为：</p>
+<p>$$
+\begin{aligned}
+K_{1} &amp;= \frac{1}{N} (-t_{2}b_{1}+t_{1}b_{2}),
+&amp; K_{2} &amp;= \frac{1}{N} (mb_{1}-nb_{2})
+\end{aligned}
+$$</p>
+<p><img src="%e7%a2%b3%e7%ba%b3%e7%b1%b3%e7%ae%a1.assets/figure-09.png" alt="图 09"></p>
+<p>(a)扶手椅型。</p>
+<p>$$
+\begin{aligned}
+a_{1}&amp;=(\frac{\sqrt{3}}{2} a,\frac{a}{2}),
+&amp; a_{2}&amp;=(\frac{\sqrt{3}}{2} a,-\frac{a}{2})
+\ \ b_{1}&amp;=(\frac{2\pi}{\sqrt{3}a},\frac{2\pi}{a}),
+&amp; b_{2}&amp;=(\frac{2\pi}{\sqrt{3}a},-\frac{2\pi}{a})
+\end{aligned}
+$$</p>
+<p>$n=m,d_{R}=3n$，带入得 $t_{1}=1,t_{2}=-1$。
+$T=a_{1}-a_{2},N=2n$。带入得 $K_{2}=(b_{1}-b_{2})/2=(0,2\pi/a)$</p>
+<p>$\mathrm{1D}$ 布里渊区为 $(-\left|K_{2}\right| / 2,\left|K_{2}\right| / 2)=(-\pi/a,\pi/a)$</p>
+<p>$$
+\begin{aligned}
+K &amp;= \frac{2b_{1}+b_{2}}{3} = \frac{2\pi}{3a} (\sqrt{3},1)</p>
+<p>\ \k &amp;= \frac{(K \cdot K_{2})}{\left|K_{2}\right|}
+= \frac{4 \pi^{2}}{3 a^{2}} \frac{a}{2\pi}
+= \frac{2\pi}{3a}</p>
+<p>\end{aligned}
+$$</p>
+<p>故 $K$ 映射在 $k=\pm 2\pi/3$ 处。</p>
+<p>(b)锯齿型。</p>
+<p>$$
+\begin{aligned}
+a_{1}&amp;=(0,-a),
+&amp; a_{2}&amp;=(-\frac{\sqrt{3}}{2} a,-\frac{a}{2})
+\ \ b_{1}&amp;=(\frac{2\pi}{\sqrt{3}a}, -\frac{2\pi}{a}),
+&amp; b_{2}&amp;=(-\frac{4\pi}{\sqrt{3}a},0)
+\end{aligned}
+$$</p>
+<p>$m=0,d_{R}=d=n,t_{1}=1,t_{2}=-2,T=a_{1}-2a_{2},N=2n$</p>
+<p>$$
+\begin{aligned}
+K &amp;= \frac{2b_{1}+b_{2}}{3} = (0,-\frac{4\pi}{a})</p>
+<p>\ \K_{2} &amp;= -\frac{b_{2}}{2} = (\frac{2\pi}{\sqrt{3}a},0)</p>
+<p>\ \k &amp;= \frac{(K \cdot K_{2})}{\left|K_{2}\right|}
+= 0</p>
+<p>\end{aligned}
+$$</p>
+<p>故 $K$ 映射在 $k=0$ 处。</p>
+
+
+        
+      </section>
+
+      
+      <div class="divider"></div>
+      <div class="flex flex-col md:flex-row justify-between gap-4 py-4">
+        
+        <div></div>
+        
+
+        
+        <div></div>
+        
+      </div>
+      
+
+      
+      <div class="divider"></div>
+
+      <section class="space-y-4 not-prose">
+        
+
+
+<template x-if="['localhost', '127.0.0.1'].indexOf(window.location.hostname) == -1">
+  <article>
+    <script
+      src="https://utteranc.es/client.js"
+      repo="elusivekaze/elusivekaze.github.io"
+      issue-term="og:title"
+      theme="github-light"
+      crossorigin="anonymous"
+      async>
+    </script>
+  </article>
+</template>
+
+
+
+
+
+
+
+
+      </section>
+      
+    </article>
+  </div>
+
+  <div
+    x-data="tocHighlighter()"
+    @scroll.window="debouncedScroll"
+    class="hidden lg:flex lg:flex-col lg:items-end"
+  >
+    
+      <nav id="TableOfContents"></nav>
+    
+  </div>
+</div>
+
+
+            
+<footer class="flex flex-col md:flex-row justify-between items-center gap-4 px-4 py-12">
+
+  <div>
+  
+  <p>
+    © 2026 ElusiveKaze&#39;s Blog
+  </p>
+  
+
+  
+  <p class="text-sm">
+    🌱
+    <span class="text-base-content/60">
+      Powered by <a class="hover:underline" href="https://gohugo.io/" target="_blank">Hugo</a> with theme
+      <a class="hover:underline" href="https://github.com/g1eny0ung/hugo-theme-dream" target="_blank">Dream</a>.</span
+    >
+  </p>
+  
+</div>
+
+  <div
+  x-data="{ icons: [
+    { name: 'sunny', status: 'n' },
+    { name: 'moon', status: 'y' },
+    { name: 'desktop', status: 'auto' }
+  ] }"
+  class="flex items-center gap-2 h-8 px-2 bg-base-100 border border-base-content/30 rounded-full"
+>
+  <template x-for="icon in icons">
+    <div
+      role="button"
+      tabindex="0"
+      :aria-label="'Select ' + icon.name + ' mode'"
+      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
+      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
+      @click="$store.darkMode.toggle(icon.status)"
+    >
+      <ion-icon
+        :name="`${icon.name}-outline`"
+        class="group-hover:text-primary-content"
+        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
+      >
+      </ion-icon>
+    </div>
+  </template>
+</div>
+
+</footer>
+
+          </div>
+        </div>
+        
+        <div class="back" data-nosnippet>
+        
+          <div class="container">
+            
+              <div class="dream-grid dream-grid-about">
+  
+  
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">关于我</div>
+
+        <div class="prose dark:prose-invert">
+          <p>Hi，这里是 <strong>ElusiveKaze</strong> 的博客，主要发布一些学习笔记。</p>
+
+        </div>
+      </div>
+    </article>
+  </div>
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">知识共享</div>
+
+        <div class="prose dark:prose-invert">
+          <p>此网站的所有内容都遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank">CC BY-NC-SA 4.0</a>。</p>
+
+        </div>
+      </div>
+    </article>
+  </div>
+  
+  
+
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">社交链接</div>
+
+        <ul class="menu menu-horizontal flex-wrap w-full px-0 [&_ion-icon]:text-lg">
+  
+  <li>
+    <a href="mailto:2915795652@qq.com" title="Email">
+      <ion-icon name="mail"></ion-icon>
+    </a>
+  </li>
+  
+
+  
+  <li>
+    <a href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+      <ion-icon name="logo-github"></ion-icon>
+    </a>
+  </li>
+  
+</ul>
+
+      </div>
+    </article>
+  </div>
+  
+
+  
+</div>
+
+            
+
+            
+<footer class="flex flex-col md:flex-row justify-between items-center gap-4 px-4 py-12">
+
+  <div>
+  
+  <p>
+    © 2026 ElusiveKaze&#39;s Blog
+  </p>
+  
+
+  
+  <p class="text-sm">
+    🌱
+    <span class="text-base-content/60">
+      Powered by <a class="hover:underline" href="https://gohugo.io/" target="_blank">Hugo</a> with theme
+      <a class="hover:underline" href="https://github.com/g1eny0ung/hugo-theme-dream" target="_blank">Dream</a>.</span
+    >
+  </p>
+  
+</div>
+
+  <div
+  x-data="{ icons: [
+    { name: 'sunny', status: 'n' },
+    { name: 'moon', status: 'y' },
+    { name: 'desktop', status: 'auto' }
+  ] }"
+  class="flex items-center gap-2 h-8 px-2 bg-base-100 border border-base-content/30 rounded-full"
+>
+  <template x-for="icon in icons">
+    <div
+      role="button"
+      tabindex="0"
+      :aria-label="'Select ' + icon.name + ' mode'"
+      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
+      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
+      @click="$store.darkMode.toggle(icon.status)"
+    >
+      <ion-icon
+        :name="`${icon.name}-outline`"
+        class="group-hover:text-primary-content"
+        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
+      >
+      </ion-icon>
+    </div>
+  </template>
+</div>
+
+</footer>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  <script src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+
+  
+  
+    
+  
+  <script src="/js/grid.min.js"></script>
+
+
+
+
+  
+
+<script src="/js/main.min.js"></script>
+
+    
+
+
+
+
+
+
+
+  
+
+<script src="/js/toc.min.js"></script>
+
+
+  
+    <script type="module">
+      import mediumZoom from 'https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/+esm';
+      mediumZoom('#dream-single-post-content img', {
+        background: 'oklch(var(--b1))',
+        margin: 24,
+      })
+    </script>
+  
+
+
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@8.0.13/dist/ionicons/ionicons.esm.js" integrity="sha256-46Vf2l/aX0tBSf2YXcaYMxF7JVJl30zn8Y9L9zZNXMA=" crossorigin="anonymous"></script>
+  </body>
+</html>
