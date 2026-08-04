@@ -1,20 +1,24 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-  <channel>
-    <title>ElusiveKaze&#39;s Blog</title>
-    <link>https://elusivekaze.github.io/tags/%E7%9F%B3%E5%A2%A8%E7%83%AF/</link>
-    <description>ElusiveKaze 的个人博客，主要发布学习笔记</description>
-    <generator>Hugo</generator>
-    <language>zh</language>
-    <lastBuildDate>Tue, 04 Aug 2026 00:00:00 &#43;0800</lastBuildDate>
-    <atom:link href="https://elusivekaze.github.io/tags/%E7%9F%B3%E5%A2%A8%E7%83%AF/" rel="self" type="application/rss+xml"/>
-    
-    <item>
-      <title>碳纳米管</title>
-      <link>https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/</link>
-      <pubDate>Tue, 04 Aug 2026 00:00:00 &#43;0800</pubDate>
-      <guid>https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/</guid>
-      <description>碳纳米管（carbon nanotube）根据对称性分为非手性（achiral）和手性（chiral）。</description>
-    </item>
-    
-  </channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>石墨烯 on ElusiveKaze&#39;s Blog</title>
+		<link>https://elusivekaze.github.io/tags/%E7%9F%B3%E5%A2%A8%E7%83%AF/</link>
+		<description>Recent content in 石墨烯 on ElusiveKaze&#39;s Blog</description>
+		<generator>Hugo</generator>
+		<language>zh</language>
+		
+		
+		
+		
+			<lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0800</lastBuildDate>
+		
+			<atom:link href="https://elusivekaze.github.io/tags/%E7%9F%B3%E5%A2%A8%E7%83%AF/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>碳纳米管</title>
+				<link>https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/</link>
+				<pubDate>Tue, 04 Aug 2026 00:00:00 +0800</pubDate>
+				<guid>https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/</guid>
+				<description>&lt;p&gt;碳纳米管（carbon nanotube）根据对称性分为非手性（achiral）和手性（chiral）。&lt;/p&gt;</description>
+			</item>
+	</channel>
 </rss>
