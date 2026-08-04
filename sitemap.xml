@@ -2,28 +2,28 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://example.com/categories/</loc>
+    <loc>https://elusivekaze.github.io/categories/</loc>
     <lastmod>2026-08-03T18:34:44+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/categories/category1/</loc>
+    <loc>https://elusivekaze.github.io/categories/category1/</loc>
     <lastmod>2026-08-03T18:34:44+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/first-blog/</loc>
+    <loc>https://elusivekaze.github.io/</loc>
     <lastmod>2026-08-03T18:34:44+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/</loc>
+    <loc>https://elusivekaze.github.io/posts/first-blog/</loc>
     <lastmod>2026-08-03T18:34:44+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/posts/</loc>
+    <loc>https://elusivekaze.github.io/posts/</loc>
     <lastmod>2026-08-03T18:34:44+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/tag1/</loc>
+    <loc>https://elusivekaze.github.io/tags/tag1/</loc>
     <lastmod>2026-08-03T18:34:44+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/tag2/</loc>
+    <loc>https://elusivekaze.github.io/tags/tag2/</loc>
     <lastmod>2026-08-03T18:34:44+08:00</lastmod>
   </url><url>
-    <loc>https://example.com/tags/</loc>
+    <loc>https://elusivekaze.github.io/tags/</loc>
     <lastmod>2026-08-03T18:34:44+08:00</lastmod>
   </url>
 </urlset>

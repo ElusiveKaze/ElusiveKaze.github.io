@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<title>Categories on Hugo Theme Dream</title>
-		<link>https://example.com/categories/</link>
-		<description>Recent content in Categories on Hugo Theme Dream</description>
+		<title>Categories on ElusiveKaze&#39;s Blog</title>
+		<link>https://elusivekaze.github.io/categories/</link>
+		<description>Recent content in Categories on ElusiveKaze&#39;s Blog</description>
 		<generator>Hugo</generator>
-		<language>en</language>
+		<language>zh</language>
 		
 		
 		
 		
 			<lastBuildDate>Mon, 03 Aug 2026 18:34:44 +0800</lastBuildDate>
 		
-			<atom:link href="https://example.com/categories/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="https://elusivekaze.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>Category1</title>
-				<link>https://example.com/categories/category1/</link>
+				<link>https://elusivekaze.github.io/categories/category1/</link>
 				<pubDate>Mon, 03 Aug 2026 18:34:44 +0800</pubDate>
-				<guid>https://example.com/categories/category1/</guid>
+				<guid>https://elusivekaze.github.io/categories/category1/</guid>
 				<description></description>
 			</item>
 	</channel>
