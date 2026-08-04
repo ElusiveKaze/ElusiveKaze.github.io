@@ -1,24 +1,20 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-	<channel>
-		<title>Categories on ElusiveKaze&#39;s Blog</title>
-		<link>https://elusivekaze.github.io/categories/</link>
-		<description>Recent content in Categories on ElusiveKaze&#39;s Blog</description>
-		<generator>Hugo</generator>
-		<language>zh</language>
-		
-		
-		
-		
-			<lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0800</lastBuildDate>
-		
-			<atom:link href="https://elusivekaze.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
-			<item>
-				<title>学习笔记</title>
-				<link>https://elusivekaze.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
-				<pubDate>Tue, 04 Aug 2026 00:00:00 +0800</pubDate>
-				<guid>https://elusivekaze.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
-				<description></description>
-			</item>
-	</channel>
+<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
+  <channel>
+    <title>ElusiveKaze&#39;s Blog</title>
+    <link>https://elusivekaze.github.io/categories/</link>
+    <description>ElusiveKaze 的个人博客，主要发布学习笔记</description>
+    <generator>Hugo</generator>
+    <language>zh</language>
+    <lastBuildDate>Tue, 04 Aug 2026 00:00:00 &#43;0800</lastBuildDate>
+    <atom:link href="https://elusivekaze.github.io/categories/" rel="self" type="application/rss+xml"/>
+    
+    <item>
+      <title>学习笔记</title>
+      <link>https://elusivekaze.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+      <pubDate>Tue, 04 Aug 2026 00:00:00 &#43;0800</pubDate>
+      <guid>https://elusivekaze.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
 </rss>
