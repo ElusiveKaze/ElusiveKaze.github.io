@@ -1,20 +1,24 @@
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-  <channel>
-    <title>ElusiveKaze&#39;s Blog</title>
-    <link>https://elusivekaze.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
-    <description>ElusiveKaze 的个人博客，主要发布学习笔记</description>
-    <generator>Hugo</generator>
-    <language>zh</language>
-    <lastBuildDate>Tue, 04 Aug 2026 00:00:00 &#43;0800</lastBuildDate>
-    <atom:link href="https://elusivekaze.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/" rel="self" type="application/rss+xml"/>
-    
-    <item>
-      <title>碳纳米管</title>
-      <link>https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/</link>
-      <pubDate>Tue, 04 Aug 2026 00:00:00 &#43;0800</pubDate>
-      <guid>https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/</guid>
-      <description>碳纳米管（carbon nanotube）根据对称性分为非手性（achiral）和手性（chiral）。</description>
-    </item>
-    
-  </channel>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>学习笔记 on ElusiveKaze&#39;s Blog</title>
+		<link>https://elusivekaze.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/</link>
+		<description>Recent content in 学习笔记 on ElusiveKaze&#39;s Blog</description>
+		<generator>Hugo</generator>
+		<language>zh</language>
+		
+		
+		
+		
+			<lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0800</lastBuildDate>
+		
+			<atom:link href="https://elusivekaze.github.io/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>碳纳米管</title>
+				<link>https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/</link>
+				<pubDate>Tue, 04 Aug 2026 00:00:00 +0800</pubDate>
+				<guid>https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/</guid>
+				<description>&lt;p&gt;碳纳米管（carbon nanotube）根据对称性分为非手性（achiral）和手性（chiral）。&lt;/p&gt;&#xA;&lt;p&gt;非手性碳纳米管的镜像结构与原始碳纳米管完全相同。非手性碳纳米管只有两种情况：扶手椅型（armchair）和锯齿型（zigzag）碳纳米管，扶手椅型和锯齿型的名称来自于横截面的形状，如图3.1中纳米管的边缘所示。&lt;/p&gt;&#xA;&lt;p&gt;手性纳米管（Chiral nanotubes）具有螺旋对称性（spiral symmetry），其镜像不能叠加到原始纳米管上，这种结构在化学命名中被称为轴手性（axially chiral）。轴手性通常与光学活性联系在一起讨论。&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;%e7%a2%b3%e7%ba%b3%e7%b1%b3%e7%ae%a1.assets/figure-01.png&#34; alt=&#34;图 01&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;碳纳米管的C-C键长度为 $1.44\mathring{A}$，&lt;/p&gt;&#xA;&lt;p&gt;晶格常数（lattice constant） $a=1.44\mathring{A}\times \sqrt{3} =2.49\mathring{A}$&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;%e7%a2%b3%e7%ba%b3%e7%b1%b3%e7%ae%a1.assets/figure-02.png&#34; alt=&#34;图 02&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;手性矢量（Chiral Vector）：&lt;/p&gt;&#xA;$$&#xA;C_{h} =na_{1} +ma_{2} \equiv (n,m),\quad \quad (n,m为整数,0\le \left|m\right| \le n)&#xA;$$$$&#xA;L=\left|C_{h} \right|=a\sqrt{n^{2}+ m^{2}+nm}&#xA;$$&lt;p&gt;&#xA;碳纳米管的直径：&#xA;&lt;/p&gt;&#xA;$$&#xA;d_{t} =\frac{L}{\pi } =\frac{\left|C_{h} \right| }{\pi } = \frac{a\sqrt{n^{2}+ m^{2}+nm} }{\pi }&#xA;$$&lt;p&gt;&#xA;平移矢量 T 定义为一维碳纳米管的单位向量，矢量 T 平行于纳米管轴，并且与未卷曲的蜂窝晶格中的手性矢量 $C_{h}$ 垂直。&lt;/p&gt;&#xA;$$&#xA;T=t_{1} a_{1}+t_{2}a_{2}\equiv (t_{1},t_{2}) \quad \quad t_{1},t_{2} \in \mathbb{Z}&#xA;$$$$&#xA;t_{1}=\frac{2m+n}{d_{R} }, \quad t_{2}=-\frac{2n+m}{d_{R} }&#xA;$$&lt;p&gt;&#xA;&lt;/p&gt;</description>
+			</item>
+	</channel>
 </rss>
