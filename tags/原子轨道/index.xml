@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
 	<channel>
-		<title>Posts on ElusiveKaze&#39;s Blog</title>
-		<link>https://elusivekaze.github.io/posts/</link>
-		<description>Recent content in Posts on ElusiveKaze&#39;s Blog</description>
+		<title>原子轨道 on ElusiveKaze&#39;s Blog</title>
+		<link>https://elusivekaze.github.io/tags/%E5%8E%9F%E5%AD%90%E8%BD%A8%E9%81%93/</link>
+		<description>Recent content in 原子轨道 on ElusiveKaze&#39;s Blog</description>
 		<generator>Hugo</generator>
 		<language>zh</language>
 		
@@ -12,20 +12,13 @@
 		
 			<lastBuildDate>Sat, 15 Aug 2026 00:00:00 +0800</lastBuildDate>
 		
-			<atom:link href="https://elusivekaze.github.io/posts/index.xml" rel="self" type="application/rss+xml" />
+			<atom:link href="https://elusivekaze.github.io/tags/%E5%8E%9F%E5%AD%90%E8%BD%A8%E9%81%93/index.xml" rel="self" type="application/rss+xml" />
 			<item>
 				<title>原子结构与粒子统计</title>
 				<link>https://elusivekaze.github.io/posts/%E5%8E%9F%E5%AD%90%E7%BB%93%E6%9E%84%E4%B8%8E%E7%B2%92%E5%AD%90%E7%BB%9F%E8%AE%A1/</link>
 				<pubDate>Sat, 15 Aug 2026 00:00:00 +0800</pubDate>
 				<guid>https://elusivekaze.github.io/posts/%E5%8E%9F%E5%AD%90%E7%BB%93%E6%9E%84%E4%B8%8E%E7%B2%92%E5%AD%90%E7%BB%9F%E8%AE%A1/</guid>
 				<description>&lt;h2 id=&#34;原子结构基础&#34;&gt;原子结构基础&lt;/h2&gt;&#xA;&lt;p&gt;&lt;strong&gt;原子轨道&lt;/strong&gt;：是指以波函数描述的电子在原子核外空间出现几率较大的区域。&lt;/p&gt;&#xA;&lt;p&gt;​                    /电子在原子核外出现的概率密度分布图。&lt;/p&gt;&#xA;&lt;p&gt;​&#x9;&#x9;    /薛定谔方程解出的波函数的平方的函数图像。&lt;/p&gt;&#xA;&lt;p&gt;将具有一定能层，又具有一定电子云形状，还具有一定方向的电子云称为轨道。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;主量子数&lt;/strong&gt; $n$ （电子层、能层）：$n=1、2、3......$&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;$1$&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;$2$&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;$3$&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;$4$&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;$5$&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;&amp;hellip;&amp;hellip;&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$K$&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$L$&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$M$&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$N$&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$O$&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&amp;hellip;&amp;hellip;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;&lt;strong&gt;角量子数&lt;/strong&gt; $l$  （亚层、轨道形状、能级）： $l=0、1、2......$&lt;/p&gt;&#xA;&lt;table&gt;&#xA;&#x9;&lt;thead&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;$0$&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;$1$&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;$2$&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;$3$&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;$4$&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;th&gt;&amp;hellip;&amp;hellip;&lt;/th&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/thead&gt;&#xA;&#x9;&lt;tbody&gt;&#xA;&#x9;&#x9;&#x9;&lt;tr&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$s$&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$p$&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$d$&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$f$&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;$g$&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&lt;td&gt;&amp;hellip;&amp;hellip;&lt;/td&gt;&#xA;&#x9;&#x9;&#x9;&lt;/tr&gt;&#xA;&#x9;&lt;/tbody&gt;&#xA;&lt;/table&gt;&#xA;&lt;p&gt;角动量大小：$\left | L \right | =  \sqrt{l(l+1)} \hbar$&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;磁量子数&lt;/strong&gt; $m_{l}$ （轨道角动量量子数、轨道方向）：描述轨道角动量在 $z$ 方向的分量，物理上等价于轨道在空间里的取向。 $m_{l}=0、\pm 1、\pm 2......$&lt;/p&gt;&#xA;&lt;p&gt;角动量 $z$ 分量：$L_{z}=m_{l}\hbar$&lt;/p&gt;&#xA;&lt;p&gt;氢原子轨道概率密度图：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;D:%5c%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0%5c%e5%8e%9f%e5%ad%90%e7%bb%93%e6%9e%84%e4%b8%8e%e7%b2%92%e5%ad%90%e7%bb%9f%e8%ae%a1%5c%e5%8e%9f%e5%ad%90%e7%bb%93%e6%9e%84%e4%b8%8e%e7%b2%92%e5%ad%90%e7%bb%9f%e8%ae%a1.assets%5cFigure-3.png&#34; alt=&#34;Figure-3&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;钠原子的 $1s、2s$ 和 $2p$ 轨道：&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;D:%5c%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0%5c%e5%8e%9f%e5%ad%90%e7%bb%93%e6%9e%84%e4%b8%8e%e7%b2%92%e5%ad%90%e7%bb%9f%e8%ae%a1%5c%e5%8e%9f%e5%ad%90%e7%bb%93%e6%9e%84%e4%b8%8e%e7%b2%92%e5%ad%90%e7%bb%9f%e8%ae%a1.assets%5cFigure-2.webp&#34; alt=&#34;Figure-2&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;自旋量子数&lt;/strong&gt;， $s=1/2$&lt;/p&gt;&#xA;&lt;p&gt;自旋角动量总大小：$\left | S \right | = \sqrt{s(s+1)} \hbar$&lt;/p&gt;</description>
-			</item>
-			<item>
-				<title>碳纳米管</title>
-				<link>https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/</link>
-				<pubDate>Tue, 04 Aug 2026 00:00:00 +0800</pubDate>
-				<guid>https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/</guid>
-				<description>&lt;p&gt;碳纳米管（carbon nanotube）根据对称性分为非手性（achiral）和手性（chiral）。&lt;/p&gt;</description>
 			</item>
 	</channel>
 </rss>
