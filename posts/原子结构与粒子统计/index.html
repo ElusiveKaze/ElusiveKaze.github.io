@@ -427,7 +427,7 @@
 	<meta itemprop="description" content="从量子数出发介绍原子轨道的基本概念，进而讨论电子排布的三条基本原则。在此基础上，介绍费米子与玻色子的统计性质，给出三种统计分布函数的表达式及其统一形式。">
 	<meta itemprop="datePublished" content="2026-08-15T00:00:00+08:00">
 	<meta itemprop="dateModified" content="2026-08-16T00:00:00+08:00">
-	<meta itemprop="wordCount" content="258">
+	<meta itemprop="wordCount" content="265">
 	<meta itemprop="keywords" content="原子轨道">
 
       <header>
@@ -625,27 +625,27 @@ $$<h2 id="玻色子">玻色子</h2>
 <p>由<strong>偶数个</strong>费米子组成的复合粒子行为像玻色子，由<strong>奇数个</strong>费米子组成的复合粒子行为像费米子。</p>
 <h2 id="三种统计分布">三种统计分布</h2>
 <p>平均占据数 $\bar{n}_{i} \ge 0$  (单个量子态中的平均粒子数)</p>
+<p>化学势 $\mu=\left(\frac{\partial U}{\partial N}\right)_{S,V}=\left(\frac{\partial F}{\partial N}\right)_{T,V}$</p>
 <p><strong>麦克斯韦-玻尔兹曼统计：</strong>
 </p>
 $$
-\bar{n}_{i}=\frac{1}{e^{(\epsilon_{i}-\mu)/kT}}
+\bar{n}_{i}=\frac{1}{e^{(\epsilon_{i}-\mu)/k_{B}T}}
 $$<p>
-经典稀薄极限通常要求 $\bar{n}_{i} \ll 1$ ，$\mu \ll \epsilon_{0}$ 通常是经典近似条件</p>
+经典稀薄极限通常要求 $\bar{n}_{i} \ll 1$ ，$\mu \ll \epsilon_{0}$ 通常是经典近似条件。</p>
 <p><strong>费米-狄拉克统计：</strong>
 </p>
 $$
-\bar{n}_{i}=\frac{1}{e^{(\epsilon_{i}-\mu)/kT}+1}
+\bar{n}_{i}=\frac{1}{e^{(\epsilon_{i}-\mu)/k_{B}T}+1}
 $$<p>
 <strong>玻色-爱因斯坦统计：</strong>
 </p>
 $$
-\bar{n}_{i}=\frac{1}{e^{(\epsilon_{i}-\mu)/kT}-1}
-$$$$
-\mu \le \epsilon_{0}
-$$<p><strong>统一形式：</strong>
+\bar{n}_{i}=\frac{1}{e^{(\epsilon_{i}-\mu)/k_{B}T}-1} \quad (\mu \le \epsilon_{0})
+$$<p>
+<strong>统一形式：</strong>
 </p>
 $$
-\bar{n}_{i}=\frac{1}{e^{(\epsilon_{i}-\mu)/kT}+\delta}
+\bar{n}_{i}=\frac{1}{e^{(\epsilon_{i}-\mu)/k_{B}T}+\delta}
 $$<p>
 其中 $\delta=0$ 对应 MB，$\delta=+1$ 对应 FD，$\delta=-1$ 对应 BE。</p>
 
