@@ -518,42 +518,43 @@
 <h2 id="一玻色-爱因斯坦凝聚bec">一、玻色-爱因斯坦凝聚（BEC）</h2>
 <p>考虑三维、均匀、无相互作用的理想玻色气体，并将单粒子基态能量取为</p>
 $$
-\epsilon_0=0.
+\epsilon_0=0
 $$<p>玻色-爱因斯坦分布可以写成</p>
 $$
 \bar n_i=\frac{1}{z^{-1}e^{\beta\epsilon_i}-1},
 \qquad
 z=e^{\beta\mu},
 \qquad
-\beta=\frac{1}{k_BT}.
+\beta=\frac{1}{k_BT}
 $$<p>由于平均占据数不能为负，化学势不能超过最低单粒子能量：</p>
 $$
 \mu\leq\epsilon_0=0,
-\qquad 0<z\leq1.
+\qquad 
+0<z\leq1
 $$<p>基态占据数为</p>
 $$
-N_0=\frac{1}{e^{-\beta\mu}-1}=\frac{z}{1-z}.
+N_0=\frac{1}{e^{-\beta\mu}-1}=\frac{z}{1-z}
 $$<p>总粒子数分成基态和激发态两部分：</p>
 $$
-N=N_0+N_{\mathrm{ex}}.
+N=N_0+N_{\mathrm{ex}}
 $$<h3 id="激发态饱和与临界温度">激发态饱和与临界温度</h3>
 <p>热德布罗意波长为</p>
 $$
 \lambda_T
 =\frac{h}{\sqrt{2\pi mk_BT}}
-=\sqrt{\frac{2\pi\hbar^2}{mk_BT}}.
+=\sqrt{\frac{2\pi\hbar^2}{mk_BT}}
 $$<p>对三维均匀理想玻色气体，将激发态求和写成积分后得到</p>
 $$
 N_{\mathrm{ex}}
-=\frac{V}{\lambda_T^3}g_{3/2}(z),
+=\frac{V}{\lambda_T^3}g_{3/2}(z)
 $$<p>其中玻色函数为</p>
 $$
-g_\nu(z)=\sum_{l=1}^{\infty}\frac{z^l}{l^\nu}.
+g_\nu(z)=\sum_{l=1}^{\infty}\frac{z^l}{l^\nu}
 $$<p>在给定温度下，$z$ 的最大值为 $1$，因此激发态能够容纳的最大粒子数为</p>
 $$
 N_{\mathrm{ex}}^{\max}(T)
 =\frac{V}{\lambda_T^3}g_{3/2}(1)
-=\frac{V}{\lambda_T^3}\zeta\left(\frac32\right).
+=\frac{V}{\lambda_T^3}\zeta\left(\frac32\right)
 $$<p>这里的“激发态饱和”并不是每一个激发态都被填满，而是所有激发态按照玻色分布能够容纳的<strong>总粒子数达到上限</strong>。玻色子的单个量子态仍然可以具有任意大的占据数。</p>
 <p>临界温度由</p>
 $$
@@ -561,24 +562,24 @@ N=N_{\mathrm{ex}}^{\max}(T_c)
 $$<p>确定，即</p>
 $$
 n\lambda_{T_c}^3=\zeta\left(\frac32\right),
-\qquad n=\frac NV,
+\qquad n=\frac NV
 $$<p>所以</p>
 $$
 T_c
 =\frac{2\pi\hbar^2}{mk_B}
 \left[
 \frac{n}{\zeta(3/2)}
-\right]^{2/3}.
+\right]^{2/3}
 $$<p>当 $T>T_c$ 时，$z<1$、$\mu<0$。此时基态仍然可以有粒子，但其占据数不是宏观量，即在热力学极限下</p>
 $$
-\frac{N_0}{N}\rightarrow0.
+\frac{N_0}{N}\rightarrow0
 $$<p>因此，“所有粒子都在激发态”只是一种热力学极限下的简写，并不表示基态占据数严格等于零。</p>
 <p>对于均匀封闭的理想玻色气体，固定 $N$ 和 $V$ 等价于固定粒子数密度 $n=N/V$。定义<strong>相空间密度</strong></p>
 $$
-\mathcal D=n\lambda_T^3.
+\mathcal D=n\lambda_T^3
 $$<p>在 $T>T_c$、基态占据不是宏观量时，粒子数方程可以写成</p>
 $$
-\mathcal D=n\lambda_T^3=g_{3/2}(z).
+\mathcal D=n\lambda_T^3=g_{3/2}(z)
 $$<p>因此，在固定密度下冷却气体时，</p>
 $$
 T\downarrow
@@ -589,26 +590,26 @@ T\downarrow
 \Rightarrow
 g_{3/2}(z)\uparrow
 \Rightarrow
-z\uparrow.
+z\uparrow
 $$<p>这里首先得到的是 $z$ 随降温逐渐增大；只有当 $T\to T_c^+$ 时，才有 $\mathcal D\to\zeta(3/2)$、$z\to1^-$ 和 $\mu\to0^-$。若密度也发生变化，则应直接根据 $\mathcal D=n\lambda_T^3$ 判断系统是否接近凝聚。</p>
 <p>当 $T\leq T_c$ 时，理想气体在热力学极限下有</p>
 $$
 \mu=0,
 \qquad
 N_{\mathrm{ex}}
-=N\left(\frac{T}{T_c}\right)^{3/2},
+=N\left(\frac{T}{T_c}\right)^{3/2}
 $$<p>凝聚分数为</p>
 $$
 \boxed{
 \frac{N_0}{N}
 =1-\left(\frac{T}{T_c}\right)^{3/2}
-}.
+}
 $$<p>该结果只适用于三维均匀理想玻色气体。外部囚禁势、有限尺寸和粒子间相互作用都会改变临界温度附近的定量结果。</p>
 <h3 id="相互作用激发谱与超流性">相互作用、激发谱与超流性</h3>
 <p>真实原子之间存在相互作用。低能稀薄玻色气体的相互作用主要由 $s$ 波散射长度 $a_s$ 表征。对弱排斥相互作用，可以写出有效耦合常数</p>
 $$
 g=\frac{4\pi\hbar^2a_s}{m},
-\qquad a_s>0.
+\qquad a_s>0
 $$<p>相互作用会导致以下结果：</p>
 <ul>
 <li>即使在 $T=0$，也有一小部分粒子不在单粒子基态中，这称为<strong>量子耗尽</strong>。所以“绝对零度时全部粒子进入基态”只严格适用于理想无相互作用玻色气体。</li>
@@ -619,25 +620,25 @@ $$<p>相互作用会导致以下结果：</p>
 $$
 E(p)=\sqrt{\epsilon_p\left(\epsilon_p+2gn_0\right)},
 \qquad
-\epsilon_p=\frac{p^2}{2m},
+\epsilon_p=\frac{p^2}{2m}
 $$<p>其中 $n_0$ 是凝聚体密度。在低动量极限下，</p>
 $$
 E(p)\simeq cp,
 \qquad
-c=\sqrt{\frac{gn_0}{m}},
+c=\sqrt{\frac{gn_0}{m}}
 $$<p>激发谱呈线性，表现为声子型集体激发。</p>
 <p>朗道超流判据给出的临界速度为</p>
 $$
-v_c=\min_p\frac{E(p)}{p}.
+v_c=\min_p\frac{E(p)}{p}
 $$<p>对于理想玻色气体，$E(p)=p^2/(2m)$，所以</p>
 $$
-v_c=\lim_{p\to0}\frac{p}{2m}=0.
+v_c=\lim_{p\to0}\frac{p}{2m}=0
 $$<p>因此，发生 BEC 并不能自动保证超流性。弱排斥相互作用把低动量色散变成 $E(p)\simeq cp$，从而给出非零临界速度。BEC 描述宏观量子态占据，超流性则描述体系对流动和激发的响应。</p>
 <p>BEC 的宏观相干性可以用序参量表示：</p>
 $$
 \Psi(\mathbf r)
 =\left\langle\hat\psi(\mathbf r)\right\rangle
-=\sqrt{n_0(\mathbf r)}e^{i\theta(\mathbf r)}.
+=\sqrt{n_0(\mathbf r)}e^{i\theta(\mathbf r)}
 $$<p>凝聚体选择确定的宏观相位，相当于整体 $U(1)$ 相位对称性的自发破缺。这个对称性观点也是理解 BCS-BEC 渡越连续性的关键。</p>
 <h3 id="玻色增强与原子激光">玻色增强与原子激光</h3>
 <p>若某个玻色量子态已经有 $N$ 个粒子，其他玻色子进入该态的跃迁率会出现与</p>
@@ -672,7 +673,7 @@ $$<p>时，材料将回到正常态。实际的Ⅱ型超导体具有两个临界
 <p>电子之间原本存在库仑排斥，但在费米面附近的一定能量范围内，经过屏蔽并具有延迟效应的声子吸引可能占优势。费米海还有一个关键性质：只要费米面附近存在有效吸引，哪怕吸引很弱，正常费米海也会出现形成配对的倾向，这称为 <strong>Cooper 不稳定性</strong>。</p>
 <p>常规 $s$ 波 BCS 理论中，相互配对的电子态具有相反动量和相反自旋：</p>
 $$
-(\mathbf k,\uparrow),\qquad(-\mathbf k,\downarrow).
+(\mathbf k,\uparrow),\qquad(-\mathbf k,\downarrow)
 $$<p>两个电子的动量分别为 $\hbar\mathbf k$ 和 $-\hbar\mathbf k$，所以它们的总动量为零。每个电子的自旋都是 $1/2$，两个自旋组成的反对称状态为</p>
 $$
 \chi_{\mathrm{s}}
@@ -680,10 +681,10 @@ $$
 \left(
 |\uparrow_1\downarrow_2\rangle
 -|\downarrow_1\uparrow_2\rangle
-\right).
+\right)
 $$<p>这个组合的总自旋量子数为</p>
 $$
-S=0.
+S=0
 $$<p>因为自旋多重度为 $2S+1=1$，所以它称为<strong>自旋单重态</strong>。它不是简单地指定“电子 1 一定向上、电子 2 一定向下”，而是两种相反自旋排列的量子叠加；沿同一方向测量时，两个电子的自旋一定相反。</p>
 <p>常规 $s$ 波配对的空间波函数在交换两个电子后保持不变，即空间部分是对称的。电子是费米子，总波函数在交换两个电子后必须变号，因此自旋部分必须是反对称的自旋单重态。于是这两个电子态组成总动量为零、总自旋 $S=0$ 的<strong>库珀对</strong>。</p>
 <p>库珀对不能简单想成两个电子紧贴在一起形成的小分子。在弱耦合金属中，一个库珀对的空间尺度通常远大于电子间距，同一范围内会同时存在许多库珀对，它们的波函数彼此高度重叠。因此，不能给电子编号后说“电子 A 永远只与电子 B 配对”。这里的“配对”主要表示量子态之间的关联：$(\mathbf k,\uparrow)$ 与 $(-\mathbf k,\downarrow)$ 倾向于作为一个整体共同参与超导状态。</p>
@@ -698,13 +699,13 @@ $$<p>因为自旋多重度为 $2S+1=1$，所以它称为<strong>自旋单重态<
 <h3 id="能隙零电阻与迈斯纳效应">能隙、零电阻与迈斯纳效应</h3>
 <p>电子配对会在费米面附近打开超导能隙。令</p>
 $$
-\xi_{\mathbf k}=\epsilon_{\mathbf k}-\mu,
+\xi_{\mathbf k}=\epsilon_{\mathbf k}-\mu
 $$<p>BCS 准粒子能谱为</p>
 $$
-E_{\mathbf k}=\sqrt{\xi_{\mathbf k}^2+|\Delta|^2}.
+E_{\mathbf k}=\sqrt{\xi_{\mathbf k}^2+|\Delta|^2}
 $$<p>$\Delta$ 既是配对序参量的大小，也给出最小单准粒子激发能。在简单的各向同性 $s$ 波模型中，破坏一个库珀对会产生两个准粒子，因此破对所需的最低总能量约为 $2|\Delta|$。随着温度升高，$\Delta$ 逐渐减小，并在 $T_c$ 处消失。弱耦合 BCS 理论给出</p>
 $$
-\frac{2\Delta(0)}{k_BT_c}\simeq3.53.
+\frac{2\Delta(0)}{k_BT_c}\simeq3.53
 $$<p>这个数值只适用于弱耦合、各向同性的常规 BCS 超导体，不是所有超导材料都必须满足的普适常数。</p>
 <p>能隙使低温下产生准粒子激发变得困难，但<strong>零电阻不能只解释成“能隙使电子无法散射”</strong>。更完整的说法是：</p>
 <ul>
@@ -715,7 +716,7 @@ $$<p>这个数值只适用于弱耦合、各向同性的常规 BCS 超导体，�
 <p>因此超导电流可以无耗散地持续存在。有限温度下仍可能有热激发准粒子，但它们不等于整个凝聚体都恢复了正常电阻；只有当超导相干被破坏时，材料才整体回到正常态。</p>
 <p>迈斯纳效应则来自带电凝聚体对电磁场的集体响应。外磁场会诱导表面超导电流，这些电流产生反向磁场，使内部磁场在伦敦穿透深度 $\lambda_L$ 内指数衰减：</p>
 $$
-B(x)=B(0)e^{-x/\lambda_L}.
+B(x)=B(0)e^{-x/\lambda_L}
 $$<p>库珀对的电荷量为 $2e$。宏观波函数必须保持单值，因此超导环中的磁通以</p>
 $$
 \Phi_0=\frac{h}{2e}
@@ -788,7 +789,7 @@ $$
 \longrightarrow
 \text{强关联配对}
 \longrightarrow
-\text{小而紧束缚的分子}.
+\text{小而紧束缚的分子}
 $$<p>BCS 一侧最反直觉的地方是：真空中的两个粒子未必能够形成稳定分子，但费米海附近的许多体环境仍能使任意弱的有效吸引产生库珀配对。BEC 一侧则已经存在真正的双原子束缚态，这些分子由两个费米子组成，总体表现为复合玻色子，低温下可以发生 BEC。</p>
 <h3 id="为什么叫渡越">为什么叫“渡越”</h3>
 <p>在标准的平衡、双组分、$s$ 波模型中，BCS 态和分子 BEC 都具有非零的配对序参量，也都建立了统一的宏观相位。增强吸引时，配对大小、能隙和化学势等物理量连续变化，没有必须出现的额外对称性改变，因此两端之间通常没有新的零温相变，而称为 <strong>BCS-BEC 渡越</strong>。</p>
