@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>超导 on ElusiveKaze&#39;s Blog</title>
+		<link>https://elusivekaze.github.io/tags/%E8%B6%85%E5%AF%BC/</link>
+		<description>Recent content in 超导 on ElusiveKaze&#39;s Blog</description>
+		<generator>Hugo</generator>
+		<language>zh</language>
+		
+		
+		
+		
+			<lastBuildDate>Tue, 18 Aug 2026 00:00:00 +0800</lastBuildDate>
+		
+			<atom:link href="https://elusivekaze.github.io/tags/%E8%B6%85%E5%AF%BC/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>BEC、BCS与BCS-BEC渡越</title>
+				<link>https://elusivekaze.github.io/posts/becbcs%E4%B8%8Ebcs-bec%E6%B8%A1%E8%B6%8A/becbcs%E4%B8%8Ebcs-bec%E6%B8%A1%E8%B6%8A/</link>
+				<pubDate>Tue, 18 Aug 2026 00:00:00 +0800</pubDate>
+				<guid>https://elusivekaze.github.io/posts/becbcs%E4%B8%8Ebcs-bec%E6%B8%A1%E8%B6%8A/becbcs%E4%B8%8Ebcs-bec%E6%B8%A1%E8%B6%8A/</guid>
+				<description>&lt;p&gt;玻色-爱因斯坦凝聚（BEC）描述玻色子的宏观量子态占据；BCS 理论描述费米子在吸引相互作用下形成配对并建立宏观相干；BCS-BEC 渡越则说明，弱耦合的重叠库珀对可以连续演化为紧束缚分子构成的 BEC。&lt;/p&gt;&#xA;&lt;h2 id=&#34;一玻色-爱因斯坦凝聚bec&#34;&gt;一、玻色-爱因斯坦凝聚（BEC）&lt;/h2&gt;&#xA;&lt;p&gt;考虑三维、均匀、无相互作用的理想玻色气体，并将单粒子基态能量取为&lt;/p&gt;&#xA;$$&#xA;\epsilon_0=0.&#xA;$$&lt;p&gt;玻色-爱因斯坦分布可以写成&lt;/p&gt;&#xA;$$&#xA;\bar n_i=\frac{1}{z^{-1}e^{\beta\epsilon_i}-1},&#xA;\qquad&#xA;z=e^{\beta\mu},&#xA;\qquad&#xA;\beta=\frac{1}{k_BT}.&#xA;$$&lt;p&gt;由于平均占据数不能为负，化学势不能超过最低单粒子能量：&lt;/p&gt;&#xA;$$&#xA;\mu\leq\epsilon_0=0,&#xA;\qquad 0&lt;z\leq1.&#xA;$$&lt;p&gt;基态占据数为&lt;/p&gt;&#xA;$$&#xA;N_0=\frac{1}{e^{-\beta\mu}-1}=\frac{z}{1-z}.&#xA;$$&lt;p&gt;总粒子数分成基态和激发态两部分：&lt;/p&gt;&#xA;$$&#xA;N=N_0+N_{\mathrm{ex}}.&#xA;$$&lt;h3 id=&#34;激发态饱和与临界温度&#34;&gt;激发态饱和与临界温度&lt;/h3&gt;&#xA;&lt;p&gt;热德布罗意波长为&lt;/p&gt;&#xA;$$&#xA;\lambda_T&#xA;=\frac{h}{\sqrt{2\pi mk_BT}}&#xA;=\sqrt{\frac{2\pi\hbar^2}{mk_BT}}.&#xA;$$&lt;p&gt;对三维均匀理想玻色气体，将激发态求和写成积分后得到&lt;/p&gt;&#xA;$$&#xA;N_{\mathrm{ex}}&#xA;=\frac{V}{\lambda_T^3}g_{3/2}(z),&#xA;$$&lt;p&gt;其中玻色函数为&lt;/p&gt;&#xA;$$&#xA;g_\nu(z)=\sum_{l=1}^{\infty}\frac{z^l}{l^\nu}.&#xA;$$&lt;p&gt;在给定温度下，$z$ 的最大值为 $1$，因此激发态能够容纳的最大粒子数为&lt;/p&gt;&#xA;$$&#xA;N_{\mathrm{ex}}^{\max}(T)&#xA;=\frac{V}{\lambda_T^3}g_{3/2}(1)&#xA;=\frac{V}{\lambda_T^3}\zeta\left(\frac32\right).&#xA;$$&lt;p&gt;这里的“激发态饱和”并不是每一个激发态都被填满，而是所有激发态按照玻色分布能够容纳的&lt;strong&gt;总粒子数达到上限&lt;/strong&gt;。玻色子的单个量子态仍然可以具有任意大的占据数。&lt;/p&gt;&#xA;&lt;p&gt;临界温度由&lt;/p&gt;&#xA;$$&#xA;N=N_{\mathrm{ex}}^{\max}(T_c)&#xA;$$&lt;p&gt;确定，即&lt;/p&gt;&#xA;$$&#xA;n\lambda_{T_c}^3=\zeta\left(\frac32\right),&#xA;\qquad n=\frac NV,&#xA;$$&lt;p&gt;所以&lt;/p&gt;&#xA;$$&#xA;T_c&#xA;=\frac{2\pi\hbar^2}{mk_B}&#xA;\left[&#xA;\frac{n}{\zeta(3/2)}&#xA;\right]^{2/3}.&#xA;$$&lt;p&gt;当 $T&gt;T_c$ 时，$z&lt;1$、$\mu&lt;0$。此时基态仍然可以有粒子，但其占据数不是宏观量，即在热力学极限下&lt;/p&gt;&#xA;$$&#xA;\frac{N_0}{N}\rightarrow0.&#xA;$$&lt;p&gt;因此，“所有粒子都在激发态”只是一种热力学极限下的简写，并不表示基态占据数严格等于零。&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>

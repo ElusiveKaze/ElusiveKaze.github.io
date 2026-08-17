@@ -5,13 +5,13 @@
     <description>ElusiveKaze 的个人博客，主要发布学习笔记</description>
     <generator>Hugo</generator>
     <language>zh</language>
-    <lastBuildDate>Sat, 15 Aug 2026 00:00:00 &#43;0800</lastBuildDate>
+    <lastBuildDate>Tue, 18 Aug 2026 00:00:00 &#43;0800</lastBuildDate>
     <atom:link href="https://elusivekaze.github.io/" rel="self" type="application/rss+xml"/>
     
     <item>
       <title>Posts</title>
       <link>https://elusivekaze.github.io/posts/</link>
-      <pubDate>Sat, 15 Aug 2026 00:00:00 &#43;0800</pubDate>
+      <pubDate>Tue, 18 Aug 2026 00:00:00 &#43;0800</pubDate>
       <guid>https://elusivekaze.github.io/posts/</guid>
       <description></description>
     </item>

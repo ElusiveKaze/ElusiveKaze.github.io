@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="zh"
+  x-data
+  :class="$store.darkMode.isDark() ? 'dark' : 'light'"
+  :data-theme="$store.darkMode.theme()">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BEC、BCS与BCS-BEC渡越 | ElusiveKaze&#39;s Blog</title>
+
+    <head>  
+  
+    
+      <link href="/favicon.jpg" rel="icon" type="image/x-icon" />
+    
+  
+  
+  <link rel="canonical" href="https://elusivekaze.github.io/posts/becbcs%E4%B8%8Ebcs-bec%E6%B8%A1%E8%B6%8A/becbcs%E4%B8%8Ebcs-bec%E6%B8%A1%E8%B6%8A/" />
+  
+  
+  
+  <meta name="author" content="ElusiveKaze" />
+  <meta name="description" content="玻色-爱因斯坦凝聚（BEC）、超导与 BCS 理论、 BCS-BEC 渡越。" />
+  
+  
+  <meta name="keywords" content="超导">
+  
+  
+  
+  <meta name="generator" content="Hugo 0.165.0">
+  
+  
+  <meta property="og:url" content="https://elusivekaze.github.io/posts/becbcs%E4%B8%8Ebcs-bec%E6%B8%A1%E8%B6%8A/becbcs%E4%B8%8Ebcs-bec%E6%B8%A1%E8%B6%8A/">
+	<meta property="og:site_name" content="ElusiveKaze&#39;s Blog">
+	<meta property="og:title" content="BEC、BCS与BCS-BEC渡越">
+	<meta property="og:description" content="玻色-爱因斯坦凝聚（BEC）、超导与 BCS 理论、 BCS-BEC 渡越。">
+	<meta property="og:locale" content="zh">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+		<meta property="article:published_time" content="2026-08-18T00:00:00+08:00">
+		<meta property="article:modified_time" content="2026-08-18T00:00:00+08:00">
+		<meta property="article:tag" content="超导">
+
+  
+  
+  
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="BEC、BCS与BCS-BEC渡越">
+	<meta name="twitter:description" content="玻色-爱因斯坦凝聚（BEC）、超导与 BCS 理论、 BCS-BEC 渡越。">
+
+  
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/output.min.css" />
+  
+  
+  
+  <script>
+  MathJax = {
+    tex: {
+      inlineMath: [
+        ["$", "$"],
+        ["\\(", "\\)"],
+      ],
+      displayMath: [
+        ["$$", "$$"],
+        ["\\[", "\\]"],
+      ],
+      processEscapes: true,
+      processEnvironments: true,
+    },
+    options: {
+      skipHtmlTags: ["script", "noscript", "style", "textarea", "pre"],
+    },
+  };
+
+  window.addEventListener("load", (event) => {
+    document.querySelectorAll("mjx-container").forEach(function (x) {
+      x.parentElement.classList += "has-jax";
+    });
+  });
+</script>
+<script
+  type="text/javascript"
+  id="MathJax-script"
+  async
+  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"
+></script>
+
+</head>
+<style>
+    code.has-jax {
+      -webkit-font-smoothing: antialiased;
+      background: inherit !important;
+      border: none !important;
+      font-size: 100%;
+    }
+</style>
+
+
+    
+
+
+<style>
+  pre {
+    padding: 1em;
+    overflow: auto;
+  }
+</style>
+
+
+
+
+
+
+
+
+
+    
+
+    <script>
+      window.lightTheme = 'emerald'
+      window.darkTheme = 'forest'
+
+      ;(function() {
+        const isDark = ('hugo-theme-dream-is-dark' in localStorage)
+          ? window.localStorage.getItem('hugo-theme-dream-is-dark') === 'y'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+        const theme = isDark ? window.darkTheme : window.lightTheme
+
+        document.documentElement.setAttribute('data-theme', theme)
+      })()
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.12/dist/cdn.min.js" integrity="sha256-V7N9fK6aJ9ll/a5K3MhEJF39xAfmVa7oXc//OggDaj8=" crossorigin="anonymous"></script>
+  </head>
+
+  <body x-data="{
+    flip: false,
+  }">
+    
+
+    
+<nav x-data="{ isSticky: false }"
+  x-init="window.addEventListener('scroll', () => { isSticky = window.scrollY > 30 })"
+  class="sticky top-0 z-30 mt-4 lg:mt-8 py-4"
+  :class="{ 'bg-base-100 shadow-lg dark:border-b dark:border-base-content/30': isSticky }">
+
+  
+  <div class="container flex justify-between px-4">
+  
+    <section class="flex items-center gap-2">
+      <div class="avatar cursor-pointer hover:avatar-online" @click="flip = !flip" title="翻转一下！">
+        <div class="w-12 h-12 rounded-full select-none">
+          <img src="/img/avatar.png" alt="ElusiveKaze&#39;s Blog" />
+        </div>
+      </div>
+
+      
+      <div>
+        
+        <a href="https://elusivekaze.github.io/" class="text-lg font-semibold cursor-pointer">
+          ElusiveKaze&#39;s Blog
+        </a>
+        
+        
+        <div class="text-base-content/60 text-sm">向远方</div>
+        
+      </div>
+      
+    </section>
+
+    
+    
+      
+    
+
+    <div class="dropdown dropdown-end sm:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="Select an option">
+        <ion-icon name="menu" class="text-2xl"></ion-icon>
+      </div>
+      <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-10 shadow-md">
+        
+
+
+
+
+
+
+
+
+<li>
+  <div role="link" tabindex="0" class="inline-flex items-center p-2 cursor-pointer" @click="flip = !flip" title="关于">
+    <ion-icon name="information-circle"></ion-icon>关于</div>
+</li>
+
+
+
+
+
+
+
+
+
+<li>
+  <a class="group inline-flex items-center p-2 cursor-pointer" href="/search" title="搜索">
+    <ion-icon name="search"></ion-icon>
+    搜索
+  </a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+    
+    <ion-icon name="logo-github"></ion-icon>
+    
+    GitHub
+  </a>
+</li>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="归档">
+    <ion-icon name="archive"></ion-icon>
+    归档
+  </a>
+</li>
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/categories" title="所有分类">
+    <ion-icon name="grid"></ion-icon>
+    所有分类
+  </a>
+</li>
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/tags" title="所有标签">
+    <ion-icon name="pricetags"></ion-icon>
+    所有标签
+  </a>
+</li>
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/index.xml" title="RSS">
+    <ion-icon name="logo-rss"></ion-icon>
+    RSS
+  </a>
+</li>
+
+
+
+
+
+      </ul>
+    </div>
+    <section class="hidden sm:flex sm:items-center sm:gap-2 md:gap-4">
+      
+
+      
+      
+      
+      
+
+
+
+
+<div role="link" tabindex="0" class="text-sm font-semibold cursor-pointer hover:underline" @click="flip = !flip" title="关于">关于</div>
+
+
+
+
+
+      
+      
+<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/search" title="搜索">
+  <ion-icon class="group-hover:text-primary-content" name="search"></ion-icon>
+</a>
+
+
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+  
+    
+
+
+
+
+  
+  <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+    <ion-icon class="group-hover:text-primary-content" name="logo-github"></ion-icon>
+  </a>
+  
+
+
+
+
+  
+
+
+      
+
+      <div class="dropdown dropdown-end dropdown-hover">
+        <div tabindex="0" role="button" class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" aria-label="Select an option">
+          <ion-icon class="group-hover:text-primary-content text-xl" name="menu"></ion-icon>
+        </div>
+        <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-10 shadow-xl">
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="归档">
+    <ion-icon name="archive"></ion-icon>
+    归档
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/categories" title="所有分类">
+    <ion-icon name="grid"></ion-icon>
+    所有分类
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/tags" title="所有标签">
+    <ion-icon name="pricetags"></ion-icon>
+    所有标签
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/index.xml" title="RSS">
+    <ion-icon name="logo-rss"></ion-icon>
+    RSS
+  </a>
+</li>
+
+
+          
+        </ul>
+      </div>
+      
+    </section>
+  </div>
+</nav>
+
+
+    <div class="flip-container" :class="{ 'flip-it': flip }">
+      <div class="flipper">
+        <div class="front">
+          <div class="container">
+            
+<div class="lg:grid lg:grid-cols-4 gap-4 mt-4 px-4">
+  <div class="hidden lg:block">
+    
+  </div>
+
+  <div class="lg:col-span-2">
+    <article class="mx-auto prose prose-quoteless dark:prose-invert" id="dream-single-post-main" itemscope itemtype="http://schema.org/Article">
+      
+	<meta itemprop="name" content="BEC、BCS与BCS-BEC渡越">
+	<meta itemprop="description" content="玻色-爱因斯坦凝聚（BEC）、超导与 BCS 理论、 BCS-BEC 渡越。">
+	<meta itemprop="datePublished" content="2026-08-18T00:00:00+08:00">
+	<meta itemprop="dateModified" content="2026-08-18T00:00:00+08:00">
+	<meta itemprop="wordCount" content="21">
+	<meta itemprop="keywords" content="超导">
+
+      <header>
+        <h1 itemprop="headline">BEC、BCS与BCS-BEC渡越</h1>
+        <p class="text-sm">
+          
+            <span data-format="luxon">2026-08-18T00:00:00&#43;08:00</span>
+          
+
+          | <span>1分钟阅读</span>
+
+          
+            | <span>更新于
+              
+                <span data-format="luxon">2026-08-18T00:00:00&#43;08:00</span>
+              
+            </span>
+          
+        </p>
+
+        
+        <div class="flex justify-between">
+          
+            <div class="flex items-center">
+  
+  <div class="avatar mr-1">
+    <div class="w-8 rounded-full">
+      <img class="my-0!" src="/img/avatar.png" alt="ElusiveKaze" />
+    </div>
+  </div>
+  
+
+  <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+  
+    
+      <span itemprop="name">ElusiveKaze</span>
+    
+  
+  </span>
+</div>
+
+          
+
+          <div class="flex items-center gap-2">
+  
+  
+
+  
+  
+  
+  
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://x.com/intent/post?text=BEC%e3%80%81BCS%e4%b8%8eBCS-BEC%e6%b8%a1%e8%b6%8a&amp;url=https://elusivekaze.github.io/posts/becbcs%E4%B8%8Ebcs-bec%E6%B8%A1%E8%B6%8A/becbcs%E4%B8%8Ebcs-bec%E6%B8%A1%E8%B6%8A/" target="_blank" rel="noopener noreferrer"
+      title="Share on X">
+      <ion-icon class="group-hover:text-primary-content" name="logo-x"></ion-icon>
+    </a>
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://facebook.com/sharer/sharer.php?u=https://elusivekaze.github.io/posts/becbcs%E4%B8%8Ebcs-bec%E6%B8%A1%E8%B6%8A/becbcs%E4%B8%8Ebcs-bec%E6%B8%A1%E8%B6%8A/" target="_blank" rel="noopener noreferrer"
+      title="Share on Facebook">
+      <ion-icon class="group-hover:text-primary-content" name="logo-facebook"></ion-icon>
+    </a>
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://wa.me/?text=BEC%e3%80%81BCS%e4%b8%8eBCS-BEC%e6%b8%a1%e8%b6%8a%20https://elusivekaze.github.io/posts/becbcs%E4%B8%8Ebcs-bec%E6%B8%A1%E8%B6%8A/becbcs%E4%B8%8Ebcs-bec%E6%B8%A1%E8%B6%8A/" target="_blank" rel="noopener noreferrer"
+      title="Share on WhatsApp">
+      <ion-icon class="group-hover:text-primary-content" name="logo-whatsapp"></ion-icon>
+    </a>
+  
+
+  
+  
+</div>
+
+        </div>
+      </header>
+
+      <section id="dream-single-post-content" itemprop="articleBody">
+        
+          <figure>
+            <img class="z-30" src="/img/skateboard.jpg" alt="BEC、BCS与BCS-BEC渡越" />
+            
+          </figure>
+        
+
+        <p>玻色-爱因斯坦凝聚（BEC）描述玻色子的宏观量子态占据；BCS 理论描述费米子在吸引相互作用下形成配对并建立宏观相干；BCS-BEC 渡越则说明，弱耦合的重叠库珀对可以连续演化为紧束缚分子构成的 BEC。</p>
+<h2 id="一玻色-爱因斯坦凝聚bec">一、玻色-爱因斯坦凝聚（BEC）</h2>
+<p>考虑三维、均匀、无相互作用的理想玻色气体，并将单粒子基态能量取为</p>
+$$
+\epsilon_0=0.
+$$<p>玻色-爱因斯坦分布可以写成</p>
+$$
+\bar n_i=\frac{1}{z^{-1}e^{\beta\epsilon_i}-1},
+\qquad
+z=e^{\beta\mu},
+\qquad
+\beta=\frac{1}{k_BT}.
+$$<p>由于平均占据数不能为负，化学势不能超过最低单粒子能量：</p>
+$$
+\mu\leq\epsilon_0=0,
+\qquad 0<z\leq1.
+$$<p>基态占据数为</p>
+$$
+N_0=\frac{1}{e^{-\beta\mu}-1}=\frac{z}{1-z}.
+$$<p>总粒子数分成基态和激发态两部分：</p>
+$$
+N=N_0+N_{\mathrm{ex}}.
+$$<h3 id="激发态饱和与临界温度">激发态饱和与临界温度</h3>
+<p>热德布罗意波长为</p>
+$$
+\lambda_T
+=\frac{h}{\sqrt{2\pi mk_BT}}
+=\sqrt{\frac{2\pi\hbar^2}{mk_BT}}.
+$$<p>对三维均匀理想玻色气体，将激发态求和写成积分后得到</p>
+$$
+N_{\mathrm{ex}}
+=\frac{V}{\lambda_T^3}g_{3/2}(z),
+$$<p>其中玻色函数为</p>
+$$
+g_\nu(z)=\sum_{l=1}^{\infty}\frac{z^l}{l^\nu}.
+$$<p>在给定温度下，$z$ 的最大值为 $1$，因此激发态能够容纳的最大粒子数为</p>
+$$
+N_{\mathrm{ex}}^{\max}(T)
+=\frac{V}{\lambda_T^3}g_{3/2}(1)
+=\frac{V}{\lambda_T^3}\zeta\left(\frac32\right).
+$$<p>这里的“激发态饱和”并不是每一个激发态都被填满，而是所有激发态按照玻色分布能够容纳的<strong>总粒子数达到上限</strong>。玻色子的单个量子态仍然可以具有任意大的占据数。</p>
+<p>临界温度由</p>
+$$
+N=N_{\mathrm{ex}}^{\max}(T_c)
+$$<p>确定，即</p>
+$$
+n\lambda_{T_c}^3=\zeta\left(\frac32\right),
+\qquad n=\frac NV,
+$$<p>所以</p>
+$$
+T_c
+=\frac{2\pi\hbar^2}{mk_B}
+\left[
+\frac{n}{\zeta(3/2)}
+\right]^{2/3}.
+$$<p>当 $T>T_c$ 时，$z<1$、$\mu<0$。此时基态仍然可以有粒子，但其占据数不是宏观量，即在热力学极限下</p>
+$$
+\frac{N_0}{N}\rightarrow0.
+$$<p>因此，“所有粒子都在激发态”只是一种热力学极限下的简写，并不表示基态占据数严格等于零。</p>
+<p>对于均匀封闭的理想玻色气体，固定 $N$ 和 $V$ 等价于固定粒子数密度 $n=N/V$。定义<strong>相空间密度</strong></p>
+$$
+\mathcal D=n\lambda_T^3.
+$$<p>在 $T>T_c$、基态占据不是宏观量时，粒子数方程可以写成</p>
+$$
+\mathcal D=n\lambda_T^3=g_{3/2}(z).
+$$<p>因此，在固定密度下冷却气体时，</p>
+$$
+T\downarrow
+\Rightarrow
+\lambda_{T} \uparrow
+\Rightarrow
+\mathcal D\uparrow
+\Rightarrow
+g_{3/2}(z)\uparrow
+\Rightarrow
+z\uparrow.
+$$<p>这里首先得到的是 $z$ 随降温逐渐增大；只有当 $T\to T_c^+$ 时，才有 $\mathcal D\to\zeta(3/2)$、$z\to1^-$ 和 $\mu\to0^-$。若密度也发生变化，则应直接根据 $\mathcal D=n\lambda_T^3$ 判断系统是否接近凝聚。</p>
+<p>当 $T\leq T_c$ 时，理想气体在热力学极限下有</p>
+$$
+\mu=0,
+\qquad
+N_{\mathrm{ex}}
+=N\left(\frac{T}{T_c}\right)^{3/2},
+$$<p>凝聚分数为</p>
+$$
+\boxed{
+\frac{N_0}{N}
+=1-\left(\frac{T}{T_c}\right)^{3/2}
+}.
+$$<p>该结果只适用于三维均匀理想玻色气体。外部囚禁势、有限尺寸和粒子间相互作用都会改变临界温度附近的定量结果。</p>
+<h3 id="相互作用激发谱与超流性">相互作用、激发谱与超流性</h3>
+<p>真实原子之间存在相互作用。低能稀薄玻色气体的相互作用主要由 $s$ 波散射长度 $a_s$ 表征。对弱排斥相互作用，可以写出有效耦合常数</p>
+$$
+g=\frac{4\pi\hbar^2a_s}{m},
+\qquad a_s>0.
+$$<p>相互作用会导致以下结果：</p>
+<ul>
+<li>即使在 $T=0$，也有一小部分粒子不在单粒子基态中，这称为<strong>量子耗尽</strong>。所以“绝对零度时全部粒子进入基态”只严格适用于理想无相互作用玻色气体。</li>
+<li>凝聚体的低能激发不再是彼此独立的单粒子激发，而是集体的玻戈留波夫准粒子。</li>
+<li>凝聚分数和超流密度是不同的物理量，不能直接等同。</li>
+</ul>
+<p>玻戈留波夫激发谱为</p>
+$$
+E(p)=\sqrt{\epsilon_p\left(\epsilon_p+2gn_0\right)},
+\qquad
+\epsilon_p=\frac{p^2}{2m},
+$$<p>其中 $n_0$ 是凝聚体密度。在低动量极限下，</p>
+$$
+E(p)\simeq cp,
+\qquad
+c=\sqrt{\frac{gn_0}{m}},
+$$<p>激发谱呈线性，表现为声子型集体激发。</p>
+<p>朗道超流判据给出的临界速度为</p>
+$$
+v_c=\min_p\frac{E(p)}{p}.
+$$<p>对于理想玻色气体，$E(p)=p^2/(2m)$，所以</p>
+$$
+v_c=\lim_{p\to0}\frac{p}{2m}=0.
+$$<p>因此，发生 BEC 并不能自动保证超流性。弱排斥相互作用把低动量色散变成 $E(p)\simeq cp$，从而给出非零临界速度。BEC 描述宏观量子态占据，超流性则描述体系对流动和激发的响应。</p>
+<p>BEC 的宏观相干性可以用序参量表示：</p>
+$$
+\Psi(\mathbf r)
+=\left\langle\hat\psi(\mathbf r)\right\rangle
+=\sqrt{n_0(\mathbf r)}e^{i\theta(\mathbf r)}.
+$$<p>凝聚体选择确定的宏观相位，相当于整体 $U(1)$ 相位对称性的自发破缺。这个对称性观点也是理解 BCS-BEC 渡越连续性的关键。</p>
+<h3 id="玻色增强与原子激光">玻色增强与原子激光</h3>
+<p>若某个玻色量子态已经有 $N$ 个粒子，其他玻色子进入该态的跃迁率会出现与</p>
+$$
+N+1
+$$<p>有关的增强，这就是玻色增强或玻色刺激。它可以加速凝聚体的形成，并为物质波放大提供增益。</p>
+<p>原子激光则是从相干 BEC 中输出的原子物质波。射频、微波或拉曼过程可以把部分原子从受囚禁内态转移到不受囚禁或受引导的内态，从而形成相干原子脉冲或原子束。</p>
+<p>两者不是同一个概念：</p>
+<ul>
+<li><strong>玻色增强</strong>是粒子进入已占据玻色模式时的统计增强机制；</li>
+<li><strong>BEC</strong>是宏观占据的相干原子模式；</li>
+<li><strong>原子激光</strong>是从该相干模式中耦合输出的原子束。</li>
+</ul>
+<p>若先制备好有限寿命的 BEC，可以通过相干输出耦合将其中一部分原子转移到非束缚态，形成脉冲式原子激光。输出耦合本身不依赖玻色增强，原子束的相干性继承自已有的 BEC；但 BEC 的形成和增长仍可能包含玻色增强。由于输出会逐渐耗尽凝聚体，连续原子激光还需要持续补充原子，并通过保持相位的增益机制补偿损失；标准方案中的增益机制正是玻色增强。</p>
+<h2 id="二超导与-bcs-理论">二、超导与 BCS 理论</h2>
+<p>BCS 理论首先是一套解释<strong>常规超导</strong>的微观理论。它要回答的核心问题不是“两个电子怎样结合”这么简单，而是：电子为什么会配对，大量电子对如何形成统一的宏观量子态，以及这种状态为什么具有零电阻和迈斯纳效应。</p>
+<h3 id="超导的基本现象">超导的基本现象</h3>
+<p>材料降到临界温度 $T_c$ 以下，并且磁场和电流没有超过相应临界值时，可以进入超导态。超导态最重要的两个特征是：</p>
+<ol>
+<li><strong>零直流电阻</strong>：稳恒电流可以在没有电压降和焦耳热的情况下流动。</li>
+<li><strong>迈斯纳效应</strong>：材料进入超导态时，会把内部磁场排斥出去；磁场只能进入表面附近很薄的一层。</li>
+</ol>
+<p>超导因此不只是“电阻恰好等于零”。假想的理想导体只要求电阻为零，它会把原来存在的磁通冻结在内部；超导体在降温穿过 $T_c$ 时则会主动建立屏蔽电流，把磁场排出。这说明超导是一种新的热力学相。</p>
+<p>超导态并非在任何条件下都能维持。温度、磁场或电流超过临界值后，超导会被破坏：</p>
+$$
+T>T_c,\qquad H>H_c,\qquad J>J_c
+$$<p>时，材料将回到正常态。实际的Ⅱ型超导体具有两个临界磁场 $H_{c1}$ 和 $H_{c2}$，两者之间磁通以量子化涡旋的形式进入材料；这里不再展开。</p>
+<h3 id="bcs-的微观机制">BCS 的微观机制</h3>
+<p>正常金属中的电子会被晶格振动、杂质和缺陷散射，电流携带的有序动量逐渐转移给晶格，因此产生电阻和焦耳热。单纯降低温度虽然会减弱晶格热振动造成的散射，但不能由此解释超导相变、迈斯纳效应和能隙。</p>
+<p>在低温金属中，电子从低能量量子态开始依次占据。动量空间中被电子占据的区域称为<strong>费米海</strong>，其边界称为<strong>费米面</strong>，边界所对应的能量是费米能 $E_F$。费米面深处的量子态已经被占满，电子若想改变状态，容易受到泡利不相容原理的限制；费米面附近则同时存在能量相近的已占据态和空态，电子只需很小的能量就可以重新安排。因此，低温下的导电、散射和配对主要由费米面附近的电子态决定。</p>
+<p>在常规超导体中，一个电子经过晶格时会使带正电的离子发生微小位移，这种晶格形变又会影响另一个电子。用量子语言描述，就是两个电子通过交换<strong>虚声子</strong>产生有效吸引。声子是晶格振动的量子；“虚声子”表示它是相互作用过程中的中间状态，并不是先产生一个可以单独观测的真实声子，再由另一个电子把它吸收。</p>
+<p>电子之间原本存在库仑排斥，但在费米面附近的一定能量范围内，经过屏蔽并具有延迟效应的声子吸引可能占优势。费米海还有一个关键性质：只要费米面附近存在有效吸引，哪怕吸引很弱，正常费米海也会出现形成配对的倾向，这称为 <strong>Cooper 不稳定性</strong>。</p>
+<p>常规 $s$ 波 BCS 理论中，相互配对的电子态具有相反动量和相反自旋：</p>
+$$
+(\mathbf k,\uparrow),\qquad(-\mathbf k,\downarrow).
+$$<p>两个电子的动量分别为 $\hbar\mathbf k$ 和 $-\hbar\mathbf k$，所以它们的总动量为零。每个电子的自旋都是 $1/2$，两个自旋组成的反对称状态为</p>
+$$
+\chi_{\mathrm{s}}
+=\frac{1}{\sqrt2}
+\left(
+|\uparrow_1\downarrow_2\rangle
+-|\downarrow_1\uparrow_2\rangle
+\right).
+$$<p>这个组合的总自旋量子数为</p>
+$$
+S=0.
+$$<p>因为自旋多重度为 $2S+1=1$，所以它称为<strong>自旋单重态</strong>。它不是简单地指定“电子 1 一定向上、电子 2 一定向下”，而是两种相反自旋排列的量子叠加；沿同一方向测量时，两个电子的自旋一定相反。</p>
+<p>常规 $s$ 波配对的空间波函数在交换两个电子后保持不变，即空间部分是对称的。电子是费米子，总波函数在交换两个电子后必须变号，因此自旋部分必须是反对称的自旋单重态。于是这两个电子态组成总动量为零、总自旋 $S=0$ 的<strong>库珀对</strong>。</p>
+<p>库珀对不能简单想成两个电子紧贴在一起形成的小分子。在弱耦合金属中，一个库珀对的空间尺度通常远大于电子间距，同一范围内会同时存在许多库珀对，它们的波函数彼此高度重叠。因此，不能给电子编号后说“电子 A 永远只与电子 B 配对”。这里的“配对”主要表示量子态之间的关联：$(\mathbf k,\uparrow)$ 与 $(-\mathbf k,\downarrow)$ 倾向于作为一个整体共同参与超导状态。</p>
+<p>孤立的一个库珀对还不能产生宏观超导。超导态中，大量这样的配对关联共享统一的宏观相位，这称为<strong>宏观相干</strong>。所谓“共享相位”，是指各配对成分之间的相位关系固定而不是随机；它们因而能够作为一个整体对电流和磁场作出响应。</p>
+<p>所以，也不宜把 BCS 超导想成“金属中的全部电子被固定分组，变成许多互不相关的双电子分子”。更准确的图像是：</p>
+<ul>
+<li>配对造成的占据变化和低能激发主要集中在费米面附近；</li>
+<li>库珀对很大并且彼此重叠，没有可以逐个指定的固定搭档；</li>
+<li>大量配对关联具有统一相位，共同组成一个宏观量子态。</li>
+</ul>
+<p>费米面深处的电子态在超导转变前后变化很小，但超导电流和电磁响应是整个相干态的集体性质。因此，“主要是费米面附近发生配对变化”也不能简单理解成“只有少数电子属于超导体”。</p>
+<h3 id="能隙零电阻与迈斯纳效应">能隙、零电阻与迈斯纳效应</h3>
+<p>电子配对会在费米面附近打开超导能隙。令</p>
+$$
+\xi_{\mathbf k}=\epsilon_{\mathbf k}-\mu,
+$$<p>BCS 准粒子能谱为</p>
+$$
+E_{\mathbf k}=\sqrt{\xi_{\mathbf k}^2+|\Delta|^2}.
+$$<p>$\Delta$ 既是配对序参量的大小，也给出最小单准粒子激发能。在简单的各向同性 $s$ 波模型中，破坏一个库珀对会产生两个准粒子，因此破对所需的最低总能量约为 $2|\Delta|$。随着温度升高，$\Delta$ 逐渐减小，并在 $T_c$ 处消失。弱耦合 BCS 理论给出</p>
+$$
+\frac{2\Delta(0)}{k_BT_c}\simeq3.53.
+$$<p>这个数值只适用于弱耦合、各向同性的常规 BCS 超导体，不是所有超导材料都必须满足的普适常数。</p>
+<p>能隙使低温下产生准粒子激发变得困难，但<strong>零电阻不能只解释成“能隙使电子无法散射”</strong>。更完整的说法是：</p>
+<ul>
+<li>超导电流由具有统一相位的配对凝聚体携带；</li>
+<li>改变这种宏观电流状态需要产生激发或发生相位滑移；</li>
+<li>在低于临界温度、临界磁场和临界电流时，能隙与相位刚性共同阻止普通弱散射持续地把超流动能转化为热。</li>
+</ul>
+<p>因此超导电流可以无耗散地持续存在。有限温度下仍可能有热激发准粒子，但它们不等于整个凝聚体都恢复了正常电阻；只有当超导相干被破坏时，材料才整体回到正常态。</p>
+<p>迈斯纳效应则来自带电凝聚体对电磁场的集体响应。外磁场会诱导表面超导电流，这些电流产生反向磁场，使内部磁场在伦敦穿透深度 $\lambda_L$ 内指数衰减：</p>
+$$
+B(x)=B(0)e^{-x/\lambda_L}.
+$$<p>库珀对的电荷量为 $2e$。宏观波函数必须保持单值，因此超导环中的磁通以</p>
+$$
+\Phi_0=\frac{h}{2e}
+$$<p>为单位量子化。分母中的 $2e$ 是电子发生配对的重要实验证据之一。</p>
+<p>把 BCS 的因果关系压缩起来就是：</p>
+$$
+\boxed{
+\text{声子介导的有效吸引}
+\Rightarrow
+\text{库珀配对}
+\Rightarrow
+\text{宏观相位相干与能隙}
+\Rightarrow
+\text{零电阻和迈斯纳效应}
+}
+$$<p>这里的“声子介导”针对常规超导体。某些非常规超导体也具有电子配对和宏观相干，但配对媒介、配对对称性和能隙结构未必符合最简单的声子介导 $s$ 波 BCS 模型。因此，“不符合简单 BCS 模型”不等于“没有库珀配对”。</p>
+<p>“高温超导”中的“高温”只表示其临界温度相对于传统低温超导体较高，并不表示它必然属于 BEC。超导与 BEC 发生联系，是因为两个费米子形成紧束缚对后可以近似看成一个复合玻色子；这些复合玻色子在低温下建立宏观相干时，可以形成 BEC 极限的配对凝聚。高临界温度和处于 BEC 极限是两个不同的判断，不能相互推出。</p>
+<h2 id="三bcs-bec-渡越">三、BCS-BEC 渡越</h2>
+<p>BCS 和 BEC 看起来差别很大：BCS 一侧是巨大而相互重叠的库珀对，BEC 一侧则是紧束缚分子发生玻色凝聚。但对具有可调吸引相互作用的双组分费米气体，两者可以是同一个配对超流态的两个极限。</p>
+<h3 id="从重叠库珀对到紧束缚分子">从重叠库珀对到紧束缚分子</h3>
+<p>在超冷费米气体中，可以利用费什巴赫共振调节 $s$ 波散射长度 $a_s$，常用参数</p>
+$$
+\frac{1}{k_Fa_s}
+$$<p>表示相互作用区域。只需要记住下面的物理图像：</p>
+<table>
+	<thead>
+			<tr>
+					<th>区域</th>
+					<th>BCS 一侧</th>
+					<th>幺正区</th>
+					<th>BEC 一侧</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>配对形态</td>
+					<td>巨大、松散的库珀对</td>
+					<td>强关联配对</td>
+					<td>紧束缚双原子分子</td>
+			</tr>
+			<tr>
+					<td>配对大小</td>
+					<td>大于粒子间距</td>
+					<td>与粒子间距相近</td>
+					<td>小于粒子间距</td>
+			</tr>
+			<tr>
+					<td>配对重叠</td>
+					<td>高度重叠</td>
+					<td>显著重叠</td>
+					<td>很少重叠</td>
+			</tr>
+			<tr>
+					<td>两体束缚态</td>
+					<td>真空中没有稳定束缚态</td>
+					<td>位于共振附近</td>
+					<td>存在稳定分子</td>
+			</tr>
+			<tr>
+					<td>低温状态</td>
+					<td>BCS 型费米超流</td>
+					<td>强关联费米超流</td>
+					<td>复合玻色分子的 BEC</td>
+			</tr>
+	</tbody>
+</table>
+<p>变化过程可以概括为</p>
+$$
+\text{大而重叠的库珀对}
+\longrightarrow
+\text{强关联配对}
+\longrightarrow
+\text{小而紧束缚的分子}.
+$$<p>BCS 一侧最反直觉的地方是：真空中的两个粒子未必能够形成稳定分子，但费米海附近的许多体环境仍能使任意弱的有效吸引产生库珀配对。BEC 一侧则已经存在真正的双原子束缚态，这些分子由两个费米子组成，总体表现为复合玻色子，低温下可以发生 BEC。</p>
+<h3 id="为什么叫渡越">为什么叫“渡越”</h3>
+<p>在标准的平衡、双组分、$s$ 波模型中，BCS 态和分子 BEC 都具有非零的配对序参量，也都建立了统一的宏观相位。增强吸引时，配对大小、能隙和化学势等物理量连续变化，没有必须出现的额外对称性改变，因此两端之间通常没有新的零温相变，而称为 <strong>BCS-BEC 渡越</strong>。</p>
+<p>二者的差别主要在于配对发生的方式：</p>
+<ul>
+<li><strong>BCS 一侧</strong>：配对和宏观相干几乎同时出现，库珀对很大并且彼此重叠。</li>
+<li><strong>BEC 一侧</strong>：紧束缚分子可以先形成，温度进一步降低后，分子才建立宏观相干并发生 BEC。</li>
+</ul>
+<p>BCS-BEC 渡越在超冷原子中最容易研究，因为原子间相互作用可以连续调节。对电子系统而言，带电配对凝聚后表现为超导；对中性原子而言，则表现为超流。普通弱耦合常规超导体通常位于 BCS 一侧，而不是紧束缚分子的 BEC。某些低载流子密度或强配对超导材料可能接近渡越区域，但它们还受到晶格、库仑相互作用和能带结构影响，不能直接照搬理想超冷气体的结论。</p>
+<h2 id="四核心关系">四、核心关系</h2>
+<table>
+	<thead>
+			<tr>
+					<th>概念</th>
+					<th>凝聚或配对对象</th>
+					<th>最关键的物理结果</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>BEC</td>
+					<td>原本就是玻色子的粒子，或紧束缚复合玻色分子</td>
+					<td>宏观占据同一量子态</td>
+			</tr>
+			<tr>
+					<td>BCS 超导</td>
+					<td>高度重叠的电子库珀对</td>
+					<td>能隙、宏观相位相干、零电阻和迈斯纳效应</td>
+			</tr>
+			<tr>
+					<td>BCS 型中性费米超流</td>
+					<td>高度重叠的中性费米子对</td>
+					<td>无黏滞超流和量子化涡旋，不具有电磁迈斯纳效应</td>
+			</tr>
+			<tr>
+					<td>BCS-BEC 渡越</td>
+					<td>同一费米体系中的配对</td>
+					<td>配对从重叠库珀对连续演化为紧束缚分子</td>
+			</tr>
+	</tbody>
+</table>
+<p>最简洁的主线是：</p>
+$$
+\boxed{
+\begin{aligned}
+\mathrm{BEC}:&\quad \text{玻色粒子的宏观凝聚},\\
+\mathrm{BCS}:&\quad \text{费米面附近的电子配对并形成相干超导态},\\
+\mathrm{BCS\!-\!BEC}:&\quad \text{费米子对由巨大重叠逐渐变成紧束缚分子}.
+\end{aligned}
+}
+$$
+
+        
+      </section>
+
+      
+      <div class="divider"></div>
+      <div class="flex flex-col md:flex-row justify-between gap-4 py-4">
+        
+        <div></div>
+        
+
+        
+        <a role="button" class="btn btn-outline h-12" href="/posts/%E5%8E%9F%E5%AD%90%E7%BB%93%E6%9E%84%E4%B8%8E%E7%B2%92%E5%AD%90%E7%BB%9F%E8%AE%A1/" title="原子结构与粒子统计">
+          <div class="inline-flex flex-col items-end">
+            <span class="text-base-content/60 text-xs font-normal">下一页</span>
+            <span class="max-w-48 truncate">原子结构与粒子统计</span>
+          </div>
+          <ion-icon name="chevron-forward"></ion-icon>
+        </a>
+        
+      </div>
+      
+
+      
+      <div class="divider"></div>
+
+      <section class="space-y-4 not-prose">
+        
+
+
+<template x-if="['localhost', '127.0.0.1'].indexOf(window.location.hostname) == -1">
+  <article>
+    <script
+      src="https://utteranc.es/client.js"
+      repo="elusivekaze/elusivekaze.github.io"
+      issue-term="og:title"
+      theme="github-light"
+      crossorigin="anonymous"
+      async>
+    </script>
+  </article>
+</template>
+
+
+
+
+
+
+
+
+      </section>
+      
+    </article>
+  </div>
+
+  <div
+    x-data="tocHighlighter()"
+    @scroll.window="debouncedScroll"
+    class="hidden lg:flex lg:flex-col lg:items-end"
+  >
+    
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一玻色-爱因斯坦凝聚bec">一、玻色-爱因斯坦凝聚（BEC）</a>
+      <ul>
+        <li><a href="#激发态饱和与临界温度">激发态饱和与临界温度</a></li>
+        <li><a href="#相互作用激发谱与超流性">相互作用、激发谱与超流性</a></li>
+        <li><a href="#玻色增强与原子激光">玻色增强与原子激光</a></li>
+      </ul>
+    </li>
+    <li><a href="#二超导与-bcs-理论">二、超导与 BCS 理论</a>
+      <ul>
+        <li><a href="#超导的基本现象">超导的基本现象</a></li>
+        <li><a href="#bcs-的微观机制">BCS 的微观机制</a></li>
+        <li><a href="#能隙零电阻与迈斯纳效应">能隙、零电阻与迈斯纳效应</a></li>
+      </ul>
+    </li>
+    <li><a href="#三bcs-bec-渡越">三、BCS-BEC 渡越</a>
+      <ul>
+        <li><a href="#从重叠库珀对到紧束缚分子">从重叠库珀对到紧束缚分子</a></li>
+        <li><a href="#为什么叫渡越">为什么叫“渡越”</a></li>
+      </ul>
+    </li>
+    <li><a href="#四核心关系">四、核心关系</a></li>
+  </ul>
+</nav>
+    
+  </div>
+</div>
+
+
+            
+<footer class="flex flex-col md:flex-row justify-between items-center gap-4 px-4 py-12">
+
+  <div>
+  
+  <p>
+    © 2026 ElusiveKaze&#39;s Blog
+  </p>
+  
+
+  
+  <p>🌱 Towards the Distance.</p>
+  
+</div>
+
+  <div
+  x-data="{ icons: [
+    { name: 'sunny', status: 'n' },
+    { name: 'moon', status: 'y' },
+    { name: 'desktop', status: 'auto' }
+  ] }"
+  class="flex items-center gap-2 h-8 px-2 bg-base-100 border border-base-content/30 rounded-full"
+>
+  <template x-for="icon in icons">
+    <div
+      role="button"
+      tabindex="0"
+      :aria-label="'Select ' + icon.name + ' mode'"
+      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
+      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
+      @click="$store.darkMode.toggle(icon.status)"
+    >
+      <ion-icon
+        :name="`${icon.name}-outline`"
+        class="group-hover:text-primary-content"
+        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
+      >
+      </ion-icon>
+    </div>
+  </template>
+</div>
+
+</footer>
+
+          </div>
+        </div>
+        
+        <div class="back" data-nosnippet>
+        
+          <div class="container">
+            
+              <div class="dream-grid dream-grid-about">
+  
+  
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">关于我</div>
+
+        <div class="prose dark:prose-invert">
+          <p>Hi，这里是 <strong>ElusiveKaze</strong> 的博客，主要发布一些学习笔记。</p>
+
+        </div>
+      </div>
+    </article>
+  </div>
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">知识共享</div>
+
+        <div class="prose dark:prose-invert">
+          <p>此网站的所有内容都遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank">CC BY-NC-SA 4.0</a>。</p>
+
+        </div>
+      </div>
+    </article>
+  </div>
+  
+  
+
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">社交链接</div>
+
+        <ul class="menu menu-horizontal flex-wrap w-full px-0 [&_ion-icon]:text-lg">
+  
+  <li>
+    <a href="mailto:2915795652@qq.com" title="Email">
+      <ion-icon name="mail"></ion-icon>
+    </a>
+  </li>
+  
+
+  
+  <li>
+    <a href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+      <ion-icon name="logo-github"></ion-icon>
+    </a>
+  </li>
+  
+</ul>
+
+      </div>
+    </article>
+  </div>
+  
+
+  
+</div>
+
+            
+
+            
+<footer class="flex flex-col md:flex-row justify-between items-center gap-4 px-4 py-12">
+
+  <div>
+  
+  <p>
+    © 2026 ElusiveKaze&#39;s Blog
+  </p>
+  
+
+  
+  <p>🌱 Towards the Distance.</p>
+  
+</div>
+
+  <div
+  x-data="{ icons: [
+    { name: 'sunny', status: 'n' },
+    { name: 'moon', status: 'y' },
+    { name: 'desktop', status: 'auto' }
+  ] }"
+  class="flex items-center gap-2 h-8 px-2 bg-base-100 border border-base-content/30 rounded-full"
+>
+  <template x-for="icon in icons">
+    <div
+      role="button"
+      tabindex="0"
+      :aria-label="'Select ' + icon.name + ' mode'"
+      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
+      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
+      @click="$store.darkMode.toggle(icon.status)"
+    >
+      <ion-icon
+        :name="`${icon.name}-outline`"
+        class="group-hover:text-primary-content"
+        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
+      >
+      </ion-icon>
+    </div>
+  </template>
+</div>
+
+</footer>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  <script src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+
+  
+  
+    
+  
+  <script src="/js/grid.min.js"></script>
+
+
+
+
+  
+
+<script src="/js/main.min.js"></script>
+
+    
+
+
+  <script
+  src="https://cdn.jsdelivr.net/npm/luxon@3.7.2/build/global/luxon.min.js"
+  integrity="sha256-UWxf6lyCvfH7XEcrmq/cqc2m3IBrLBLOnWLC4Pw0gQQ="
+  crossorigin="anonymous"
+></script>
+<script>
+  format()
+
+  function format() {
+    document.querySelectorAll('span[data-format="luxon"]').forEach((el) => {
+      const date = el.textContent
+
+      el.textContent = luxon.DateTime.fromISO(date, { locale: 'zh' }).toFormat(
+        'yyyy年MM月dd日',
+      )
+    })
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+<script src="/js/toc.min.js"></script>
+
+
+  
+    <script type="module">
+      import mediumZoom from 'https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/+esm';
+      mediumZoom('#dream-single-post-content img', {
+        background: 'oklch(var(--b1))',
+        margin: 24,
+      })
+    </script>
+  
+
+
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@8.0.13/dist/ionicons/ionicons.esm.js" integrity="sha256-46Vf2l/aX0tBSf2YXcaYMxF7JVJl30zn8Y9L9zZNXMA=" crossorigin="anonymous"></script>
+  </body>
+</html>
