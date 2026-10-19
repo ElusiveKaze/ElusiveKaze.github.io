@@ -1,0 +1,1719 @@
+<!DOCTYPE html>
+<html lang="zh"
+  x-data
+  :class="$store.darkMode.isDark() ? 'dark' : 'light'"
+  :data-theme="$store.darkMode.theme()">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> | ElusiveKaze&#39;s Blog</title>
+
+    <head>  
+  
+    
+      <link href="/logo.svg" rel="icon" type="image/x-icon" />
+    
+  
+  
+  <link rel="canonical" href="https://elusivekaze.github.io/posts/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/" />
+  
+  
+  
+  <meta name="author" content="ElusiveKaze" />
+  <meta name="description" content="石墨烯之字形边缘的特殊局域态 一、石墨烯的电子结构 1.1 $sp^{2}$ 杂化与 $\sigma、\pi$ 键 碳原子激发态电子排布为 $1s^{2}2s^{1}2p^{3}$，$2s$ 与 $2p_{x}、2p_{y}$ 杂化，形成三个 $sp^{2}$ 杂化轨道，夹角 $120^{\circ}$，共面分布（平面三角形）。杂化轨道头对头重叠，形成面内的 $\sigma$ 键，构成稳定的蜂窝骨架；未参与杂化的 $2p_{z}$ 与杂化轨道正交，相邻的 $2p_{z}$ 轨道肩对肩重叠，形成 $\pi$ 键。此处详情可见本博客的这篇文章（打个广告）。
+两个原子轨道头对头重叠，会裂出两个分子轨道（而不是原来两个一样的轨道）：
+成键态 $\sigma$：两个原子的波函数同相叠加，电子云集中在两核之间，把两个核“拉住” → 能量比原来的原子轨道更低（更稳定）。 反键态 $\sigma^{*}$：两个原子的波函数反相叠加，两核之间出现节面，电子云往两侧散去，把两核“推开” → 能量比原子轨道更高（更不稳定）。 每个碳原子有 $4$ 个价电子，$3$ 个拿去形成 $\sigma$ 键，剩下 $1$ 个用来形成 $\pi$ 键。
+看 $\sigma$ 体系
+每个原胞有 $2$ 个碳原子，每个碳原子有 $3$ 条 $C-C$ 键（$\sigma$ 键）。每个 $\sigma$ 键中有 $2$ 个电子，由键两端的原子各贡献 $1$ 个，所以 $\sigma$ 电子 $=3\times2=6$ 个/原胞。 $\sigma$ 能带共 $6$ 条：$3$ 条成键带、$3$ 条反键带，每条带计入自旋可容纳 $2$ 个电子。$6$ 个电子刚好填满 $3$ 条成键带 → $\sigma$ 成键带全满，$\sigma^{*}$ 反键带全空。 看 $\pi$ 体系
+" />
+  
+  
+  <meta name="keywords" content="">
+  
+  
+  
+  <meta name="generator" content="Hugo 0.168.0">
+  
+  
+  <meta property="og:url" content="https://elusivekaze.github.io/posts/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/">
+	<meta property="og:site_name" content="ElusiveKaze&#39;s Blog">
+	<meta property="og:title" content="ElusiveKaze&#39;s Blog">
+	<meta property="og:description" content="石墨烯之字形边缘的特殊局域态 一、石墨烯的电子结构 1.1 $sp^{2}$ 杂化与 $\sigma、\pi$ 键 碳原子激发态电子排布为 $1s^{2}2s^{1}2p^{3}$，$2s$ 与 $2p_{x}、2p_{y}$ 杂化，形成三个 $sp^{2}$ 杂化轨道，夹角 $120^{\circ}$，共面分布（平面三角形）。杂化轨道头对头重叠，形成面内的 $\sigma$ 键，构成稳定的蜂窝骨架；未参与杂化的 $2p_{z}$ 与杂化轨道正交，相邻的 $2p_{z}$ 轨道肩对肩重叠，形成 $\pi$ 键。此处详情可见本博客的这篇文章（打个广告）。
+两个原子轨道头对头重叠，会裂出两个分子轨道（而不是原来两个一样的轨道）：
+成键态 $\sigma$：两个原子的波函数同相叠加，电子云集中在两核之间，把两个核“拉住” → 能量比原来的原子轨道更低（更稳定）。 反键态 $\sigma^{*}$：两个原子的波函数反相叠加，两核之间出现节面，电子云往两侧散去，把两核“推开” → 能量比原子轨道更高（更不稳定）。 每个碳原子有 $4$ 个价电子，$3$ 个拿去形成 $\sigma$ 键，剩下 $1$ 个用来形成 $\pi$ 键。
+看 $\sigma$ 体系
+每个原胞有 $2$ 个碳原子，每个碳原子有 $3$ 条 $C-C$ 键（$\sigma$ 键）。每个 $\sigma$ 键中有 $2$ 个电子，由键两端的原子各贡献 $1$ 个，所以 $\sigma$ 电子 $=3\times2=6$ 个/原胞。 $\sigma$ 能带共 $6$ 条：$3$ 条成键带、$3$ 条反键带，每条带计入自旋可容纳 $2$ 个电子。$6$ 个电子刚好填满 $3$ 条成键带 → $\sigma$ 成键带全满，$\sigma^{*}$ 反键带全空。 看 $\pi$ 体系">
+	<meta property="og:locale" content="zh">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+
+  
+  
+  
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="ElusiveKaze&#39;s Blog">
+	<meta name="twitter:description" content="石墨烯之字形边缘的特殊局域态 一、石墨烯的电子结构 1.1 $sp^{2}$ 杂化与 $\sigma、\pi$ 键 碳原子激发态电子排布为 $1s^{2}2s^{1}2p^{3}$，$2s$ 与 $2p_{x}、2p_{y}$ 杂化，形成三个 $sp^{2}$ 杂化轨道，夹角 $120^{\circ}$，共面分布（平面三角形）。杂化轨道头对头重叠，形成面内的 $\sigma$ 键，构成稳定的蜂窝骨架；未参与杂化的 $2p_{z}$ 与杂化轨道正交，相邻的 $2p_{z}$ 轨道肩对肩重叠，形成 $\pi$ 键。此处详情可见本博客的这篇文章（打个广告）。
+两个原子轨道头对头重叠，会裂出两个分子轨道（而不是原来两个一样的轨道）：
+成键态 $\sigma$：两个原子的波函数同相叠加，电子云集中在两核之间，把两个核“拉住” → 能量比原来的原子轨道更低（更稳定）。 反键态 $\sigma^{*}$：两个原子的波函数反相叠加，两核之间出现节面，电子云往两侧散去，把两核“推开” → 能量比原子轨道更高（更不稳定）。 每个碳原子有 $4$ 个价电子，$3$ 个拿去形成 $\sigma$ 键，剩下 $1$ 个用来形成 $\pi$ 键。
+看 $\sigma$ 体系
+每个原胞有 $2$ 个碳原子，每个碳原子有 $3$ 条 $C-C$ 键（$\sigma$ 键）。每个 $\sigma$ 键中有 $2$ 个电子，由键两端的原子各贡献 $1$ 个，所以 $\sigma$ 电子 $=3\times2=6$ 个/原胞。 $\sigma$ 能带共 $6$ 条：$3$ 条成键带、$3$ 条反键带，每条带计入自旋可容纳 $2$ 个电子。$6$ 个电子刚好填满 $3$ 条成键带 → $\sigma$ 成键带全满，$\sigma^{*}$ 反键带全空。 看 $\pi$ 体系">
+
+  
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/output.min.css" />
+  
+  
+  
+  
+</head>
+<style>
+    code.has-jax {
+      -webkit-font-smoothing: antialiased;
+      background: inherit !important;
+      border: none !important;
+      font-size: 100%;
+    }
+</style>
+
+
+    
+
+
+<style>
+  pre {
+    padding: 1em;
+    overflow: auto;
+  }
+</style>
+
+
+
+
+
+
+
+
+
+    
+
+    <script>
+      window.lightTheme = 'emerald'
+      window.darkTheme = 'forest'
+
+      ;(function() {
+        const isDark = ('hugo-theme-dream-is-dark' in localStorage)
+          ? window.localStorage.getItem('hugo-theme-dream-is-dark') === 'y'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+        const theme = isDark ? window.darkTheme : window.lightTheme
+
+        document.documentElement.setAttribute('data-theme', theme)
+      })()
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.12/dist/cdn.min.js" integrity="sha256-V7N9fK6aJ9ll/a5K3MhEJF39xAfmVa7oXc//OggDaj8=" crossorigin="anonymous"></script>
+  </head>
+
+  <body x-data="{
+    flip: false,
+  }">
+    
+
+    
+<nav x-data="{ isSticky: false }"
+  x-init="window.addEventListener('scroll', () => { isSticky = window.scrollY > 30 })"
+  class="sticky top-0 z-30 mt-4 lg:mt-8 py-4"
+  :class="{ 'bg-base-100 shadow-lg dark:border-b dark:border-base-content/30': isSticky }">
+
+  
+  <div class="container flex justify-between px-4">
+  
+    <section class="flex items-center gap-2">
+      <div class="avatar cursor-pointer hover:avatar-online" @click="flip = !flip" title="翻转一下！">
+        <div class="w-12 h-12 rounded-full select-none">
+          <img src="/img/avatar.png" alt="ElusiveKaze&#39;s Blog" />
+        </div>
+      </div>
+
+      
+      <div>
+        
+        <a href="https://elusivekaze.github.io/" class="text-lg font-semibold cursor-pointer">
+          ElusiveKaze&#39;s Blog
+        </a>
+        
+        
+        <div class="text-base-content/60 text-sm">向远方</div>
+        
+      </div>
+      
+    </section>
+
+    
+    
+      
+    
+
+    <div class="dropdown dropdown-end sm:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="Select an option">
+        <ion-icon name="menu" class="text-2xl"></ion-icon>
+      </div>
+      <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-10 shadow-md">
+        
+
+
+
+
+
+
+
+
+<li>
+  <div role="link" tabindex="0" class="inline-flex items-center p-2 cursor-pointer" @click="flip = !flip" title="关于">
+    <ion-icon name="information-circle"></ion-icon>关于</div>
+</li>
+
+
+
+
+
+
+
+
+
+<li>
+  <a class="group inline-flex items-center p-2 cursor-pointer" href="/search" title="搜索">
+    <ion-icon name="search"></ion-icon>
+    搜索
+  </a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+    
+    <ion-icon name="logo-github"></ion-icon>
+    
+    GitHub
+  </a>
+</li>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="归档">
+    <ion-icon name="archive"></ion-icon>
+    归档
+  </a>
+</li>
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/categories" title="所有分类">
+    <ion-icon name="grid"></ion-icon>
+    所有分类
+  </a>
+</li>
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/tags" title="所有标签">
+    <ion-icon name="pricetags"></ion-icon>
+    所有标签
+  </a>
+</li>
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/index.xml" title="RSS">
+    <ion-icon name="logo-rss"></ion-icon>
+    RSS
+  </a>
+</li>
+
+
+
+
+
+      </ul>
+    </div>
+    <section class="hidden sm:flex sm:items-center sm:gap-2 md:gap-4">
+      
+
+      
+      
+      
+      
+
+
+
+
+<div role="link" tabindex="0" class="text-sm font-semibold cursor-pointer hover:underline" @click="flip = !flip" title="关于">关于</div>
+
+
+
+
+
+      
+      
+<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/search" title="搜索">
+  <ion-icon class="group-hover:text-primary-content" name="search"></ion-icon>
+</a>
+
+
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+  
+    
+
+
+
+
+  
+  <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+    <ion-icon class="group-hover:text-primary-content" name="logo-github"></ion-icon>
+  </a>
+  
+
+
+
+
+  
+
+
+      
+
+      <div class="dropdown dropdown-end dropdown-hover">
+        <div tabindex="0" role="button" class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" aria-label="Select an option">
+          <ion-icon class="group-hover:text-primary-content text-xl" name="menu"></ion-icon>
+        </div>
+        <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-10 shadow-xl">
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="归档">
+    <ion-icon name="archive"></ion-icon>
+    归档
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/categories" title="所有分类">
+    <ion-icon name="grid"></ion-icon>
+    所有分类
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/tags" title="所有标签">
+    <ion-icon name="pricetags"></ion-icon>
+    所有标签
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/index.xml" title="RSS">
+    <ion-icon name="logo-rss"></ion-icon>
+    RSS
+  </a>
+</li>
+
+
+          
+        </ul>
+      </div>
+      
+    </section>
+  </div>
+</nav>
+
+
+    <div class="flip-container" :class="{ 'flip-it': flip }">
+      <div class="flipper">
+        <div class="front">
+          <div class="container">
+            
+<div class="lg:grid lg:grid-cols-4 gap-4 mt-4 px-4">
+  <div class="hidden lg:block">
+    
+  </div>
+
+  <div class="lg:col-span-2">
+    <article class="mx-auto prose prose-quoteless dark:prose-invert" id="dream-single-post-main" itemscope itemtype="http://schema.org/Article">
+      
+	<meta itemprop="name" content="ElusiveKaze&#39;s Blog">
+	<meta itemprop="description" content="石墨烯之字形边缘的特殊局域态 一、石墨烯的电子结构 1.1 $sp^{2}$ 杂化与 $\sigma、\pi$ 键 碳原子激发态电子排布为 $1s^{2}2s^{1}2p^{3}$，$2s$ 与 $2p_{x}、2p_{y}$ 杂化，形成三个 $sp^{2}$ 杂化轨道，夹角 $120^{\circ}$，共面分布（平面三角形）。杂化轨道头对头重叠，形成面内的 $\sigma$ 键，构成稳定的蜂窝骨架；未参与杂化的 $2p_{z}$ 与杂化轨道正交，相邻的 $2p_{z}$ 轨道肩对肩重叠，形成 $\pi$ 键。此处详情可见本博客的这篇文章（打个广告）。
+两个原子轨道头对头重叠，会裂出两个分子轨道（而不是原来两个一样的轨道）：
+成键态 $\sigma$：两个原子的波函数同相叠加，电子云集中在两核之间，把两个核“拉住” → 能量比原来的原子轨道更低（更稳定）。 反键态 $\sigma^{*}$：两个原子的波函数反相叠加，两核之间出现节面，电子云往两侧散去，把两核“推开” → 能量比原子轨道更高（更不稳定）。 每个碳原子有 $4$ 个价电子，$3$ 个拿去形成 $\sigma$ 键，剩下 $1$ 个用来形成 $\pi$ 键。
+看 $\sigma$ 体系
+每个原胞有 $2$ 个碳原子，每个碳原子有 $3$ 条 $C-C$ 键（$\sigma$ 键）。每个 $\sigma$ 键中有 $2$ 个电子，由键两端的原子各贡献 $1$ 个，所以 $\sigma$ 电子 $=3\times2=6$ 个/原胞。 $\sigma$ 能带共 $6$ 条：$3$ 条成键带、$3$ 条反键带，每条带计入自旋可容纳 $2$ 个电子。$6$ 个电子刚好填满 $3$ 条成键带 → $\sigma$ 成键带全满，$\sigma^{*}$ 反键带全空。 看 $\pi$ 体系">
+	<meta itemprop="wordCount" content="2788">
+
+      <header>
+        <h1 itemprop="headline"></h1>
+        <p class="text-sm">
+          
+            <span data-format="luxon">0001-01-01T00:00:00Z</span>
+          
+
+          | <span>14分钟阅读</span>
+
+          
+            | <span>更新于
+              
+                <span data-format="luxon">0001-01-01T00:00:00Z</span>
+              
+            </span>
+          
+        </p>
+
+        
+        <div class="flex justify-between">
+          
+            <div class="flex items-center">
+  
+  <span>@</span>
+  
+
+  <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+  
+    <span itemprop="name">ElusiveKaze</span>
+  
+  </span>
+</div>
+
+          
+
+          <div class="flex items-center gap-2">
+  
+  
+
+  
+  
+  
+  
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://x.com/intent/post?text=&amp;url=https://elusivekaze.github.io/posts/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/" target="_blank" rel="noopener noreferrer"
+      title="Share on X">
+      <ion-icon class="group-hover:text-primary-content" name="logo-x"></ion-icon>
+    </a>
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://facebook.com/sharer/sharer.php?u=https://elusivekaze.github.io/posts/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/" target="_blank" rel="noopener noreferrer"
+      title="Share on Facebook">
+      <ion-icon class="group-hover:text-primary-content" name="logo-facebook"></ion-icon>
+    </a>
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://wa.me/?text=%20https://elusivekaze.github.io/posts/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/" target="_blank" rel="noopener noreferrer"
+      title="Share on WhatsApp">
+      <ion-icon class="group-hover:text-primary-content" name="logo-whatsapp"></ion-icon>
+    </a>
+  
+
+  
+  
+</div>
+
+        </div>
+      </header>
+
+      <section id="dream-single-post-content" itemprop="articleBody">
+        
+
+        <h1 id="石墨烯之字形边缘的特殊局域态">石墨烯之字形边缘的特殊局域态</h1>
+<h2 id="一石墨烯的电子结构">一、石墨烯的电子结构</h2>
+<h3 id="11--杂化与--键">1.1 $sp^{2}$ 杂化与 $\sigma、\pi$ 键</h3>
+<p>碳原子激发态电子排布为 $1s^{2}2s^{1}2p^{3}$，$2s$ 与 $2p_{x}、2p_{y}$ 杂化，形成三个 $sp^{2}$ 杂化轨道，夹角 $120^{\circ}$，共面分布（平面三角形）。杂化轨道头对头重叠，形成面内的 $\sigma$ 键，构成稳定的蜂窝骨架；未参与杂化的 $2p_{z}$ 与杂化轨道正交，相邻的 $2p_{z}$ 轨道肩对肩重叠，形成 $\pi$ 键。<a href="https://elusivekaze.github.io/posts/%E5%8E%9F%E5%AD%90%E7%BB%93%E6%9E%84%E4%B8%8E%E7%B2%92%E5%AD%90%E7%BB%9F%E8%AE%A1/#%E5%8E%9F%E5%AD%90%E8%BD%A8%E9%81%93%E6%9D%82%E5%8C%96" target="_blank">此处详情可见本博客的这篇文章（<del>打个广告</del>）。</a></p>
+<p><img src="%e7%9f%b3%e5%a2%a8%e7%83%af%e4%b9%8b%e5%ad%97%e5%bd%a2%e8%be%b9%e7%bc%98%e7%9a%84%e7%89%b9%e6%ae%8a%e5%b1%80%e5%9f%9f%e6%80%81.assets/Figure-2.jpg" alt="Figure-2"></p>
+<p>两个原子轨道头对头重叠，会裂出两个分子轨道（而不是原来两个一样的轨道）：</p>
+<ul>
+<li>成键态 $\sigma$：两个原子的波函数同相叠加，电子云集中在两核之间，把两个核“拉住” → 能量比原来的原子轨道更低（更稳定）。</li>
+<li>反键态 $\sigma^{*}$：两个原子的波函数反相叠加，两核之间出现节面，电子云往两侧散去，把两核“推开” → 能量比原子轨道更高（更不稳定）。</li>
+</ul>
+<p><img src="%e7%9f%b3%e5%a2%a8%e7%83%af%e4%b9%8b%e5%ad%97%e5%bd%a2%e8%be%b9%e7%bc%98%e7%9a%84%e7%89%b9%e6%ae%8a%e5%b1%80%e5%9f%9f%e6%80%81.assets/Figure-3.jpg" alt="Figure-3"></p>
+<p>每个碳原子有 $4$ 个价电子，$3$ 个拿去形成 $\sigma$ 键，剩下 $1$ 个用来形成 $\pi$ 键。</p>
+<p><strong>看 $\sigma$ 体系</strong></p>
+<ul>
+<li>每个原胞有 $2$ 个碳原子，每个碳原子有 $3$ 条 $C-C$ 键（$\sigma$ 键）。每个 $\sigma$ 键中有 $2$ 个电子，由键两端的原子各贡献 $1$ 个，所以 $\sigma$ 电子 $=3\times2=6$ 个/原胞。</li>
+<li>$\sigma$ 能带共 $6$ 条：$3$ 条成键带、$3$ 条反键带，每条带计入自旋可容纳 $2$ 个电子。$6$ 个电子刚好填满 $3$ 条成键带 → $\sigma$ 成键带全满，$\sigma^{*}$ 反键带全空。</li>
+</ul>
+<p><strong>看 $\pi$ 体系</strong></p>
+<ul>
+<li>与定域的 $\sigma$ 键（如同连接两个特定原子的胶水）不同，$\pi$ 键网络是<strong>离域</strong>的，没有“一根一根独立的 $\pi$ 键”可数。每个碳原子贡献 $1$ 个 $2p_z$ 电子，每个原胞有 $2$ 个碳原子，所以 $\pi$ 电子 $=2$ 个/原胞。</li>
+<li>$\pi$ 能带有 $2$ 条（成键 $\pi$、反键 $\pi^{*}$），每条计入自旋可容纳 $2$ 个电子。$2$ 个电子刚好填满 $\pi$ 带 → $\pi$ 体系半填充：$\pi$ 带全满、$\pi^{*}$ 带全空。$\pi$、$\pi^{*}$ 在 $K$ 点接触（$E=0$），费米能级正好落在接触点，这是半金属（零带隙）的典型结构。</li>
+</ul>
+<p><strong>※ $\sigma$ 和 $\pi$ 体系都是成键满、反键空，但 $\sigma$ 体系的成键、反键能带都远离费米能级（分别低于和高于费米能级），而 $\pi$ 体系的成键、反键能带正好跨在费米能级上。</strong></p>
+<p>每个 $2p_z$ 轨道可以容纳两个自旋态，中性体系平均每个碳原子提供一个 $\pi$ 电子，所以这个单轨道模型处于半填充。这些离域的 $\pi$ 电子遍布整个石墨烯片。如果说 $\sigma$ 键是摩天大楼的钢梁，那么 $\pi$ 电子就是大楼里的居民，可以从一端走到另一端。正是这些在 $2p_z$ 轨道之间跳来跳去的电子，造就了石墨烯惊人的导电性。</p>
+<h3 id="12-蜂窝晶格与--子晶格">1.2 蜂窝晶格与 $A、B$ 子晶格</h3>
+<p>蜂窝晶格不是单原子布拉维晶格，它的一个原胞含两个碳原子，分别属于 $A、B$ 两个子晶格。两个子晶格的特点是：同子晶格的原子不相邻，每条最近邻键都连接一个 $A$ 和一个 $B$。</p>
+<p><img src="%e7%9f%b3%e5%a2%a8%e7%83%af%e4%b9%8b%e5%ad%97%e5%bd%a2%e8%be%b9%e7%bc%98%e7%9a%84%e7%89%b9%e6%ae%8a%e5%b1%80%e5%9f%9f%e6%80%81.assets/Figure-5.png" alt="Figure-5"></p>
+<h3 id="13--点零带隙与线性色散">1.3 $K$ 点零带隙与线性色散</h3>
+<p>为了后面讨论石墨烯纳米带，先从二维石墨烯的最近邻紧束缚模型出发，写出 $\pi$ 电子的能带。</p>
+<p>取原胞基矢</p>
+$$
+\vec a_1=a\left(\frac{\sqrt3}{2},\frac12\right),\qquad
+\vec a_2=a\left(\frac{\sqrt3}{2},-\frac12\right)
+$$<p>倒格矢满足 $\vec a_i\cdot\vec b_j=2\pi\delta_{ij}$，因此</p>
+$$
+\vec b_1=\frac{2\pi}{a}\left(\frac1{\sqrt3},1\right),\qquad
+\vec b_2=\frac{2\pi}{a}\left(\frac1{\sqrt3},-1\right)
+$$<p>可取一个 $K$ 点为</p>
+$$
+\vec K=\frac{2\vec b_1+\vec b_2}{3}=\frac{2\pi}{3a}\left(\sqrt3,1\right)
+$$<p>在这个坐标中，$x$ 方向（$\vec a_1+\vec a_2$ 方向）是扶手椅方向，$y$ 方向（$\vec a_1-\vec a_2$ 方向）是之字形方向，第二章会用到。</p>
+<h4 id="131-最近邻紧束缚模型">1.3.1 最近邻紧束缚模型</h4>
+<p>只考虑 $\pi$ 电子在最近邻碳原子之间的跃迁，哈密顿量为</p>
+$$
+H=-\sum_{\langle i,j\rangle}\left(t\,c_i^\dagger c_j+\mathrm{h.c.}\right)
+$$<p>其中 $t$ 为最近邻跃迁强度。对产生、湮灭算符作 Fourier 变换：</p>
+$$
+c_i^\dagger=\frac1{\sqrt N}\sum_{\vec k}c_{\vec k}^\dagger e^{i\vec k\cdot\vec R_i},\qquad
+c_j=\frac1{\sqrt N}\sum_{\vec k'}c_{\vec k'}e^{-i\vec k'\cdot\vec R_j}
+$$<p>代入哈密顿量：</p>
+$$
+H=-\sum_{\langle i,j\rangle}\sum_{\vec k,\vec k'}\frac tN\,c_{\vec k}^\dagger c_{\vec k'}\,e^{i\vec k\cdot\vec R_i-i\vec k'\cdot\vec R_j}+\mathrm{h.c.}
+$$<p>$c_i^\dagger c_j$ 描述电子从 $j$ 跳到 $i$。定义跃迁矢量 $\vec l=\vec R_i-\vec R_j$（由起点指向终点），即 $\vec R_i=\vec R_j+\vec l$：</p>
+$$
+H=-\sum_j\sum_{\vec l}\sum_{\vec k,\vec k'}\frac tN\,c_{\vec k}^\dagger c_{\vec k'}\,e^{i\vec k\cdot\vec l}\,e^{i(\vec k-\vec k')\cdot\vec R_j}+\mathrm{h.c.}
+$$<p>利用 $\frac1N\sum_je^{i(\vec k-\vec k')\cdot\vec R_j}=\delta_{\vec k\vec k'}$，得到</p>
+$$
+H=-t\sum_{\vec l}\sum_{\vec k}e^{i\vec k\cdot\vec l}\,c_{\vec k}^\dagger c_{\vec k}+\mathrm{h.c.}
+$$<p>最近邻跃迁矢量有三个方向：</p>
+$$
+a\left(-\frac1{\sqrt3},0\right),\qquad
+a\left(\frac1{2\sqrt3},\frac12\right),\qquad
+a\left(\frac1{2\sqrt3},-\frac12\right)
+$$<p>也可以把格点位置写成“原胞位置 + 胞内位置”：$\vec r_{A,\vec R}=\vec R+\vec\tau_A$，$\vec r_{B,\vec R'}=\vec R'+\vec\tau_B$。于是从 $A$ 到 $B$ 的跃迁矢量拆成“原胞之间的位移”与“胞内 $A、B$ 之间的位移”：</p>
+$$
+\vec l=\vec r_{B,\vec R'}-\vec r_{A,\vec R}=(\vec R'-\vec R)+(\vec\tau_B-\vec\tau_A)
+$$<p>对 $A$、$B$ 两个子晶格分别作上面的 Fourier 变换，得到 $c_{A\vec k}$、$c_{B\vec k}$。对照 Figure-5，$A$ 指向三个最近邻 $B$ 的矢量为</p>
+$$
+\vec\delta_1=\vec\delta_3+\vec a_1,\qquad
+\vec\delta_2=\vec\delta_3+\vec a_2,\qquad
+\vec\delta_3=\vec\tau_B-\vec\tau_A
+$$<p>即上面列出的三个方向，原胞之间的位移 $\vec R'-\vec R$ 分别为 $\vec a_1$、$\vec a_2$、$0$。于是</p>
+$$
+H=-t\sum_{\vec k}\sum_{j=1}^{3}\left(e^{i\vec k\cdot\vec\delta_j}\,c_{B\vec k}^\dagger c_{A\vec k}+\mathrm{h.c.}\right)
+$$<p>最近邻跃迁只发生在 $A、B$ 之间，所以以 $(A,B)$ 为基底：</p>
+$$
+H(\vec k)=\begin{pmatrix}0 & h^*(\vec k)\\ h(\vec k) & 0\end{pmatrix}
+$$<p>$h(\vec k)$ 是 $A\to B$ 的矩阵元 $H_{BA}$，所以放在左下角：</p>
+$$
+h(\vec k)=-t\sum_{j=1}^{3}e^{i\vec k\cdot\vec\delta_j}
+=-t\,e^{i\vec k\cdot(\vec\tau_B-\vec\tau_A)}\,f(\vec k),
+\qquad
+f(\vec k)=1+e^{i\vec k\cdot\vec a_1}+e^{i\vec k\cdot\vec a_2}
+$$<p>由于 $\left|e^{i\vec k\cdot(\vec\tau_B-\vec\tau_A)}\right|=1$，所以 $|h(\vec k)|=t|f(\vec k)|$。</p>
+<p>由 $H\psi=E\psi$ 得到特征方程：</p>
+$$
+\det\left[H(\vec k)-EI\right]=
+\begin{vmatrix}-E & h^*\\ h & -E\end{vmatrix}
+=E^2-|h|^2=E^2-t^2|f(\vec k)|^2=0
+$$<p>最终得到</p>
+$$
+E_\pm(\vec k)=\pm t|f(\vec k)|
+$$<p>对应上下两条 $\pi/\pi^{*}$ 能带。</p>
+<h4 id="132--点零能与线性色散">1.3.2 $K$ 点零能与线性色散</h4>
+<p>令 $\vec k=\alpha\vec b_1+\beta\vec b_2$。由 $\vec a_1\cdot\vec b_1=2\pi$、$\vec a_1\cdot\vec b_2=0$，有 $\vec k\cdot\vec a_1=2\pi\alpha$，同理 $\vec k\cdot\vec a_2=2\pi\beta$，于是</p>
+$$
+f(\vec k)=1+e^{i2\pi\alpha}+e^{i2\pi\beta}
+$$<p>在 $K$ 点满足 $f(\vec K)=0$，因此 $E_\pm(\vec K)=0$，即 $\pi$ 带和 $\pi^{*}$ 带在 $K$ 点接触。</p>
+<p>下面看 $K$ 点附近的色散。令 $\vec k=\vec K+\vec q$，$\vec q=(q_x,q_y)\to0$：</p>
+$$
+f(\vec K+\vec q)=1+e^{i\vec K\cdot\vec a_1}e^{i\vec q\cdot\vec a_1}+e^{i\vec K\cdot\vec a_2}e^{i\vec q\cdot\vec a_2}
+$$<p>$\vec q\cdot\vec a_i$ 是很小的标量，用一阶泰勒展开 $e^{ix}\approx1+ix$：</p>
+$$
+f(\vec K+\vec q)\approx\underbrace{\left[1+e^{i\vec K\cdot\vec a_1}+e^{i\vec K\cdot\vec a_2}\right]}_{f(\vec K)=0}
++i(\vec q\cdot\vec a_1)e^{i\vec K\cdot\vec a_1}+i(\vec q\cdot\vec a_2)e^{i\vec K\cdot\vec a_2}
+$$<p>代入</p>
+$$
+\vec q\cdot\vec a_1=a\left(\frac{\sqrt3}{2}q_x+\frac12q_y\right),\qquad
+\vec q\cdot\vec a_2=a\left(\frac{\sqrt3}{2}q_x-\frac12q_y\right)
+$$$$
+e^{i\vec K\cdot\vec a_1}=e^{i\frac{4\pi}{3}}=-\frac12-\frac{\sqrt3}{2}i,\qquad
+e^{i\vec K\cdot\vec a_2}=e^{i\frac{2\pi}{3}}=-\frac12+\frac{\sqrt3}{2}i
+$$<p>得到</p>
+$$
+f(\vec K+\vec q)\approx ia\left[\left(\frac{\sqrt3}{2}q_x+\frac12q_y\right)e^{i\frac{4\pi}{3}}+\left(\frac{\sqrt3}{2}q_x-\frac12q_y\right)e^{i\frac{2\pi}{3}}\right]
+=\frac{\sqrt3a}{2}\left(q_y-iq_x\right)
+$$<p>所以</p>
+$$
+|f|\approx\frac{\sqrt3a}{2}\sqrt{q_x^2+q_y^2}=\frac{\sqrt3a}{2}|\vec q|
+$$<p>代入 $E_\pm=\pm t|f|$，并令 $\hbar v_F=\frac{\sqrt3at}{2}$：</p>
+$$
+E_\pm\approx\pm\hbar v_F|\vec q|
+$$<p>因此 $K$ 点附近为线性色散：上下两条能带在 $K$ 点形成狄拉克锥。</p>
+<p><img src="%e7%9f%b3%e5%a2%a8%e7%83%af%e4%b9%8b%e5%ad%97%e5%bd%a2%e8%be%b9%e7%bc%98%e7%9a%84%e7%89%b9%e6%ae%8a%e5%b1%80%e5%9f%9f%e6%80%81.assets/Figure-4.jpg" alt="Figure-4"></p>
+<p><strong>注：图中红色的是 $\sigma$ 能带，蓝色的是 $\pi$ 能带，零能线上方是反键能带 $(\sigma ^{*}、\pi ^{*})$ ，下方是成键能带 $(\sigma、\pi)$ 。</strong></p>
+<hr>
+<h2 id="二石墨烯纳米带扶手椅形与之字形">二、石墨烯纳米带：扶手椅形与之字形</h2>
+<h3 id="21-两种切割边缘">2.1 两种切割边缘</h3>
+<p>将二维石墨烯沿不同方向切割，可以得到有限宽、无限长的石墨烯纳米带（GNR）。根据边缘结构的不同，石墨烯纳米带主要分为两类：扶手椅形边缘（armchair edge）和之字形边缘（zigzag edge）。</p>
+<p>石墨烯纳米带沿长度方向仍然保持平移周期性，因此电子态可以沿该方向用布洛赫定理描述；而垂直于长度方向的宽度有限，电子受到边界条件限制。</p>
+<p><img src="%e7%9f%b3%e5%a2%a8%e7%83%af%e4%b9%8b%e5%ad%97%e5%bd%a2%e8%be%b9%e7%bc%98%e7%9a%84%e7%89%b9%e6%ae%8a%e5%b1%80%e5%9f%9f%e6%80%81.assets/Figure-6.png" alt="Figure-6"></p>
+<p>若将纳米带的宽度方向首尾连接，相当于沿该方向卷曲石墨烯形成碳纳米管：</p>
+$$
+\text{纳米带宽度方向}\longleftrightarrow\vec C_h\ (\text{手性矢量}),\qquad
+\text{纳米带长度方向}\longleftrightarrow\vec T\ (\text{平移矢量})
+$$<p>需要注意的是，石墨烯纳米带中的 armchair 和 zigzag 是根据边缘形状命名，而碳纳米管中的 armchair 和 zigzag 是根据卷曲方向（手性矢量）命名，因此二者的对应关系正好相反：</p>
+<ul>
+<li>armchair 石墨烯纳米带卷曲后对应 zigzag 碳纳米管；</li>
+<li>zigzag 石墨烯纳米带卷曲后对应 armchair 碳纳米管。</li>
+</ul>
+<p><a href="https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/" target="_blank">有关碳纳米管的基础知识，可见本博客的这篇文章。</a></p>
+<h3 id="22-波数与能带的投影">2.2 波数与能带的投影</h3>
+<p>二维石墨烯的电子态由二维波矢 $\vec k=(k_x,k_y)$ 标记。切成纳米带后，只剩沿长度方向的平移对称性，因此只有沿长度方向的波矢分量仍是好量子数。下面把沿长度方向的分量记为 $k_\parallel$，沿宽度方向的分量记为 $k_\perp$。</p>
+<p><strong>波矢分量的物理含义。</strong> 平面波 $e^{i\vec k\cdot\vec r}$ 沿长度方向每走单位长度，相位增加 $k_\parallel$；沿宽度方向每走单位长度，相位增加 $k_\perp$。所以波矢的分量描述的是相位沿各个方向增加得有多快，对应的波长为 $\lambda=\frac{2\pi}{k}$。</p>
+<p><strong>无量纲波数 $k$：相邻单胞之间的相位差。</strong> 在紧束缚模型中，振幅只定义在格点上，方程只把相邻格点联系起来，所以方程中真正出现的只是相邻格点之间的相位差。两个格点沿长度方向相距 $d$，相位差就是 $k_\parallel d$。因此对纳米带，本文使用无量纲的波数</p>
+$$
+k=k_\parallel L
+$$<p>它表示相邻两个单胞之间的相位差。$L$ 是纳米带沿长度方向的周期，由纳米带的晶向决定：</p>
+<table>
+	<thead>
+			<tr>
+					<th>纳米带</th>
+					<th>长度方向（1.3 坐标中）</th>
+					<th>最短格矢</th>
+					<th>周期 $L$</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>之字形带</td>
+					<td>$y$（之字形方向）</td>
+					<td>$\vec a_1-\vec a_2$</td>
+					<td>$a$</td>
+			</tr>
+			<tr>
+					<td>扶手椅带</td>
+					<td>$x$（扶手椅方向）</td>
+					<td>$\vec a_1+\vec a_2$</td>
+					<td>$\sqrt3a$（$=3$ 个 C–C 键长）</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>一维布里渊区。</strong> 相邻单胞相差 $\varphi$ 与相差 $\varphi+2\pi$，在格点上完全无法区分，所以 $k$ 只需取一个长度为 $2\pi$ 的区间，即一维布里渊区 $(-\pi,\pi]$。</p>
+<ul>
+<li>写成半开区间，是因为 $k=-\pi$ 与 $k=\pi$ 是同一个态（$e^{-i\pi}=e^{i\pi}$），数态时只能算一次。</li>
+<li>描述一段 $k$ 的范围或画图时，两端都写闭区间也可以，比如 3.2 的 $\frac{2\pi}{3}\le|k|\le\pi$。</li>
+<li>这与时间反演对称性 $E(k)=E(-k)$ 不矛盾：$k=\pi$ 的配对 $-\pi$ 就是它自己。</li>
+</ul>
+<p><strong>投影。</strong> 纳米带中的电子态可以看成由二维石墨烯的平面波叠加而成：</p>
+<ul>
+<li>沿长度方向不受限制，$k_\parallel$ 就对应纳米带的 $k$；</li>
+<li>沿宽度方向，电子被两侧边缘来回反射，$+k_\perp$ 与 $-k_\perp$ 叠加成驻波，$k_\perp$ 只能取一组分立的值。</li>
+</ul>
+<p>所以纳米带在 $k$ 处的能量，来自二维布里渊区中 $k_\parallel$ 对应于 $k$、$k_\perp$ 取允许值的那些点。“投影”就是只保留 $k_\parallel$、丢掉 $k_\perp$，相当于在<strong>倒空间</strong>里把二维布里渊区沿 $k_\perp$ 方向压扁到 $k_\parallel$ 轴上。被压扁的是倒空间，不是实空间里的石墨烯。</p>
+<p><strong>$K$ 点投影到哪里。</strong> 二维石墨烯只在狄拉克点处能量为零，所以纳米带中能量接近零的态，都集中在狄拉克点投影到的 $k$ 附近。由 $\vec K=\frac{2\pi}{3a}(\sqrt3,1)$，记一维倒格矢 $G=\frac{2\pi}{L}$：</p>
+<ul>
+<li><strong>之字形带</strong>：沿 $y$，$L=a$，$G=\frac{2\pi}{a}$。$K_\parallel=K_y=\frac{2\pi}{3a}=\frac G3$，所以 $k=K_\parallel L=\frac{2\pi}{3}$；$K'$ 给出 $-\frac{2\pi}{3}$。</li>
+<li><strong>扶手椅带</strong>：沿 $x$，$L=\sqrt3a$，$G=\frac{2\pi}{\sqrt3a}$。$K_\parallel=K_x=\frac{2\pi}{\sqrt3a}=G$，所以 $k=K_\parallel L=2\pi\equiv0$。相邻单胞之间的相位差正好是一整圈，在格点上与 $k=0$（相邻单胞完全同相）无法区分。布里渊区上下两个顶点 $\left(0,\pm\frac{4\pi}{3a}\right)$ 也是狄拉克点，它们的 $k_x=0$，直接投影到 $k=0$。</li>
+</ul>
+<table>
+	<thead>
+			<tr>
+					<th></th>
+					<th>周期 $L$</th>
+					<th>倒格矢 $G$</th>
+					<th>$K_\parallel$</th>
+					<th>$k=K_\parallel L$</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>之字形带</td>
+					<td>$a$</td>
+					<td>$\frac{2\pi}{a}$</td>
+					<td>$\frac G3$</td>
+					<td>$\pm\frac{2\pi}{3}$</td>
+			</tr>
+			<tr>
+					<td>扶手椅带</td>
+					<td>$\sqrt3a$</td>
+					<td>$\frac{2\pi}{\sqrt3a}$</td>
+					<td>$G$</td>
+					<td>$2\pi\equiv0$（即 $\Gamma$ 点）</td>
+			</tr>
+	</tbody>
+</table>
+<p>注意 $k$ 是无量纲的，一个倒格矢对应 $2\pi$，所以“$\frac13$ 个倒格矢”对应 $\frac{2\pi}{3}$。这里的 $\Gamma$ 点是纳米带一维布里渊区的中心 $k=0$，不是二维石墨烯的 $\Gamma$ 点（二维石墨烯在自己的 $\Gamma$ 点能量为 $\pm3t$）。</p>
+<p><strong>与碳纳米管的关系。</strong> 把纳米带沿宽度方向卷起来就是碳纳米管。两者只差宽度方向的条件：纳米带两端固定，形成驻波；纳米管首尾相接，要求周期性。两者 $k_\perp$ 的允许值不同，但“取狄拉克点沿轴向的分量”这一投影完全相同。碳纳米管笔记中的 $k=\frac{K\cdot K_2}{|K_2|}$ 算的就是 $K_\parallel$：扶手椅形管的轴沿之字形方向，$K$ 投影到 $\pm\frac{2\pi}{3}$；之字形管的轴沿扶手椅方向，$K$ 投影到 $0$。与上表一致，只是名称对应相反（见 2.1）。</p>
+<p>这种投影关系是扶手椅带和之字形带电子性质不同的重要原因之一，后面讨论边缘态时会反复用到。</p>
+<h3 id="23-扶手椅带的能带">2.3 扶手椅带的能带</h3>
+<p>本节的推导全部针对扶手椅带。由 2.2，扶手椅带的狄拉克点投影到 $k=0$，能量接近零的态都在 $\Gamma$ 点附近，所以判断它是金属还是绝缘体，只需求出 $\Gamma$ 点的能量。思路是：</p>
+$$
+K,K'\text{ 投影到 }k=0
+\;\rightarrow\;
+\text{只需看 }\Gamma\text{ 点}
+\;\rightarrow\;
+k=0\text{ 时化成沿宽度方向的等效双链，解出 }\varepsilon_n^{\pm}
+\;\rightarrow\;
+\text{判断是否有 }\varepsilon_n^{\pm}=0
+$$<p>注意逻辑顺序：不是因为 $\Gamma$ 点能量为零才选它，而是先知道能隙最小处在 $\Gamma$ 点；这里的能量是否为零，要看宽度 $N$。</p>
+<p><strong>$k=0$ 时化成等效双链。</strong> 对照 2.1 图中左边的扶手椅带：</p>
+<ul>
+<li>$k=0$ 时相邻单胞之间没有相位差，所有单胞的振幅相同，只需看一个单胞（虚线框）里的 $2N$ 个原子；连到相邻单胞的键照样计入，只是不带相位。</li>
+<li>虚线框的<strong>下边</strong> $1A$–$2B$–$3A$–……由斜键依次相连，横跨整个宽度，是第一条链，振幅记为 $\psi_1(j)$；<strong>上边</strong> $1B$–$2A$–$3B$–……是第二条链，振幅记为 $\psi_2(j)$。$j=1,\ldots,N$ 是列号，即沿宽度方向的位置。</li>
+<li>每一列里 $jA$ 与 $jB$ 之间有一条竖直的键（有的连到相邻单胞，$k=0$ 时没有区别），把两条链连起来，相当于梯子的横档。</li>
+</ul>
+<p>这样得到两条沿宽度方向、跃迁均匀的链。先求解单独一条这样的链。</p>
+<p><strong>单链：宽度方向的驻波。</strong> 为了与沿长度方向的 $k$ 区分，沿宽度方向的波数记为 $q$。它同样是无量纲的相位差，表示链上相邻两列之间的相位差。</p>
+<p>对一维无限长链，取平面波 $\psi_j=e^{iqj}$。最近邻紧束缚方程为</p>
+$$
+E\psi_j=-t\left(\psi_{j-1}+\psi_{j+1}\right)
+$$<p>代入得</p>
+$$
+E=-t\left(e^{-iq}+e^{iq}\right)=-2t\cos q
+$$<p>从方程本身也可以直观看出：（能量 $E$）×（该点振幅）=（该点受到的所有最近邻跃迁贡献）。</p>
+<p>对有限链，只保留 $j=1,\ldots,N$ 共 $N$ 个格点，两端加边界条件 $\psi(0)=0$、$\psi(N+1)=0$。单个平面波无法同时满足两个边界条件，解要写成两个相反方向平面波的叠加，即驻波：</p>
+$$
+\psi_j=Ae^{iqj}+Be^{-iqj}=C\sin(qj)+D\cos(qj)
+$$<p>由 $\psi(0)=0$ 得 $D=0$；再由 $\psi(N+1)=0$ 得 $\sin[q(N+1)]=0$，所以</p>
+$$
+q_n=\frac{n\pi}{N+1},\qquad
+\varepsilon_n=-2t\cos\frac{n\pi}{N+1},\qquad
+n=1,2,\ldots,N
+$$<p><strong>驻波与节点。</strong> 第 $n$ 个解 $\psi_n(j)\propto\sin\frac{n\pi j}{N+1}$ 是宽度方向上的一个驻波，和两端固定的琴弦一样。“节点”是驻波振幅为零的位置；$j=0$ 和 $j=N+1$ 在纳米带之外，是边界条件强制的零点。</p>
+<ul>
+<li>$n=1$：在 $j=1,\ldots,N$ 上全为正，宽度内没有节点，整个宽度上恰好是半个波长；</li>
+<li>第 $n$ 个驻波在宽度内有 $n-1$ 个节点；</li>
+<li>$n=N+1$ 时 $\sin(\pi j)\equiv0$，不是一个态；$n>N+1$ 的解与前面的重复。所以 $N$ 个格点恰好有 $N$ 个独立的驻波。</li>
+</ul>
+<p>$n$ 与位置编号 $j$ 含义完全不同：$j$ 是“在哪里”，$n$ 是“哪一个驻波”。</p>
+<p>$q$ 与二维的 $k_\perp$（这里就是 $k_y$）一一对应：相邻两列沿 $y$ 方向相距 $\frac a2$，所以</p>
+$$
+q=k_y\cdot\frac a2,\qquad
+k_{y,n}=\frac{2q_n}{a}=\frac{2n\pi}{(N+1)a}
+$$<p><strong>双链：成键与反键。</strong> 回到等效双链。链内耦合为 $\psi_1(j)\leftrightarrow\psi_1(j\pm1)$、$\psi_2(j)\leftrightarrow\psi_2(j\pm1)$，链间耦合为 $\psi_1(j)\leftrightarrow\psi_2(j)$，因此</p>
+$$
+E\psi_1(j)=-t\left[\psi_1(j-1)+\psi_1(j+1)\right]-t\psi_2(j)
+$$$$
+E\psi_2(j)=-t\left[\psi_2(j-1)+\psi_2(j+1)\right]-t\psi_1(j)
+$$<p>定义同相、反相组合</p>
+$$
+\psi_\pm(j)=\frac{\psi_1(j)\pm\psi_2(j)}{\sqrt2}
+$$<p>两式相加、相减：</p>
+$$
+E\psi_+(j)=-t\left[\psi_+(j-1)+\psi_+(j+1)\right]-t\psi_+(j)
+$$$$
+E\psi_-(j)=-t\left[\psi_-(j-1)+\psi_-(j+1)\right]+t\psi_-(j)
+$$<p>双链问题化成了两个独立的单链问题，本征值为</p>
+$$
+\varepsilon_n^{\pm}=-2t\cos\frac{n\pi}{N+1}\pm t,\qquad n=1,2,\ldots,N
+$$<p>注意 $\pm$ 的对应关系：由上面两式，同相组合 $\psi_+$ 给出 $-t$，反相组合 $\psi_-$ 给出 $+t$，所以 $\varepsilon^{+}$ 对应 $\psi_-$，$\varepsilon^{-}$ 对应 $\psi_+$。</p>
+<p>$\pm$ 的物理意义：$\psi_1(j)$、$\psi_2(j)$ 是同一列竖直键两端的 $jA$、$jB$。同相组合（两个原子上的振幅同号）是这条键的<strong>成键态</strong>，能量降低 $t$；反相组合（振幅反号，两原子之间出现节面）是<strong>反键态</strong>，能量升高 $t$，与 1.1 的成键、反键是同一个道理。区分二者的是振幅的相对符号，而不是键长：这个模型中所有键的键长、跃迁强度都相同。</p>
+$$
+\varepsilon=\underbrace{-2t\cos\frac{n\pi}{N+1}}_{\text{第 }n\text{ 个横向驻波}}\ \underbrace{\pm\,t}_{\text{竖直键的反键 / 成键}}
+$$<p>$n$ 取 $N$ 个值、$\pm$ 取 $2$ 个值，共 $2N$ 个态，正好等于单胞中的 $2N$ 个原子。</p>
+<p><strong>零能条件。</strong> 当 $N=3M-1$，即 $N+1=3M$ 时，有两组量子数恰好给出零能量：</p>
+<ul>
+<li>$n=M$：$\cos\frac{\pi}{3}=\frac12$，$\varepsilon^{+}=-t+t=0$（$\varepsilon^{-}=-2t$）；</li>
+<li>$n=2M$：$\cos\frac{2\pi}{3}=-\frac12$，$\varepsilon^{-}=t-t=0$（$\varepsilon^{+}=2t$）。</li>
+</ul>
+<p>因此当 $N=3M-1$ 时，扶手椅带表现为金属（导带底与价带顶在 $E_F=0$ 处相接）。当 $N\ne3M-1$ 时有直接能隙 $E_g>0$，随着宽度增加，$\frac1{N+1}\to0$，能隙 $E_g\to0$。</p>
+<p><img src="%e7%9f%b3%e5%a2%a8%e7%83%af%e4%b9%8b%e5%ad%97%e5%bd%a2%e8%be%b9%e7%bc%98%e7%9a%84%e7%89%b9%e6%ae%8a%e5%b1%80%e5%9f%9f%e6%80%81.assets/Figure-1.png" alt="Figure-1"></p>
+<p><strong>与能带图的对应。</strong> 上面的能带图（左图为扶手椅带，$N=20$）的横轴是沿长度方向的 $k$，图中共有 $2N$ 条曲线（子带）。$\varepsilon_n^{\pm}$ 只是这些曲线在 $k=0$ 这条竖线上的取值。</p>
+<p>整条曲线可以由 2.2 的投影图像得到：纳米带的子带，就是二维能带 $E=\pm t|f(\vec k)|$ 沿直线 $k_y=k_{y,n}$ 切下来的截面。由 1.3.1，</p>
+$$
+f(\vec k)=1+e^{i\frac{\sqrt3}{2}k_xa}\left(e^{i\frac{k_ya}{2}}+e^{-i\frac{k_ya}{2}}\right)
+=1+2e^{i\frac{\sqrt3}{2}k_xa}\cos\frac{k_ya}{2}
+$$$$
+|f|^2=1+4\cos^2\frac{k_ya}{2}+4\cos\frac{k_ya}{2}\cos\frac{\sqrt3k_xa}{2}
+$$<p>代入 $k=k_xL=\sqrt3k_xa$ 和 $\frac{k_{y,n}a}{2}=q_n=\frac{n\pi}{N+1}$，记 $c_n=\cos\frac{n\pi}{N+1}$：</p>
+$$
+E_n(k)=\pm t\sqrt{1+4c_n^2+4c_n\cos\frac k2}
+$$<p>两点检验：</p>
+<ul>
+<li>$k=0$ 时 $E_n(0)=\pm t|1+2c_n|$。由于 $c_{N+1-n}=-c_n$，$n$ 取遍 $1,\ldots,N$ 时，这与 $\varepsilon_n^{\pm}$ 是同一组能量。</li>
+<li>能隙最小处在 $k=0$：$c_n<0$ 的子带，$|E_n|$ 在 $k=0$ 处最小；$c_n>0$ 的子带，处处 $|E_n|\ge t$。</li>
+</ul>
+<p><strong>切线图像。</strong> 每个允许的 $k_{y,n}$，在二维布里渊区里对应一条平行于 $k_x$ 轴（纳米带方向）的水平直线 $k_y=\pm\frac{2n\pi}{(N+1)a}$。沿每条直线，二维能带 $\pm t|f|$ 给出一对子带。</p>
+<p><img src="%e7%9f%b3%e5%a2%a8%e7%83%af%e4%b9%8b%e5%ad%97%e5%bd%a2%e8%be%b9%e7%bc%98%e7%9a%84%e7%89%b9%e6%ae%8a%e5%b1%80%e5%9f%9f%e6%80%81.assets/Figure-11.png" alt="Figure-11"></p>
+<ul>
+<li><strong>穿过</strong>：某条直线经过狄拉克点，沿这条线的子带在 $k=0$ 处取到 $E=0$，价带与导带相接。驻波同时含 $\pm k_y$，直线总是上下成对出现，所以经过 $K$ 的同时也经过 $K'$。</li>
+<li><strong>避开</strong>：所有直线都不经过狄拉克点，最近的一条相差 $\Delta k_y$。由 1.3.2 的线性色散，能隙约为 $2\hbar v_F\Delta k_y$。宽度越大，直线间距 $\frac{2\pi}{(N+1)a}$ 越小，能隙也越小。</li>
+<li><strong>条件</strong>：$K$ 点的 $k_y=\frac{2\pi}{3a}$，上下顶点的 $k_y=\pm\frac{4\pi}{3a}$。直线经过它们，要求 $\frac{n}{N+1}=\frac13$ 或 $\frac23$，即 $N+1$ 是 $3$ 的倍数，与上面的零能条件一致。</li>
+</ul>
+<p>※ 2.3 只适用于扶手椅带：等效双链是扶手椅带在 $k=0$ 处特有的几何。之字形带沿宽度方向依次是 $1A,1B,2A,2B,\ldots,NB$，相邻格点之间的跃迁交替为 $-2t\cos\frac k2$ 与 $-t$（见 3.2、3.3），不是跃迁均匀的链；它的狄拉克点也投影到 $k=\pm\frac{2\pi}{3}$，而不是 $\Gamma$ 点。之字形带的情况见第三章。</p>
+<h3 id="24-态与态密度">2.4 态与态密度</h3>
+<p>“零能隙就是金属”还要再说清楚一点：费米能级处不仅要没有能隙，还要有足够多的态。这就需要态密度。</p>
+<p><strong>什么是一个态。</strong> 设纳米带由 $N_c$ 个单胞首尾相接组成。相邻单胞每次差相位 $k$，绕一圈共差 $N_ck$；回到原处时波函数必须与原来相同，所以</p>
+$$
+N_ck=2\pi m\quad\Longrightarrow\quad k_m=\frac{2\pi m}{N_c},\qquad m=0,1,\ldots,N_c-1
+$$<ul>
+<li>对每条子带、每个自旋，每一个允许的 $k_m$ 就是一个电子态（下面不计自旋，计入时再乘 $2$）；</li>
+<li>允许的 $k$ 在布里渊区内等间距排列，间距 $\Delta k=\frac{2\pi}{N_c}$；</li>
+<li>一段长度为 $\ell$ 的 $k$ 区间里，态的个数就是 $\frac{\ell}{\Delta k}=\frac{N_c}{2\pi}\ell$。就像路灯每隔 $2$ 米一盏，$10$ 米的路段里有 $10\div2=5$ 盏。</li>
+</ul>
+<p>二维同理：允许的波矢在 $\vec k$ 平面上组成均匀的网格，每个网格点是一个态；面积为 $A$ 的样品，每个态占倒空间面积 $\frac{(2\pi)^2}{A}$。</p>
+<p><strong>态密度。</strong> 态密度 $D(E)$ 的定义是：能量在 $E$ 到 $E+dE$ 之间的态数为 $D(E)\,dE$。也就是在一个能量窗口里，数有多少个允许的 $k$ 落在其中。问题因此变成：能量窗口对应的 $k$ 区间有多长？</p>
+<p><strong>一维：金属性扶手椅带，态密度为常数。</strong> 分四步。</p>
+<p>① 只看经过 $E=0$ 的子带。$E_F=0$ 附近的态，只来自能量能碰到零的子带。由 2.3，$c_n<0$ 的子带在 $k=0$ 处最低，$|E_n(0)|=t|1+2c_n|$；$c_n>0$ 的子带处处 $|E_n|\ge t$。所以能碰到零的只有 $c_n=-\frac12$ 的子带，这正是 $N=3M-1$、$n=2M$ 的情形。以 $N=5$ 为例：</p>
+<table>
+	<thead>
+			<tr>
+					<th>$n$</th>
+					<th>$1$</th>
+					<th>$2$</th>
+					<th>$3$</th>
+					<th>$4$</th>
+					<th>$5$</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>$c_n$</td>
+					<td>$0.866$</td>
+					<td>$0.5$</td>
+					<td>$0$</td>
+					<td>$-0.5$</td>
+					<td>$-0.866$</td>
+			</tr>
+			<tr>
+					<td>离零最近的 $\lvert E_n\rvert$</td>
+					<td>$2t$</td>
+					<td>$1.41t$</td>
+					<td>$t$</td>
+					<td>$\mathbf 0$</td>
+					<td>$0.73t$</td>
+			</tr>
+			<tr>
+					<td>出现在</td>
+					<td>$k=\pi$</td>
+					<td>$k=\pi$</td>
+					<td>处处相同</td>
+					<td>$k=0$</td>
+					<td>$k=0$</td>
+			</tr>
+	</tbody>
+</table>
+<p>$|E|<0.73t$ 的态只来自 $n=4$ 这一条子带。若 $N\ne3M-1$，没有子带碰到零，能隙内一个态也没有，$D(E_F)=0$。</p>
+<p>② 这条子带的色散。代入 $c_n=-\frac12$，并用 $1-\cos\theta=2\sin^2\frac\theta2$：</p>
+$$
+E=\pm t\sqrt{2-2\cos\frac k2}=\pm2t\left|\sin\frac k4\right|\approx\pm\frac t2|k|\qquad(k\to0)
+$$<p>导带是 V 形，价带是倒 V 形，在 $k=0$、$E=0$ 处相交，这就是“线性相交”。换回有量纲的量，$\frac t2|k|=\frac{\sqrt3at}{2}|k_x|=\hbar v_F|k_x|$，正是 1.3.2 的线性色散。</p>
+<p>③ 数态。取导带中很小的能量 $E>0$ 和窗口 $[E,E+dE]$。由 $E=\frac t2|k|$，能量 $E$ 对应 $k=\pm\frac{2E}{t}$ 两个点。能量增加 $dE$ 时，每个点移动 $\frac{2\,dE}{t}$，两个点合计 $k$ 区间长 $\ell=\frac{4\,dE}{t}$。其中的态数为</p>
+$$
+\frac{\ell}{\Delta k}=\frac{4\,dE/t}{2\pi/N_c}=\frac{2N_c}{\pi t}\,dE
+\quad\Longrightarrow\quad
+D(E)=\frac{2N_c}{\pi t}
+$$<p>结果与 $E$ 无关。$E\to0$ 时 $D$ 仍是这个有限值，$D(E_F)\neq0$。价带一侧对称，结果相同。</p>
+<p>④ 不用近似也成立。用精确的 $E=2t\sin\frac{|k|}{4}$，$\left|\frac{dE}{dk}\right|=\frac t2\cos\frac k4$，两个点合计</p>
+$$
+D(E)=2\times\frac{N_c}{2\pi}\times\frac{1}{\frac t2\cos\frac k4}=\frac{2N_c}{\pi t\cos\frac k4}
+$$<p>$E\to0$ 时 $k\to0$，回到 $\frac{2N_c}{\pi t}$。</p>
+<p>直观地说：能量与 $k$ 成正比，等宽的能量窗口对应等长的 $k$ 区间，而允许的 $k$ 是等间距的，所以每个窗口里的态数相同。就像一架每一级都一样高的梯子。</p>
+<p><strong>二维：石墨烯在狄拉克点处态密度为零。</strong> 由 1.3.2，狄拉克点附近 $E=\hbar v_F|\vec q|$，能量为 $E$ 的态组成以狄拉克点为圆心、半径 $q=\frac{E}{\hbar v_F}$ 的圆。能量在 $E$ 到 $E+dE$ 之间的态，落在半径 $q$ 到 $q+dq$ 的圆环里，$dq=\frac{dE}{\hbar v_F}$：</p>
+$$
+D(E)\,dE=\frac{A}{(2\pi)^2}\cdot2\pi q\,dq
+\quad\Longrightarrow\quad
+D(E)=\frac{A}{2\pi\hbar^2v_F^2}\,E
+$$<p>这是一个狄拉克点的贡献；$K$、$K'$ 两个谷合起来再乘 $2$。$E\to0$ 时圆缩成一个点，圆环的周长 $2\pi q\to0$，所以 $D(E)\propto|E|\to0$。</p>
+<p><strong>数值验证。</strong> 直接数态（二维取 $600\times600$ 个单胞；一维取 $N=5$、$N_c=6000$），每个宽 $0.05t$ 的能量窗口内的态数为：</p>
+<table>
+	<thead>
+			<tr>
+					<th>能量窗口（单位 $t$）</th>
+					<th>二维石墨烯</th>
+					<th>一维金属性扶手椅带</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>0.00–0.05</td>
+					<td>170</td>
+					<td>191</td>
+			</tr>
+			<tr>
+					<td>0.05–0.10</td>
+					<td>492</td>
+					<td>192</td>
+			</tr>
+			<tr>
+					<td>0.10–0.15</td>
+					<td>828</td>
+					<td>190</td>
+			</tr>
+			<tr>
+					<td>0.15–0.20</td>
+					<td>1170</td>
+					<td>192</td>
+			</tr>
+	</tbody>
+</table>
+<p>二维的态数随能量线性增加，越接近零越少；一维几乎恒定，与 $\frac{2N_c}{\pi t}\times0.05t\approx191$ 一致。</p>
+<p><strong>对比。</strong> 三种情况用的是同一个思路，区别只在“能量为 $E$ 的态”在 $k$ 空间里是什么形状，以及 $|dE/dk|$ 的大小：</p>
+<table>
+	<thead>
+			<tr>
+					<th></th>
+					<th>能量为 $E$ 的态</th>
+					<th>$D(E_F)$</th>
+					<th>性质</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>一维线性相交</td>
+					<td>两个点，个数不变</td>
+					<td>有限常数</td>
+					<td>金属</td>
+			</tr>
+			<tr>
+					<td>二维狄拉克锥</td>
+					<td>一个圆，周长 $\propto E\to0$</td>
+					<td>$0$</td>
+					<td>半金属（零带隙半导体）</td>
+			</tr>
+			<tr>
+					<td>之字形带的平带</td>
+					<td>一整段 $k$ 区间，$\lvert dE/dk\rvert\to0$</td>
+					<td>极大</td>
+					<td>引起边缘磁性（第三章）</td>
+			</tr>
+	</tbody>
+</table>
+<p>能隙为零、且费米能级处态密度不为零时，$E_F$ 附近有大量可被占据、也可被激发的电子态，外加电场时电子可以改变动量、形成电流，所以导电。二维石墨烯虽然没有能隙，但费米能级处几乎没有态，所以只称为半金属。</p>
+<p><strong>或许读到这里，会有些懵。别担心，本文重点正是解释之字形边缘的特殊局域态。</strong></p>
+<hr>
+<h2 id="三之字边缘的特殊局域态">三、之字边缘的特殊局域态</h2>
+<h3 id="31-费米能级附近的平带">3.1 费米能级附近的平带</h3>
+<p>在前面的能带分析中可以看到，扶手椅形和之字形石墨烯纳米带虽然都可以由最近邻紧束缚模型描述，但由于边缘终止方式不同，其电子结构表现出明显差异。对于之字形纳米带，在费米能级附近存在一条近似平坦的能带。</p>
+<p>这类平坦能带并不是由普通的体态量子化产生，而来源于之字边缘特殊边界条件导致的边缘局域态。电子态主要集中在纳米带两侧边缘附近，并随着远离边缘方向逐渐衰减。</p>
+<p>对于理想最近邻紧束缚模型，之字边缘态出现在 $\frac{2\pi}{3}\leq |k|\leq\pi$ 的范围内。在该区域内，能量接近 $E=0$，因此形成费米能级附近的平带。随着纳米带宽度增加，两侧边缘之间的距离增大，两个边缘态之间的耦合减弱，导致能量劈裂减小，平带更加接近严格的零能态。</p>
+<p>因此，之字边缘平带的本质是：特殊边界条件产生了局域在边缘的零能态，而不是普通能带结构中的偶然能隙闭合。</p>
+<h3 id="32-波函数的解析解">3.2 波函数的解析解</h3>
+<p>对于最近邻紧束缚模型，单电子薛定谔方程可以写为</p>
+$$
+E\psi_i=-t\sum_{\mathrm{NN}}\psi_j
+$$<p>其中求和表示格点 $i$ 的最近邻格点。考虑零能态 $E=0$，则有 $\sum_{\mathrm{NN}}\psi_j=0$。</p>
+<p>设某一子晶格上的振幅为零，例如 $\psi_B=0$。</p>
+<ul>
+<li>$A$ 格点的三个最近邻全是 $B$ 格点，所以 $A$ 格点上的方程 $E\psi_A=-t\sum_{\mathrm{NN}}\psi_B$ 在 $E=0$ 时自动满足；</li>
+<li>剩下的约束来自 $B$ 格点上的方程 $0=E\psi_B=-t\sum_{\mathrm{NN}}\psi_A$，即每个 $B$ 格点周围三个 $A$ 格点的振幅之和必须为零。</li>
+</ul>
+<p><img src="D:%5c%e5%ad%a6%e4%b9%a0%e7%ac%94%e8%ae%b0%5c%e7%9f%b3%e5%a2%a8%e7%83%af%5c%e7%9f%b3%e5%a2%a8%e7%83%af%e4%b9%8b%e5%ad%97%e5%bd%a2%e8%be%b9%e7%bc%98%e7%9a%84%e7%89%b9%e6%ae%8a%e5%b1%80%e5%9f%9f%e6%80%81%5c%e7%9f%b3%e5%a2%a8%e7%83%af%e4%b9%8b%e5%ad%97%e5%bd%a2%e8%be%b9%e7%bc%98%e7%9a%84%e7%89%b9%e6%ae%8a%e5%b1%80%e5%9f%9f%e6%80%81.assets%5cFigure-7.png" alt="Figure-7"></p>
+<p>把纳米带看成一条条沿长度方向延伸的锯齿链，沿宽度方向从边缘数起，记为第 $j$ 条链（$j=1$ 为边缘），第 $j$ 条链上 $A$ 格点的振幅记为 $A_j$。沿长度方向（沿每条锯齿链）具有周期性，用 2.2 的无量纲波数 $k$（之字形带的周期为 $a$），相邻单胞之间的相位差为 $k$。</p>
+<p>看第 $j$ 条链上的某个 $B$ 格点，它的三个 $A$ 近邻是：</p>
+<ul>
+<li>同一条链上的两个 $A$ 格点：沿长度方向与它相距半个周期，相位差为 $\pm\frac k2$，振幅为 $A_je^{\pm ik/2}$；</li>
+<li>第 $j+1$ 条链上的一个 $A$ 格点：这条键垂直于纳米带，没有相位差，振幅就是 $A_{j+1}$。</li>
+</ul>
+<p>也就是说，跃迁矢量沿长度方向的分量变成相位因子，沿宽度方向的分量变成链号的改变 $j\to j+1$。因此</p>
+$$
+A_{j+1}+A_je^{ik/2}+A_je^{-ik/2}=0
+$$<p>利用 $e^{ix}+e^{-ix}=2\cos x$，得到递推关系：</p>
+$$
+A_{j+1}=-2\cos\frac{k}{2}\,A_j
+$$<p><img src="%e7%9f%b3%e5%a2%a8%e7%83%af%e4%b9%8b%e5%ad%97%e5%bd%a2%e8%be%b9%e7%bc%98%e7%9a%84%e7%89%b9%e6%ae%8a%e5%b1%80%e5%9f%9f%e6%80%81.assets/Figure-8.png" alt="Figure-8"></p>
+<p>因此第 $j$ 条链上的振幅与概率密度为</p>
+$$
+A_j=\left(-2\cos\frac{k}{2}\right)^{j-1}A_1,\qquad
+\rho_j\propto\left(2\cos\frac{k}{2}\right)^{2(j-1)}
+$$<p>为了使波函数远离边缘后逐渐衰减，需要 $\left|2\cos\frac{k}{2}\right|\le1$。在 $0\le k\le\pi$ 内得到 $\frac{2\pi}{3}\le k\le\pi$。两个端点的含义：</p>
+<ul>
+<li>$k=\pi$ 时 $\cos\frac k2=0$，除 $A_1$ 外所有振幅为零，电子完全局域在边缘格点上；</li>
+<li>$k=\frac{2\pi}{3}$ 时 $|2\cos\frac k2|=1$，振幅不再衰减，穿透深度发散，边缘态与体态相接。</li>
+</ul>
+<p>利用时间反演对称性 $E(k)=E(-k)$，最终得到边缘态存在于</p>
+$$
+\frac{2\pi}{3}\le|k|\le\pi
+$$<p>之字边缘的零能态并不是只存在于单个波矢点，而是在一段动量范围内连续存在，因此形成费米能级附近的平带。</p>
+<h3 id="33-边缘态的磁性">3.3 边缘态的磁性</h3>
+<p><strong>为什么要考虑电子相互作用。</strong> 到 3.2 为止用的都是单电子模型。之字边缘有两个特点，使得相互作用不能再忽略：</p>
+<ul>
+<li><strong>电子集中在边缘的少数格点上。</strong> 由 3.2，边缘态在第 $j$ 条链上的振幅为 $\left(-2\cos\frac k2\right)^{j-1}A_1$。$k$ 越接近 $\pi$，衰减越快；$k=\pi$ 时电子只待在最外侧的 $1A$ 格点上。</li>
+<li><strong>费米能级处态密度极高。</strong> 在 $\frac{2\pi}{3}\le|k|\le\pi$ 这三分之一的布里渊区里，边缘态的能量都 $\approx0$，$|dE/dk|\to0$。由 2.4，$E_F$ 处的态密度非常大。</li>
+</ul>
+<p>为什么这两点会让相互作用变得重要？可以比较自旋极化的收益和代价（下面是帮助理解的定性估计）：</p>
+<ul>
+<li><strong>收益</strong>：设格点上电子数为 $n$、磁矩为 $m$，即 $n_\uparrow=\frac{n+m}{2}$、$n_\downarrow=\frac{n-m}{2}$，则同一格点上的排斥能 $Un_\uparrow n_\downarrow=\frac U4(n^2-m^2)$。极化使排斥能降低 $\frac U4m^2$。</li>
+<li><strong>代价</strong>：要让 $\uparrow$ 电子比 $\downarrow$ 电子多，就得把一部分电子挪到能量更高的态，要花动能。$E_F$ 附近的态越密，挪动时能量升高得越少，代价 $\propto m^2/D(E_F)$。</li>
+</ul>
+<p>于是极化是否划算，取决于 $U\cdot D(E_F)$ 的大小（Stoner 判据：$U\cdot D(E_F)\gtrsim1$ 时倾向于极化）。二维石墨烯 $D(E_F)=0$，小的 $U$ 不足以引起极化；之字边缘 $D(E_F)$ 非常大，很小的 $U$ 就足以引起极化。</p>
+<p>此外，平带也可能通过电声子相互作用引起晶格畸变，这是与磁性竞争的另一种可能，本文不讨论。</p>
+<p><strong>Hubbard 模型。</strong> 为了描述同一格点上的电子排斥，引入 Hubbard 模型：</p>
+$$
+H= -t\sum_{\langle i,j\rangle,\sigma} \left(c_{i\sigma}^{\dagger}c_{j\sigma}+\mathrm{h.c.}\right) + U\sum_i n_{i\uparrow}n_{i\downarrow}
+$$<p>第一项是最近邻跃迁，对应电子的动能；第二项是同一格点上两个相反自旋电子之间的库仑排斥。$U$ 为 Hubbard 相互作用强度，$n_{i\sigma}=c_{i\sigma}^\dagger c_{i\sigma}$ 为第 $i$ 个格点上自旋为 $\sigma$ 的电子数。</p>
+<p>决定磁性的是两个能量尺度：跃迁强度 $t$ 代表电子在晶格中运动的趋势，$U$ 代表电子避免双占据的趋势。因此磁性取决于二者的相对大小 $U/t$，这也是后面磁化曲线的横坐标采用 $U/t$ 的原因。</p>
+<p><strong>平均场近似。</strong> Hubbard 模型是多体问题，无法直接求解，因此采用 Hartree-Fock 平均场近似。令</p>
+$$
+n_{i\sigma} = \langle n_{i\sigma}\rangle+\delta n_{i\sigma}
+$$<p>其中 $\langle n_{i\sigma}\rangle$ 为平均占据，$\delta n_{i\sigma}$ 为相对于平均值的涨落。忽略二阶涨落项 $\delta n_{i\uparrow}\delta n_{i\downarrow}$：</p>
+$$
+\begin{aligned}
+n_{i\uparrow}n_{i\downarrow}
+&=(\langle n_{i\uparrow}\rangle+\delta n_{i\uparrow})(\langle n_{i\downarrow}\rangle+\delta n_{i\downarrow})\\
+&\approx\langle n_{i\uparrow}\rangle\langle n_{i\downarrow}\rangle+\langle n_{i\uparrow}\rangle\delta n_{i\downarrow}+\langle n_{i\downarrow}\rangle\delta n_{i\uparrow}\\
+&=\langle n_{i\uparrow}\rangle\langle n_{i\downarrow}\rangle+\langle n_{i\uparrow}\rangle(n_{i\downarrow}-\langle n_{i\downarrow}\rangle)+\langle n_{i\downarrow}\rangle(n_{i\uparrow}-\langle n_{i\uparrow}\rangle)\\
+&=\langle n_{i\uparrow}\rangle n_{i\downarrow}+\langle n_{i\downarrow}\rangle n_{i\uparrow}-\langle n_{i\uparrow}\rangle\langle n_{i\downarrow}\rangle
+\end{aligned}
+$$<p>代回 Hubbard 模型，得到平均场哈密顿量：</p>
+$$
+H_{\mathrm{MF}}=-t\sum_{\langle i,j\rangle,\sigma}\left(c_{i\sigma}^\dagger c_{j\sigma}+\mathrm{h.c.}\right)
++U\sum_i\left(\langle n_{i\downarrow}\rangle n_{i\uparrow}+\langle n_{i\uparrow}\rangle n_{i\downarrow}\right)
+-U\sum_i\langle n_{i\uparrow}\rangle\langle n_{i\downarrow}\rangle
+$$<p>原来的两体项变成了单体项：$\uparrow$ 电子不再直接与 $\downarrow$ 电子作用，而是感受到 $\downarrow$ 电子平均密度产生的势能，反之亦然。</p>
+<p>记 $\bar\sigma$ 为与 $\sigma$ 相反的自旋（$\bar\uparrow=\downarrow$，$\bar\downarrow=\uparrow$；文献中也常写作 $-\sigma$）。$H_{\mathrm{MF}}$ 中没有自旋翻转项，可以按自旋拆开：</p>
+$$
+H_{\mathrm{MF}}=H_\uparrow+H_\downarrow+\text{常数},\qquad
+H_\sigma=-t\sum_{\langle i,j\rangle}\left(c_{i\sigma}^\dagger c_{j\sigma}+\mathrm{h.c.}\right)+U\sum_i\langle n_{i\bar\sigma}\rangle\,n_{i\sigma}
+$$<p>最后的常数只影响总能量，不影响本征态。由此可以看出：</p>
+<ul>
+<li>两个自旋各有一个单电子哈密顿量，可以分别对角化；</li>
+<li>自旋 $\sigma$ 的电子在格点 $i$ 上感受到的在位势能是 $U\langle n_{i\bar\sigma}\rangle$：同一格点上相反自旋的电子越多，这个格点对它越“排斥”。</li>
+</ul>
+<p>当两种自旋的占据数不同时，产生局域磁矩（取 $\mu_B=1$）：</p>
+$$
+m_i = \langle n_{i\uparrow}\rangle - \langle n_{i\downarrow}\rangle
+$$<p>问题在于：$H_\sigma$ 要用到 $\langle n_{i\bar\sigma}\rangle$，而 $\langle n_{i\bar\sigma}\rangle$ 又要由 $H_{\bar\sigma}$ 的本征态算出来。$H$ 依赖于 $n$，$n$ 又依赖于 $H$，只能自洽迭代求解。下面先把 $H_\sigma$ 写成矩阵。</p>
+<p><strong>写成纳米带的矩阵。</strong> 沿长度方向，每个周期里每条锯齿链有一个 $A$、一个 $B$ 格点，$N$ 条链共 $2N$ 个格点，构成单胞（2.1 图中右边之字形带的虚线框）。基矢顺序取</p>
+$$
+1A,\ 1B,\ 2A,\ 2B,\ \dots,\ NA,\ NB
+$$<p>$1A$ 是一侧边缘最外面的格点，$NB$ 是另一侧边缘最外面的格点。矩阵元等于对连接两个格点的所有键求和，每条键贡献 $-t$ 乘上它两端的相位差因子（2.2、3.2）：</p>
+<table>
+	<thead>
+			<tr>
+					<th>两个格点</th>
+					<th>键数</th>
+					<th>相位差</th>
+					<th>矩阵元</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>$jA$ 与 $jB$（同一条链）</td>
+					<td>$2$</td>
+					<td>$\pm\frac k2$</td>
+					<td>$-t\left(e^{ik/2}+e^{-ik/2}\right)=-2t\cos\frac k2$</td>
+			</tr>
+			<tr>
+					<td>$jB$ 与 $(j+1)A$（相邻两条链）</td>
+					<td>$1$</td>
+					<td>$0$</td>
+					<td>$-t$</td>
+			</tr>
+			<tr>
+					<td>格点 $i$ 自身（对角元）</td>
+					<td>—</td>
+					<td>—</td>
+					<td>$U\langle n_{i\bar\sigma}\rangle$</td>
+			</tr>
+	</tbody>
+</table>
+<p>同链的两条键相位差为 $\pm\frac k2$，对称，所以矩阵元是实数，整个矩阵是实对称矩阵。与 1.3.1 的二维情形相比：二维时三条键都变成相位，加进同一个矩阵元；纳米带沿宽度方向没有相位，宽度方向的位移只能变成链号的改变，所以三条键分到了两个矩阵元里，矩阵也变成 $2N\times2N$。</p>
+<p>以 $N=2$ 为例，记 $c=\cos\frac k2$：</p>
+$$
+H_\sigma(k)=
+\begin{pmatrix}
+U\langle n_{1A,\bar\sigma}\rangle & -2tc & 0 & 0\\
+-2tc & U\langle n_{1B,\bar\sigma}\rangle & -t & 0\\
+0 & -t & U\langle n_{2A,\bar\sigma}\rangle & -2tc\\
+0 & 0 & -2tc & U\langle n_{2B,\bar\sigma}\rangle
+\end{pmatrix}
+$$<p>左上 $2\times2$ 块是第 $1$ 条链，右下是第 $2$ 条链，中间的 $-t$ 是链间的键 $1B$–$2A$。$1A$ 只有两个近邻（都是 $1B$），缺少的第三个近邻正是边缘被切掉的地方；$2B$ 同理。</p>
+<p>一般的 $N$：每条链一个 $2\times2$ 对角块，相邻两条链之间只有 $(jB,(j+1)A)$ 一个非零元：</p>
+$$
+H_\sigma(k)=
+\begin{pmatrix}
+h_1 & T & & \\
+T^{\mathrm T} & h_2 & T & \\
+ & T^{\mathrm T} & \ddots & T\\
+ & & T^{\mathrm T} & h_N
+\end{pmatrix},
+\qquad
+h_j=
+\begin{pmatrix}
+U\langle n_{jA,\bar\sigma}\rangle & -2tc\\
+-2tc & U\langle n_{jB,\bar\sigma}\rangle
+\end{pmatrix},
+\qquad
+T=
+\begin{pmatrix}
+0 & 0\\
+-t & 0
+\end{pmatrix}
+$$<p>链号 $j$ 体现在矩阵的行列编号里。这个矩阵不能拆成每条链各自的 $2\times2$ 矩阵分别求解：链间的 $-t$ 把相邻两条链的方程连在一起，一个本征态（例如边缘态）的振幅从第 $1$ 条链一直延伸到内部，它的能量属于整个纳米带。</p>
+<p><strong>检验：回到 3.2。</strong> 令 $U=0$，写出 $H\psi=E\psi$ 中 $jB$ 那一行，取 $E=0$、$\psi_B=0$：</p>
+$$
+-2t\cos\frac k2\,A_j-t\,A_{j+1}=0\quad\Longrightarrow\quad A_{j+1}=-2\cos\frac k2\,A_j
+$$<p>正是 3.2 的递推关系。再取 $k=\pi$：同链的矩阵元全部消失，只剩链间的 $-t$。$(1B,2A)$、$(2B,3A)$、……两两组成 $E=\pm t$ 的态，而 $1A$ 和 $NB$ 完全脱耦，给出两个 $E=0$ 的态，分别只在 $1A$ 和 $NB$ 上，即两侧边缘上完全局域的边缘态。</p>
+<p><strong>自洽迭代用到的指标。</strong> 迭代过程中有四类指标，彼此独立：</p>
+<table>
+	<thead>
+			<tr>
+					<th>指标</th>
+					<th>是什么的编号</th>
+					<th>取值</th>
+					<th>出现在哪些量上</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>$i$</td>
+					<td>格点（哪个碳原子）</td>
+					<td>$1A,1B,\dots,NB$，共 $2N$ 个</td>
+					<td>$U\langle n_{i\bar\sigma}\rangle$、$\langle n_{i\sigma}\rangle$、$m_i$</td>
+			</tr>
+			<tr>
+					<td>$\nu$</td>
+					<td>本征态（对角化后的第几个解）</td>
+					<td>$1,\dots,2N$</td>
+					<td>$E_\nu$、$\psi_\nu$</td>
+			</tr>
+			<tr>
+					<td>$\sigma$</td>
+					<td>自旋</td>
+					<td>$\uparrow,\downarrow$</td>
+					<td>来自 $H_\uparrow$ 或 $H_\downarrow$ 的量</td>
+			</tr>
+			<tr>
+					<td>$k$</td>
+					<td>沿长度方向的波数</td>
+					<td>一维布里渊区内均匀取 $N_k$ 个</td>
+					<td>$H_\sigma(k)$、$E_\nu^\sigma(k)$、$\psi_\nu^\sigma(k)$</td>
+			</tr>
+	</tbody>
+</table>
+<p>$\psi_\nu^\sigma(i;k)$ 表示“自旋 $\sigma$、波数 $k$ 的第 $\nu$ 个本征态在格点 $i$ 上的分量”，它把本征态和格点两套编号连接起来。能量 $E_\nu^\sigma(k)$ 属于整个本征态，不带格点编号 $i$。</p>
+<p><strong>自洽迭代的流程。</strong> 未知量是每个格点、每个自旋的平均占据数，写成两个 $2N$ 维向量：
+</p>
+$$
+\mathbf n_\sigma=\big(\langle n_{1A,\sigma}\rangle,\ \langle n_{1B,\sigma}\rangle,\ \dots,\ \langle n_{NB,\sigma}\rangle\big)^{\mathrm T},\qquad\sigma=\uparrow,\downarrow
+$$<p><img src="%e7%9f%b3%e5%a2%a8%e7%83%af%e4%b9%8b%e5%ad%97%e5%bd%a2%e8%be%b9%e7%bc%98%e7%9a%84%e7%89%b9%e6%ae%8a%e5%b1%80%e5%9f%9f%e6%80%81.assets/Figure-12.png" alt="Figure-12"></p>
+<p><strong>第 0 步：给定初值。</strong> 采用 Néel 序的初始自旋构型，$A$ 格点上 $\uparrow$ 多、$B$ 格点上 $\downarrow$ 多：</p>
+$$
+\langle n_{jA\uparrow}\rangle^{(0)}=\tfrac12+\delta,\quad
+\langle n_{jA\downarrow}\rangle^{(0)}=\tfrac12-\delta,\quad
+\langle n_{jB\uparrow}\rangle^{(0)}=\tfrac12-\delta,\quad
+\langle n_{jB\downarrow}\rangle^{(0)}=\tfrac12+\delta
+$$<p>每个格点上的总电子数都是 $1$（半满），上标 $(0)$ 表示迭代步数。</p>
+<ul>
+<li><strong>为什么不能从 $\delta=0$ 开始？</strong> 若 $\langle n_{i\uparrow}\rangle=\langle n_{i\downarrow}\rangle$，则 $H_\uparrow=H_\downarrow$，算出的两种自旋密度也相同，下一步仍是 $m_i=0$。非磁解始终是自洽方程的一个解（不动点），从它出发永远停在原地。只要给一个很小的 $\delta\ne0$，如果体系确实有磁性，这个扰动会在迭代中被放大。</li>
+<li><strong>为什么用交错的 $\pm\delta$？</strong> 迭代通常收敛到离初值“最近”的解。所有格点同号的初值，可能收敛到别的、能量更高的解（例如两侧边缘磁矩同向的解）。Néel 初值与最终的磁结构一致，所以采用这种初值。</li>
+</ul>
+<p><strong>第 1 步：构造矩阵。</strong> 把当前的密度填进对角元，注意自旋要交叉：$H_\uparrow(k)$ 用 $\mathbf n_\downarrow$，$H_\downarrow(k)$ 用 $\mathbf n_\uparrow$：</p>
+$$
+H_\sigma(k)=H_0(k)+U\,\mathrm{diag}\big(\langle n_{1A,\bar\sigma}\rangle,\ \dots,\ \langle n_{NB,\bar\sigma}\rangle\big)
+$$<p>$H_0(k)$ 是 $U=0$ 时只含跃迁的矩阵，对两个自旋相同，在迭代中也不变。<strong>每一轮真正改变的只有对角元。</strong></p>
+<p><strong>第 2 步：对角化。</strong> 对每个 $k$、每个自旋，求解 $2N\times2N$ 矩阵的本征值问题：</p>
+$$
+H_\sigma(k)\,\psi_\nu^\sigma(k)=E_\nu^\sigma(k)\,\psi_\nu^\sigma(k),\qquad \nu=1,\dots,2N
+$$<p>每个本征态由两样东西组成：</p>
+<ul>
+<li>一个数 $E_\nu^\sigma(k)$：这个态的能量，决定它<strong>占不占</strong>；</li>
+<li>一个 $2N$ 维列向量 $\psi_\nu^\sigma(k)$：这个态的形状，决定它<strong>占在哪</strong>。第 $i$ 个分量 $\psi_\nu^\sigma(i;k)$ 是它在格点 $i$ 上的振幅，满足归一化 $\sum_i|\psi_\nu^\sigma(i;k)|^2=1$。</li>
+</ul>
+<p>$2N$ 个本征方程合起来是一个矩阵方程：</p>
+$$
+H_\sigma(k)\,\Psi_\sigma(k)=\Psi_\sigma(k)\,E_\sigma(k),\qquad
+\Psi_\sigma=\big(\psi_1^\sigma,\ \dots,\ \psi_{2N}^\sigma\big),\qquad
+E_\sigma=\mathrm{diag}\big(E_1^\sigma,\ \dots,\ E_{2N}^\sigma\big)
+$$<p>$\Psi_\sigma(k)$ 的第 $\nu$ 列是第 $\nu$ 个本征向量，矩阵元 $[\Psi_\sigma(k)]_{i\nu}=\psi_\nu^\sigma(i;k)$：<strong>行号是格点，列号是本征态。</strong> 一轮迭代共要对角化 $2\times N_k$ 个矩阵。</p>
+<p><strong>第 3 步：定费米能级。</strong> 这一步用到半满条件：$N_k$ 个 $k$ 点对应纳米带有 $N_k$ 个单胞（2.4），共 $2N\cdot N_k$ 个格点；半满即每个格点平均 $1$ 个电子，共 $2N\cdot N_k$ 个电子；而单电子态共有 $2\times2N\times N_k$ 个，恰好一半被占据。</p>
+<p>$T=0$ 时，把两个自旋、所有 $k$、所有 $\nu$ 的能量放在一起从低到高排序，最低的 $2N\cdot N_k$ 个态占据，其余为空，$E_F$ 落在第 $2N\cdot N_k$ 与第 $2N\cdot N_k+1$ 个能量之间：</p>
+$$
+f\big(E_\nu^\sigma(k)\big)=
+\begin{cases}
+1, & E_\nu^\sigma(k)<E_F\\
+0, & E_\nu^\sigma(k)>E_F
+\end{cases}
+\qquad
+\sum_{\sigma,k,\nu}f\big(E_\nu^\sigma(k)\big)=2N\cdot N_k
+$$<ul>
+<li><strong>两个自旋共用一个 $E_F$。</strong> $\uparrow$、$\downarrow$ 电子各有几个，并不预先规定，而是由能量排序决定。除了对角元里的 $U\langle n_{i\bar\sigma}\rangle$，这是两个自旋之间唯一的联系。</li>
+<li><strong>实际计算中的处理。</strong> 平带上有大量能量几乎相同的态，严格 $T=0$ 时占哪个不占哪个会有歧义，迭代容易来回跳。实际计算常换成很低温度下的费米分布 $f(E)=1/\big(e^{(E-E_F)/k_BT}+1\big)$（例如 $k_BT=10^{-3}t$），再用二分法调节 $E_F$，使 $\sum f=2N\cdot N_k$。</li>
+</ul>
+<p>每一轮的能谱都会变，所以每一轮都要重新定 $E_F$。</p>
+<p><strong>第 4 步：计算新的密度。</strong> 格点 $i$ 上自旋 $\sigma$ 的电子数，等于所有态对这个格点的贡献之和：</p>
+$$
+\langle n_{i\sigma}\rangle^{\mathrm{new}}=\frac1{N_k}\sum_{k}\sum_{\nu=1}^{2N}f\big(E_\nu^\sigma(k)\big)\,\big|\psi_\nu^\sigma(i;k)\big|^2
+$$<ul>
+<li>$f\big(E_\nu^\sigma(k)\big)$：这个态有没有电子（<strong>占不占</strong>）；</li>
+<li>$|\psi_\nu^\sigma(i;k)|^2$：有电子时，它出现在格点 $i$ 的概率（<strong>占在哪</strong>）；</li>
+<li>对 $\nu$ 求和：把所有本征态的贡献加起来；</li>
+<li>对 $k$ 求和再除以 $N_k$：一个波数为 $k$ 的态均匀分布在全部 $N_k$ 个单胞上，落在某一个单胞的格点 $i$ 上的概率是 $\frac{|\psi|^2}{N_k}$，对所有 $k$ 求和得到一个单胞内格点 $i$ 上的平均电子数。</li>
+</ul>
+<p>左边只剩 $i$ 和 $\sigma$，因为要问的就是“格点 $i$ 上自旋 $\sigma$ 有几个电子”；$\nu$ 和 $k$ 都在求和中用掉了。</p>
+<p>同样的计算也可以写成矩阵形式，编程时就是这样一步算完的：</p>
+$$
+\langle n_{i\sigma}\rangle^{\mathrm{new}}=\frac1{N_k}\sum_k\Big[\Psi_\sigma(k)\,F_\sigma(k)\,\Psi_\sigma(k)^\dagger\Big]_{ii},\qquad
+F_\sigma(k)=\mathrm{diag}\Big(f\big(E_1^\sigma(k)\big),\ \dots,\ f\big(E_{2N}^\sigma(k)\big)\Big)
+$$<p>展开矩阵乘法，$\Psi F\Psi^\dagger=\sum_\nu f(E_\nu)\,\psi_\nu\psi_\nu^\dagger$，其第 $i$ 个对角元为 $\sum_\nu f(E_\nu)|\psi_\nu(i)|^2$，正好就是上面的分量式。</p>
+<p>自检关系：对 $i$ 求和并利用归一化，</p>
+$$
+\sum_{i,\sigma}\langle n_{i\sigma}\rangle=\frac1{N_k}\sum_{\sigma,k,\nu}f\big(E_\nu^\sigma(k)\big)=2N
+$$<p>从格点角度和从能级角度数出的电子数相等，都是每个单胞 $2N$ 个。</p>
+<p><strong>第 5 步：判断收敛。</strong> 若</p>
+$$
+\max_{i,\sigma}\left|\langle n_{i\sigma}\rangle^{\mathrm{new}}-\langle n_{i\sigma}\rangle^{\mathrm{old}}\right|<\epsilon
+$$<p>（例如 $\epsilon=10^{-7}$），即达到自洽：用这组密度构造的哈密顿量，算出来的仍是这组密度。否则回到第 1 步。直接代回新密度有时会来回振荡，实际中常先混合再代回：</p>
+$$
+\mathbf n_\sigma^{\mathrm{in}}=(1-\lambda)\,\mathbf n_\sigma^{\mathrm{old}}+\lambda\,\mathbf n_\sigma^{\mathrm{new}},\qquad 0<\lambda\le1\ (\text{例如 }\lambda=0.5)
+$$<p><strong>第 6 步：输出磁矩。</strong> 收敛后 $m_i=\langle n_{i\uparrow}\rangle-\langle n_{i\downarrow}\rangle$。后面磁化曲线中的 $m_{1A}$、$m_{2A}$、$m_{5A}$，就是同一次计算得到的 $2N$ 维向量中的三个分量。</p>
+<p><strong>用 $N=2$、$k=\pi$ 走一遍第一轮。</strong> 只看 $k=\pi$ 一个点，可以直观看出初始的小扰动为什么会被放大。$k=\pi$ 时 $c=0$，代入 Néel 初值（$H_\uparrow$ 的对角元用 $\downarrow$ 的密度）：</p>
+$$
+H_\uparrow(\pi)=
+\begin{pmatrix}
+U(\frac12-\delta) & 0 & 0 & 0\\
+0 & U(\frac12+\delta) & -t & 0\\
+0 & -t & U(\frac12-\delta) & 0\\
+0 & 0 & 0 & U(\frac12+\delta)
+\end{pmatrix},
+\qquad
+H_\downarrow(\pi)=
+\begin{pmatrix}
+U(\frac12+\delta) & 0 & 0 & 0\\
+0 & U(\frac12-\delta) & -t & 0\\
+0 & -t & U(\frac12+\delta) & 0\\
+0 & 0 & 0 & U(\frac12-\delta)
+\end{pmatrix}
+$$<p>对角化：</p>
+<ul>
+<li><strong>边缘态</strong>：$1A$、$2B$ 与其余格点脱耦。$\uparrow$ 电子在 $1A$ 上的能量为 $\frac U2-U\delta$，在 $2B$ 上为 $\frac U2+U\delta$；$\downarrow$ 电子正好相反。</li>
+<li><strong>中间的 $(1B,2A)$</strong>：组成一个 $2\times2$ 块，本征值为 $\frac U2\pm\sqrt{U^2\delta^2+t^2}$。</li>
+</ul>
+<p>这个 $k$ 点共有 $8$ 个态，半满需要填 $4$ 个。能量最低的是两种自旋各一个成键态 $\frac U2-\sqrt{U^2\delta^2+t^2}$；接下来是能量同为 $\frac U2-U\delta$ 的两个态：$1A$ 上的 $\uparrow$ 态和 $2B$ 上的 $\downarrow$ 态。$E_F$ 落在 $\frac U2-U\delta$ 与 $\frac U2+U\delta$ 之间。</p>
+<p>结果：$1A$ 上只填了 $\uparrow$，$2B$ 上只填了 $\downarrow$，这个 $k$ 点对 $m_{1A}$ 贡献 $+1$、对 $m_{2B}$ 贡献 $-1$，远大于初始的 $2\delta$，扰动被放大了。而且无论 $U$ 多小，只要 $\delta\ne0$，边缘态的 $\uparrow$、$\downarrow$ 能量就差 $2U\delta$，$E_F$ 正好落在中间，只填一种自旋——这就是边缘磁性没有阈值的原因。两侧边缘填进的自旋相反，因为 $1A$ 属于 $A$ 子晶格，$2B$ 属于 $B$ 子晶格。</p>
+<p>实际计算要对所有 $k$ 求平均。只有 $k$ 接近 $\pi$ 的态才这样完全局域在边缘，所以平均下来 $m_{1A}$ 远小于 $1$。</p>
+<p><strong>结果：磁化随 $U/t$ 的变化。</strong> 下图是 $N=10$ 的锯齿带在 $1A$、$2A$、$5A$ 三个格点上的磁化随 $U/t$ 的变化，虚线是二维石墨烯的磁化，用来对比。</p>
+<p><img src="%e7%9f%b3%e5%a2%a8%e7%83%af%e4%b9%8b%e5%ad%97%e5%bd%a2%e8%be%b9%e7%bc%98%e7%9a%84%e7%89%b9%e6%ae%8a%e5%b1%80%e5%9f%9f%e6%80%81.assets/Figure-9.png" alt="Figure-9"></p>
+<ul>
+<li><strong>二维石墨烯有阈值 $U_c$。</strong> 二维石墨烯 $D(E_F)=0$（2.4）。要产生磁矩，必须让 $A$、$B$ 子晶格的在位能不同，在 $K$ 点打开能隙，把 $E_F$ 附近的态推开以降低能量；但 $E_F$ 附近本来几乎没有态，这部分收益很小。$U$ 较小时收益抵不过代价，体系保持非磁；只有 $U$ 超过一个有限值 $U_c$，磁化才出现。按平均场计算，蜂窝晶格的 $U_c\approx2.2t$（按同样的平均场方法计算得到，与图中虚线的起点一致）。这与石墨本身没有磁性一致。</li>
+<li><strong>之字边缘没有阈值。</strong> 平带使 $D(E_F)$ 很大，极化几乎不花动能；上面 $k=\pi$ 的例子也直接说明了这一点。因此锯齿带在无穷小的 $U$ 下就有非零磁化。图中 $U\approx0.1t$ 时 $m_{1A}$ 已达约 $0.2$；$m_{2A}$ 小得多；$m_{5A}$ 在 $U$ 较小时几乎为零。$U$ 很大时，所有格点的磁化都趋近二维曲线：整个体相都已反铁磁化，边缘不再特殊。扶手椅带没有边缘态，因此没有这种奇异的磁性行为。</li>
+</ul>
+<p>按上面的流程计算的结果（$N=10$，$N_k=400$，$k_BT=10^{-3}t$）：</p>
+<table>
+	<thead>
+			<tr>
+					<th>$U/t$</th>
+					<th>$m_{1A}$</th>
+					<th>$m_{2A}$</th>
+					<th>$m_{5A}$</th>
+					<th>$m_{1B}$</th>
+					<th>$m_{NB}$</th>
+					<th>$\sum_i m_i$</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>$0.1$</td>
+					<td>$0.189$</td>
+					<td>$0.026$</td>
+					<td>$0.001$</td>
+					<td>$-0.002$</td>
+					<td>$-0.189$</td>
+					<td>$0$</td>
+			</tr>
+			<tr>
+					<td>$1.0$</td>
+					<td>$0.270$</td>
+					<td>$0.056$</td>
+					<td>$0.009$</td>
+					<td>$-0.041$</td>
+					<td>$-0.270$</td>
+					<td>$0$</td>
+			</tr>
+			<tr>
+					<td>$2.0$</td>
+					<td>$0.398$</td>
+					<td>$0.139$</td>
+					<td>$0.050$</td>
+					<td>$-0.157$</td>
+					<td>$-0.398$</td>
+					<td>$0$</td>
+			</tr>
+	</tbody>
+</table>
+<p>$U/t=0.1$ 时 $m_{1A}=0.189$，与下面磁结构图中标注的 $m=0.19$ 一致。程序见附录。</p>
+<p><strong>磁结构。</strong> $N=10$、$U/t=0.1$ 时的磁结构如下图：</p>
+<p><img src="%e7%9f%b3%e5%a2%a8%e7%83%af%e4%b9%8b%e5%ad%97%e5%bd%a2%e8%be%b9%e7%bc%98%e7%9a%84%e7%89%b9%e6%ae%8a%e5%b1%80%e5%9f%9f%e6%80%81.assets/Figure-10.png" alt="Figure-10"></p>
+<ul>
+<li><strong>同一侧边缘</strong>：边缘态只分布在一个子晶格上（$1A$ 一侧在 $A$ 子晶格），所以磁矩主要出现在这个子晶格上，沿边缘所有 $1A$ 格点的自旋同向。从边缘向内，$A$ 格点的磁矩迅速减小，相邻的 $B$ 格点带有很小的反向磁矩（上表中的 $m_{1B}$）。$A$、$B$ 磁矩方向相反、大小不等，称为<strong>局域亚铁磁</strong>结构。</li>
+<li><strong>两侧边缘</strong>：两侧最外面的格点分别属于不同的子晶格（$1A$ 与 $NB$），所以磁矩方向相反，$m_{1A}=-m_{NB}$。</li>
+<li><strong>总磁矩</strong>：两侧完全抵消，$\sum_im_i=0$。这与半满 Hubbard 模型的严格结论（Lieb 定理）一致：二分晶格上基态总自旋正比于 $|N_A-N_B|$，锯齿带的 $N_A=N_B$，所以总自旋为零。</li>
+</ul>
+<p>虽然总磁矩为零，但边缘的局域磁矩并不为零。</p>
+<p><strong>平均场的局限。</strong> 平均场近似忽略了涨落项，即忽略了量子涨落，一般会高估磁矩；不过量子涨落一般只会减小磁矩，而不会破坏整体的磁结构。另外，平带也可能通过电声子相互作用引起晶格畸变，打开能隙、消除 $E_F$ 处的高态密度，从而与磁性竞争。这种竞争对磁序能否出现至关重要，本文不作讨论。</p>
+<p>之字形石墨烯纳米带的磁性来源可以总结为：</p>
+$$
+\text{平坦边缘能带}
+\rightarrow
+E_F\text{ 处态密度极高}
+\rightarrow
+\text{自旋极化几乎不花动能}
+\rightarrow
+\text{很小的 }U\text{ 即可驱动自旋极化}
+\rightarrow
+\text{边缘磁性}
+$$<p>这种由边缘局域态诱导产生的磁性，是之字形石墨烯纳米带区别于普通石墨烯体系的核心性质。</p>
+<hr>
+<h2 id="附录自洽迭代程序">附录：自洽迭代程序</h2>
+<p>下面的程序按 3.3 的流程计算 $N=10$ 锯齿带的边缘磁化，记号与正文一致。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> numpy <span style="color:#66d9ef">as</span> np
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>N   <span style="color:#f92672">=</span> <span style="color:#ae81ff">10</span>        <span style="color:#75715e"># 锯齿链条数，单胞内 2N 个格点</span>
+</span></span><span style="display:flex;"><span>t   <span style="color:#f92672">=</span> <span style="color:#ae81ff">1.0</span>       <span style="color:#75715e"># 最近邻跃迁强度</span>
+</span></span><span style="display:flex;"><span>Nk  <span style="color:#f92672">=</span> <span style="color:#ae81ff">400</span>       <span style="color:#75715e"># k 点数</span>
+</span></span><span style="display:flex;"><span>kBT <span style="color:#f92672">=</span> <span style="color:#ae81ff">1e-3</span>      <span style="color:#75715e"># 很低的温度，用来平滑费米分布</span>
+</span></span><span style="display:flex;"><span>ks  <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linspace(<span style="color:#f92672">-</span>np<span style="color:#f92672">.</span>pi, np<span style="color:#f92672">.</span>pi, Nk, endpoint<span style="color:#f92672">=</span><span style="color:#66d9ef">False</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 格点顺序：(1A, 1B, 2A, 2B, ..., NA, NB)</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 下标 2(j-1) 为 jA，2(j-1)+1 为 jB（程序里 j 从 0 开始）</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">H0</span>(k):
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;&#34;&#34;U = 0 时只含跃迁的矩阵 H_0(k)，两个自旋相同&#34;&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>    H <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>zeros((<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>N, <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>N))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> j <span style="color:#f92672">in</span> range(N):
+</span></span><span style="display:flex;"><span>        H[<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>j, <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>j<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> H[<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>j<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>j] <span style="color:#f92672">=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>t<span style="color:#f92672">*</span>np<span style="color:#f92672">.</span>cos(k<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>)       <span style="color:#75715e"># 同链 jA-jB，l_x = ±1/2</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> j <span style="color:#f92672">&lt;</span> N<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>:
+</span></span><span style="display:flex;"><span>            H[<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>j<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>j<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>] <span style="color:#f92672">=</span> H[<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>j<span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>j<span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>] <span style="color:#f92672">=</span> <span style="color:#f92672">-</span>t            <span style="color:#75715e"># 链间 jB-(j+1)A，l_x = 0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> H
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>H0k <span style="color:#f92672">=</span> [H0(k) <span style="color:#66d9ef">for</span> k <span style="color:#f92672">in</span> ks]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">fermi</span>(E, EF):
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#ae81ff">1</span><span style="color:#f92672">/</span>(np<span style="color:#f92672">.</span>exp(np<span style="color:#f92672">.</span>clip((E<span style="color:#f92672">-</span>EF)<span style="color:#f92672">/</span>kBT, <span style="color:#f92672">-</span><span style="color:#ae81ff">50</span>, <span style="color:#ae81ff">50</span>)) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">def</span> <span style="color:#a6e22e">scf</span>(U, delta<span style="color:#f92672">=</span><span style="color:#ae81ff">0.1</span>, lam<span style="color:#f92672">=</span><span style="color:#ae81ff">0.5</span>, eps<span style="color:#f92672">=</span><span style="color:#ae81ff">1e-7</span>, max_iter<span style="color:#f92672">=</span><span style="color:#ae81ff">5000</span>):
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 第 0 步：Néel 初值，A 格点 ↑ 多，B 格点 ↓ 多</span>
+</span></span><span style="display:flex;"><span>    s  <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>array([<span style="color:#ae81ff">1</span> <span style="color:#66d9ef">if</span> i <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> <span style="color:#66d9ef">for</span> i <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>N)])
+</span></span><span style="display:flex;"><span>    nu <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">+</span> delta<span style="color:#f92672">*</span>s           <span style="color:#75715e"># n_↑</span>
+</span></span><span style="display:flex;"><span>    nd <span style="color:#f92672">=</span> <span style="color:#ae81ff">0.5</span> <span style="color:#f92672">-</span> delta<span style="color:#f92672">*</span>s           <span style="color:#75715e"># n_↓</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> it <span style="color:#f92672">in</span> range(max_iter):
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 第 1、2 步：构造 H_σ(k) 并对角化（H_↑ 用 n_↓，H_↓ 用 n_↑）</span>
+</span></span><span style="display:flex;"><span>        E, W <span style="color:#f92672">=</span> {}, {}
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> sig, n_bar <span style="color:#f92672">in</span> ((<span style="color:#e6db74">&#39;up&#39;</span>, nd), (<span style="color:#e6db74">&#39;dn&#39;</span>, nu)):
+</span></span><span style="display:flex;"><span>            E[sig], W[sig] <span style="color:#f92672">=</span> [], []
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">for</span> Hk <span style="color:#f92672">in</span> H0k:
+</span></span><span style="display:flex;"><span>                e, psi <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>linalg<span style="color:#f92672">.</span>eigh(Hk <span style="color:#f92672">+</span> U<span style="color:#f92672">*</span>np<span style="color:#f92672">.</span>diag(n_bar))
+</span></span><span style="display:flex;"><span>                E[sig]<span style="color:#f92672">.</span>append(e)                  <span style="color:#75715e"># E_ν^σ(k)</span>
+</span></span><span style="display:flex;"><span>                W[sig]<span style="color:#f92672">.</span>append(np<span style="color:#f92672">.</span>abs(psi)<span style="color:#f92672">**</span><span style="color:#ae81ff">2</span>)     <span style="color:#75715e"># |ψ_ν^σ(i;k)|²，行=格点 i，列=本征态 ν</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 第 3 步：半满条件定 E_F（二分法使 Σf = 2N·Nk）</span>
+</span></span><span style="display:flex;"><span>        allE <span style="color:#f92672">=</span> np<span style="color:#f92672">.</span>concatenate([np<span style="color:#f92672">.</span>ravel(E[<span style="color:#e6db74">&#39;up&#39;</span>]), np<span style="color:#f92672">.</span>ravel(E[<span style="color:#e6db74">&#39;dn&#39;</span>])])
+</span></span><span style="display:flex;"><span>        lo, hi <span style="color:#f92672">=</span> allE<span style="color:#f92672">.</span>min(), allE<span style="color:#f92672">.</span>max()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">for</span> _ <span style="color:#f92672">in</span> range(<span style="color:#ae81ff">100</span>):
+</span></span><span style="display:flex;"><span>            EF <span style="color:#f92672">=</span> (lo <span style="color:#f92672">+</span> hi)<span style="color:#f92672">/</span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">if</span> fermi(allE, EF)<span style="color:#f92672">.</span>sum() <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">*</span>N<span style="color:#f92672">*</span>Nk: hi <span style="color:#f92672">=</span> EF
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">else</span>: lo <span style="color:#f92672">=</span> EF
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 第 4 步：新的密度 n_iσ = (1/Nk) Σ_k Σ_ν f(E) |ψ(i)|²</span>
+</span></span><span style="display:flex;"><span>        new <span style="color:#f92672">=</span> {sig: sum(w <span style="color:#f92672">@</span> fermi(e, EF) <span style="color:#66d9ef">for</span> e, w <span style="color:#f92672">in</span> zip(E[sig], W[sig]))<span style="color:#f92672">/</span>Nk
+</span></span><span style="display:flex;"><span>               <span style="color:#66d9ef">for</span> sig <span style="color:#f92672">in</span> (<span style="color:#e6db74">&#39;up&#39;</span>, <span style="color:#e6db74">&#39;dn&#39;</span>)}
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e"># 第 5 步：判断收敛，否则混合后回到第 1 步</span>
+</span></span><span style="display:flex;"><span>        err <span style="color:#f92672">=</span> max(abs(new[<span style="color:#e6db74">&#39;up&#39;</span>]<span style="color:#f92672">-</span>nu)<span style="color:#f92672">.</span>max(), abs(new[<span style="color:#e6db74">&#39;dn&#39;</span>]<span style="color:#f92672">-</span>nd)<span style="color:#f92672">.</span>max())
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> err <span style="color:#f92672">&lt;</span> eps:
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>        nu <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>lam)<span style="color:#f92672">*</span>nu <span style="color:#f92672">+</span> lam<span style="color:#f92672">*</span>new[<span style="color:#e6db74">&#39;up&#39;</span>]
+</span></span><span style="display:flex;"><span>        nd <span style="color:#f92672">=</span> (<span style="color:#ae81ff">1</span><span style="color:#f92672">-</span>lam)<span style="color:#f92672">*</span>nd <span style="color:#f92672">+</span> lam<span style="color:#f92672">*</span>new[<span style="color:#e6db74">&#39;dn&#39;</span>]
+</span></span><span style="display:flex;"><span>    <span style="color:#75715e"># 第 6 步：输出磁矩</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> nu <span style="color:#f92672">-</span> nd
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> U <span style="color:#f92672">in</span> (<span style="color:#ae81ff">0.1</span>, <span style="color:#ae81ff">1.0</span>, <span style="color:#ae81ff">2.0</span>):
+</span></span><span style="display:flex;"><span>    m <span style="color:#f92672">=</span> scf(U)
+</span></span><span style="display:flex;"><span>    print(<span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;U/t=</span><span style="color:#e6db74">{</span>U<span style="color:#e6db74">}</span><span style="color:#e6db74">: m1A=</span><span style="color:#e6db74">{</span>m[<span style="color:#ae81ff">0</span>]<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">, m2A=</span><span style="color:#e6db74">{</span>m[<span style="color:#ae81ff">2</span>]<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">, m5A=</span><span style="color:#e6db74">{</span>m[<span style="color:#ae81ff">8</span>]<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">, &#34;</span>
+</span></span><span style="display:flex;"><span>          <span style="color:#e6db74">f</span><span style="color:#e6db74">&#34;m1B=</span><span style="color:#e6db74">{</span>m[<span style="color:#ae81ff">1</span>]<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">, mNB=</span><span style="color:#e6db74">{</span>m[<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>]<span style="color:#e6db74">:</span><span style="color:#e6db74">.3f</span><span style="color:#e6db74">}</span><span style="color:#e6db74">, sum=</span><span style="color:#e6db74">{</span>m<span style="color:#f92672">.</span>sum()<span style="color:#e6db74">:</span><span style="color:#e6db74">.1e</span><span style="color:#e6db74">}</span><span style="color:#e6db74">&#34;</span>)
+</span></span></code></pre></div>
+
+        
+      </section>
+
+      
+      <div class="divider"></div>
+      <div class="flex flex-col md:flex-row justify-between gap-4 py-4">
+        
+        <a role="button" class="btn btn-outline h-12" href="/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/" title="碳纳米管">
+          <ion-icon name="chevron-back"></ion-icon>
+          <div class="inline-flex flex-col items-start">
+            <span class="text-base-content/60 text-xs font-normal">上一页</span>
+            <span class="max-w-48 truncate">碳纳米管</span>
+          </div>
+        </a>
+        
+
+        
+        <div></div>
+        
+      </div>
+      
+
+      
+      <div class="divider"></div>
+
+      <section class="space-y-4 not-prose">
+        
+
+
+<template x-if="['localhost', '127.0.0.1'].indexOf(window.location.hostname) == -1">
+  <article>
+    <script
+      src="https://utteranc.es/client.js"
+      repo="elusivekaze/elusivekaze.github.io"
+      issue-term="og:title"
+      theme="github-light"
+      crossorigin="anonymous"
+      async>
+    </script>
+  </article>
+</template>
+
+
+
+
+
+
+
+
+      </section>
+      
+    </article>
+  </div>
+
+  <div
+    x-data="tocHighlighter()"
+    @scroll.window="debouncedScroll"
+    class="hidden lg:flex lg:flex-col lg:items-end"
+  >
+    
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一石墨烯的电子结构">一、石墨烯的电子结构</a>
+      <ul>
+        <li><a href="#11--杂化与--键">1.1 $sp^{2}$ 杂化与 $\sigma、\pi$ 键</a></li>
+        <li><a href="#12-蜂窝晶格与--子晶格">1.2 蜂窝晶格与 $A、B$ 子晶格</a></li>
+        <li><a href="#13--点零带隙与线性色散">1.3 $K$ 点零带隙与线性色散</a></li>
+      </ul>
+    </li>
+    <li><a href="#二石墨烯纳米带扶手椅形与之字形">二、石墨烯纳米带：扶手椅形与之字形</a>
+      <ul>
+        <li><a href="#21-两种切割边缘">2.1 两种切割边缘</a></li>
+        <li><a href="#22-波数与能带的投影">2.2 波数与能带的投影</a></li>
+        <li><a href="#23-扶手椅带的能带">2.3 扶手椅带的能带</a></li>
+        <li><a href="#24-态与态密度">2.4 态与态密度</a></li>
+      </ul>
+    </li>
+    <li><a href="#三之字边缘的特殊局域态">三、之字边缘的特殊局域态</a>
+      <ul>
+        <li><a href="#31-费米能级附近的平带">3.1 费米能级附近的平带</a></li>
+        <li><a href="#32-波函数的解析解">3.2 波函数的解析解</a></li>
+        <li><a href="#33-边缘态的磁性">3.3 边缘态的磁性</a></li>
+      </ul>
+    </li>
+    <li><a href="#附录自洽迭代程序">附录：自洽迭代程序</a></li>
+  </ul>
+</nav>
+    
+  </div>
+</div>
+
+
+            
+<footer class="flex flex-col md:flex-row justify-between items-center gap-4 px-4 py-12">
+
+  <div>
+  
+  <p>
+    © 2026 ElusiveKaze&#39;s Blog
+  </p>
+  
+
+  
+  <p>🌱 Towards the Distance.</p>
+  
+</div>
+
+  <div
+  x-data="{ icons: [
+    { name: 'sunny', status: 'n' },
+    { name: 'moon', status: 'y' },
+    { name: 'desktop', status: 'auto' }
+  ] }"
+  class="flex items-center gap-2 h-8 px-2 bg-base-100 border border-base-content/30 rounded-full"
+>
+  <template x-for="icon in icons">
+    <div
+      role="button"
+      tabindex="0"
+      :aria-label="'Select ' + icon.name + ' mode'"
+      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
+      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
+      @click="$store.darkMode.toggle(icon.status)"
+    >
+      <ion-icon
+        :name="`${icon.name}-outline`"
+        class="group-hover:text-primary-content"
+        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
+      >
+      </ion-icon>
+    </div>
+  </template>
+</div>
+
+</footer>
+
+          </div>
+        </div>
+        
+        <div class="back" data-nosnippet>
+        
+          <div class="container">
+            
+              <div class="dream-grid dream-grid-about">
+  
+  
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">关于我</div>
+
+        <div class="prose dark:prose-invert">
+          <p>Hi，这里是 <strong>ElusiveKaze</strong> 的博客，主要分享一些学习笔记。</p>
+
+        </div>
+      </div>
+    </article>
+  </div>
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">知识共享</div>
+
+        <div class="prose dark:prose-invert">
+          <p>此网站的所有内容都遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank">CC BY-NC-SA 4.0</a>。</p>
+
+        </div>
+      </div>
+    </article>
+  </div>
+  
+  
+
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">社交链接</div>
+
+        <ul class="menu menu-horizontal flex-wrap w-full px-0 [&_ion-icon]:text-lg">
+  
+  <li>
+    <a href="mailto:2915795652@qq.com" title="Email">
+      <ion-icon name="mail"></ion-icon>
+    </a>
+  </li>
+  
+
+  
+  <li>
+    <a href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+      <ion-icon name="logo-github"></ion-icon>
+    </a>
+  </li>
+  
+</ul>
+
+      </div>
+    </article>
+  </div>
+  
+
+  
+</div>
+
+            
+
+            
+<footer class="flex flex-col md:flex-row justify-between items-center gap-4 px-4 py-12">
+
+  <div>
+  
+  <p>
+    © 2026 ElusiveKaze&#39;s Blog
+  </p>
+  
+
+  
+  <p>🌱 Towards the Distance.</p>
+  
+</div>
+
+  <div
+  x-data="{ icons: [
+    { name: 'sunny', status: 'n' },
+    { name: 'moon', status: 'y' },
+    { name: 'desktop', status: 'auto' }
+  ] }"
+  class="flex items-center gap-2 h-8 px-2 bg-base-100 border border-base-content/30 rounded-full"
+>
+  <template x-for="icon in icons">
+    <div
+      role="button"
+      tabindex="0"
+      :aria-label="'Select ' + icon.name + ' mode'"
+      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
+      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
+      @click="$store.darkMode.toggle(icon.status)"
+    >
+      <ion-icon
+        :name="`${icon.name}-outline`"
+        class="group-hover:text-primary-content"
+        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
+      >
+      </ion-icon>
+    </div>
+  </template>
+</div>
+
+</footer>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  <script src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+
+  
+  
+    
+  
+  <script src="/js/grid.min.js"></script>
+
+
+
+
+  
+
+<script src="/js/main.min.js"></script>
+
+    
+
+
+  <script
+  src="https://cdn.jsdelivr.net/npm/luxon@3.7.2/build/global/luxon.min.js"
+  integrity="sha256-UWxf6lyCvfH7XEcrmq/cqc2m3IBrLBLOnWLC4Pw0gQQ="
+  crossorigin="anonymous"
+></script>
+<script>
+  format()
+
+  function format() {
+    document.querySelectorAll('span[data-format="luxon"]').forEach((el) => {
+      const date = el.textContent
+
+      el.textContent = luxon.DateTime.fromISO(date, { locale: 'zh' }).toFormat(
+        'yyyy年MM月dd日',
+      )
+    })
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+<script src="/js/toc.min.js"></script>
+
+
+  
+    <script type="module">
+      import mediumZoom from 'https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/+esm';
+      mediumZoom('#dream-single-post-content img', {
+        background: 'oklch(var(--b1))',
+        margin: 24,
+      })
+    </script>
+  
+
+
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@8.0.13/dist/ionicons/ionicons.esm.js" integrity="sha256-46Vf2l/aX0tBSf2YXcaYMxF7JVJl30zn8Y9L9zZNXMA=" crossorigin="anonymous"></script>
+  </body>
+</html>
