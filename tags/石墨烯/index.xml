@@ -10,9 +10,16 @@
 		
 		
 		
-			<lastBuildDate>Tue, 04 Aug 2026 00:00:00 +0800</lastBuildDate>
+			<lastBuildDate>Tue, 20 Oct 2026 00:00:00 +0800</lastBuildDate>
 		
 			<atom:link href="https://elusivekaze.github.io/tags/%E7%9F%B3%E5%A2%A8%E7%83%AF/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>石墨烯之字形边缘的特殊局域态</title>
+				<link>https://elusivekaze.github.io/posts/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/</link>
+				<pubDate>Tue, 20 Oct 2026 00:00:00 +0800</pubDate>
+				<guid>https://elusivekaze.github.io/posts/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/</guid>
+				<description>&lt;h1 id=&#34;石墨烯之字形边缘的特殊局域态&#34;&gt;石墨烯之字形边缘的特殊局域态&lt;/h1&gt;&#xA;&lt;h2 id=&#34;一石墨烯的电子结构&#34;&gt;一、石墨烯的电子结构&lt;/h2&gt;&#xA;&lt;h3 id=&#34;11--杂化与--键&#34;&gt;1.1 $sp^{2}$ 杂化与 $\sigma、\pi$ 键&lt;/h3&gt;&#xA;&lt;p&gt;碳原子激发态电子排布为 $1s^{2}2s^{1}2p^{3}$，$2s$ 与 $2p_{x}、2p_{y}$ 杂化，形成三个 $sp^{2}$ 杂化轨道，夹角 $120^{\circ}$，共面分布（平面三角形）。杂化轨道头对头重叠，形成面内的 $\sigma$ 键，构成稳定的蜂窝骨架；未参与杂化的 $2p_{z}$ 与杂化轨道正交，相邻的 $2p_{z}$ 轨道肩对肩重叠，形成 $\pi$ 键。&lt;a href=&#34;https://elusivekaze.github.io/posts/%E5%8E%9F%E5%AD%90%E7%BB%93%E6%9E%84%E4%B8%8E%E7%B2%92%E5%AD%90%E7%BB%9F%E8%AE%A1/#%E5%8E%9F%E5%AD%90%E8%BD%A8%E9%81%93%E6%9D%82%E5%8C%96&#34; target=&#34;_blank&#34;&gt;此处详情可见本博客的这篇文章（&lt;del&gt;打个广告&lt;/del&gt;）。&lt;/a&gt;&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;%e7%9f%b3%e5%a2%a8%e7%83%af%e4%b9%8b%e5%ad%97%e5%bd%a2%e8%be%b9%e7%bc%98%e7%9a%84%e7%89%b9%e6%ae%8a%e5%b1%80%e5%9f%9f%e6%80%81.assets/Figure-2.jpg&#34; alt=&#34;Figure-2&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;两个原子轨道头对头重叠，会裂出两个分子轨道（而不是原来两个一样的轨道）：&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;成键态 $\sigma$：两个原子的波函数同相叠加，电子云集中在两核之间，把两个核“拉住” → 能量比原来的原子轨道更低（更稳定）。&lt;/li&gt;&#xA;&lt;li&gt;反键态 $\sigma^{*}$：两个原子的波函数反相叠加，两核之间出现节面，电子云往两侧散去，把两核“推开” → 能量比原子轨道更高（更不稳定）。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;img src=&#34;%e7%9f%b3%e5%a2%a8%e7%83%af%e4%b9%8b%e5%ad%97%e5%bd%a2%e8%be%b9%e7%bc%98%e7%9a%84%e7%89%b9%e6%ae%8a%e5%b1%80%e5%9f%9f%e6%80%81.assets/Figure-3.jpg&#34; alt=&#34;Figure-3&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;每个碳原子有 $4$ 个价电子，$3$ 个拿去形成 $\sigma$ 键，剩下 $1$ 个用来形成 $\pi$ 键。&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;看 $\sigma$ 体系&lt;/strong&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;每个原胞有 $2$ 个碳原子，每个碳原子有 $3$ 条 $C-C$ 键（$\sigma$ 键）。每个 $\sigma$ 键中有 $2$ 个电子，由键两端的原子各贡献 $1$ 个，所以 $\sigma$ 电子 $=3\times2=6$ 个/原胞。&lt;/li&gt;&#xA;&lt;li&gt;$\sigma$ 能带共 $6$ 条：$3$ 条成键带、$3$ 条反键带，每条带计入自旋可容纳 $2$ 个电子。$6$ 个电子刚好填满 $3$ 条成键带 → $\sigma$ 成键带全满，$\sigma^{*}$ 反键带全空。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;&lt;strong&gt;看 $\pi$ 体系&lt;/strong&gt;&lt;/p&gt;</description>
+			</item>
 			<item>
 				<title>碳纳米管</title>
 				<link>https://elusivekaze.github.io/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/</link>
