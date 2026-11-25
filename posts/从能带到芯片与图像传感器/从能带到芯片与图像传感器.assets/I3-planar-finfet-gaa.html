@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>平面晶体管、FinFET 与 GAA</title><link rel="stylesheet" href="lib/ui.css">
+</head>
+<body><div class="wrap">
+<div class="row"><button id="b0" class="on">平面</button><button id="b1">FinFET</button><button id="b2">GAA 纳米片</button>
+<label style="margin-left:12px"><input id="hide" type="checkbox"> 隐藏栅极</label></div>
+<div id="view"></div>
+<div class="row"><label for="vg">栅压</label><input id="vg" type="range" min="0" max="1" step="0.01" value="0.8"><span class="val" id="vgv"></span></div>
+<div class="hint" id="note"></div>
+</div>
+<script src="lib/three.min.js"></script><script src="lib/OrbitControls.js"></script><script src="lib/fig3d.js"></script>
+<script>
+// box: the tallest of the three structures plus all label anchors, so switching does not jump
+const V = makeView(document.getElementById('view'), { cam: [6.6, 5.0, 7.8], box: [[-3.5, -1.45, -1.75], [3.5, 2.1, 1.75]] });
+const C = { sub: 0xD3D1C7, nplus: 0x85B7EB, gate: 0x7F77DD, ox: 0xEF9F27, si: 0xB4B2A9, sti: 0xFAC775 };
+let group = null, chans = [], gates = [];
+const chanMat = new THREE.MeshStandardMaterial({ color: 0x378ADD, emissive: 0x378ADD, emissiveIntensity: 0.6, roughness: 0.5 });
+function add(m, x, y, z) { m.position.set(x, y, z); group.add(m); return m; }
+function gateMesh(w, h, d) { const g = boxMesh(w, h, d, C.gate, { opacity: 0.38, edgeColor: 0x3C3489 }); gates.push(g); return g; }
+const notes = [
+  '平面晶体管：栅极只盖在硅表面上方，只能从上面一个面控制沟道。栅长缩到二三十纳米以下时，漏极的电场会从下面"绕过"栅极，关不严。',
+  'FinFET：把沟道竖起来做成很薄的"鳍"，栅极从左、右、上三面包住它。鳍很薄（约 5–7 nm）是为了让栅极控制住整片鳍；鳍做高、几片并排，是为了在同样的占地面积上流过更多电流。',
+  'GAA 纳米片：把沟道做成几片上下叠放的薄片，栅极把每一片的四面都包住，控制力最强；纳米片的宽度还可以按需要调。'
+];
+function build(k) {
+  if (group) V.scene.remove(group);
+  group = new THREE.Group(); V.scene.add(group); chans = []; gates = []; labels.forEach(l => l.visible = false);
+  if (k === 0) {
+    add(boxMesh(7, 1.2, 3.4, C.sub), 0, -0.6, 0);
+    add(boxMesh(2.2, 0.45, 3.0, C.nplus), -2.3, -0.2, 0); add(boxMesh(2.2, 0.45, 3.0, C.nplus), 2.3, -0.2, 0);
+    chans.push(add(new THREE.Mesh(new THREE.BoxGeometry(2.4, 0.08, 3.0), chanMat), 0, -0.04, 0));
+    add(boxMesh(2.4, 0.1, 3.0, C.ox), 0, 0.06, 0);
+    add(gateMesh(2.4, 0.8, 3.0), 0, 0.51, 0);
+    show([0, 1, 2, 3], [[-2.3, 0.3, 1.6], [2.3, 0.3, 1.6], [0, 1.15, 0], [0, -0.04, 1.75]]);
+  } else if (k === 1) {
+    add(boxMesh(7, 1.0, 3.4, C.sub), 0, -0.9, 0);
+    add(boxMesh(7, 0.4, 3.4, C.sti, { opacity: 0.55 }), 0, -0.2, 0);
+    for (const z of [-0.75, 0.75]) {
+      add(boxMesh(7, 1.6, 0.32, C.si), 0, 0.4, z);
+      chans.push(add(new THREE.Mesh(new THREE.BoxGeometry(2.0, 1.22, 0.34), chanMat), 0, 0.6, z));
+    }
+    add(boxMesh(2.0, 2.0, 3.2, C.ox, { opacity: 0.25 }), 0, 0.6, 0).visible = false;
+    add(boxMesh(2.0, 1.8, 2.9, C.nplus), -2.5, 0.5, 0); add(boxMesh(2.0, 1.8, 2.9, C.nplus), 2.5, 0.5, 0);
+    add(gateMesh(2.0, 1.75, 3.0), 0, 0.875, 0);
+    show([0, 1, 2, 3], [[-2.5, 1.6, 1.6], [2.5, 1.6, 1.6], [0, 2.0, 0], [0, 0.7, 1.6]]);
+  } else {
+    add(boxMesh(7, 1.0, 3.4, C.sub), 0, -0.9, 0);
+    for (const y of [0.25, 0.75, 1.25]) {
+      add(boxMesh(7, 0.18, 1.8, C.si), 0, y, 0);
+      chans.push(add(new THREE.Mesh(new THREE.BoxGeometry(2.0, 0.2, 1.82), chanMat), 0, y, 0));
+    }
+    add(boxMesh(2.0, 2.2, 3.0, C.nplus), -2.5, 0.7, 0); add(boxMesh(2.0, 2.2, 3.0, C.nplus), 2.5, 0.7, 0);
+    add(gateMesh(2.0, 1.65, 2.5), 0, 0.825, 0);
+    show([0, 1, 2, 3], [[-2.5, 2.0, 1.6], [2.5, 2.0, 1.6], [0, 1.9, 0], [0, 0.75, 1.3]]);
+  }
+  document.getElementById('note').textContent = notes[k] + '（拖动画面旋转；勾选"隐藏栅极"看里面的沟道。）';
+  applyHide(); applyVg();
+  ['b0', 'b1', 'b2'].forEach((id, i) => document.getElementById(id).classList.toggle('on', i === k));
+}
+const labels = [V.label('源极', [0, 0, 0], '#185FA5'), V.label('漏极', [0, 0, 0], '#185FA5'), V.label('栅极', [0, 0, 0], '#534AB7'), V.label('沟道', [0, 0, 0], '#0C447C')];
+function show(idx, ps) { idx.forEach((i, j) => { labels[i].visible = true; labels[i].pos.set(ps[j][0], ps[j][1], ps[j][2]); }); }
+function applyHide() { const h = document.getElementById('hide').checked; gates.forEach(g => g.visible = !h); }
+function applyVg() {
+  const v = +document.getElementById('vg').value;
+  const on = Math.max(0, Math.min(1, (v - 0.3) / 0.5));
+  chanMat.emissiveIntensity = 0.05 + 0.9 * on;
+  chanMat.color.setHSL(0.58, 0.15 + 0.6 * on, 0.75 - 0.25 * on);
+  document.getElementById('vgv').textContent = on < 0.05 ? '关' : on < 0.95 ? '部分导通' : '导通';
+}
+document.getElementById('b0').onclick = () => build(0);
+document.getElementById('b1').onclick = () => build(1);
+document.getElementById('b2').onclick = () => build(2);
+document.getElementById('hide').onchange = applyHide;
+document.getElementById('vg').oninput = applyVg;
+build(0);
+</script></body></html>

@@ -1,0 +1,1730 @@
+<!DOCTYPE html>
+<html lang="zh"
+  x-data
+  :class="$store.darkMode.isDark() ? 'dark' : 'light'"
+  :data-theme="$store.darkMode.theme()">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> | ElusiveKaze&#39;s Blog</title>
+
+    <head>  
+  
+    
+      <link href="/logo.svg" rel="icon" type="image/x-icon" />
+    
+  
+  
+  <link rel="canonical" href="https://elusivekaze.github.io/posts/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/" />
+  
+  
+  
+  <meta name="author" content="ElusiveKaze" />
+  <meta name="description" content="从能带到芯片与图像传感器 这篇笔记是从两场讲座里延伸出来的：激光等离子体光源及其应用讲到 EUV 光刻机靠 13.5 nm 的光在硅片上&quot;刻&quot;出晶体管，也讲到水窗显微镜最后要用一台&quot;成像探测器&quot;拍下软 X 射线图像。顺着这两条线往下追问，就是这篇笔记的内容：芯片里的晶体管怎样工作，图像传感器（CMOS 和 CCD）又怎样把光变成数字。
+全篇沿着一条链往下走：
+能带 → 电压怎样改变电子的能量 → PN 结 → MOSFET（nMOS、pMOS）→ CMOS → 晶体管的微缩（FinFET、GAA）→ 硅怎样吸收光 → CMOS 图像传感器 → CCD
+文中有几张可交互的图（拖动旋转、拖滑块改参数），用 &lt;iframe&gt; 嵌在文档里，Typora 中可以直接操作。
+一、能带：电子在固体里能待在哪些能量上 1.1 从原子能级到能带 单个原子里，电子只能待在一些分立的能级上。两个原子靠近时，它们的轨道发生重叠，一个能级会分裂成两个：同相叠加的成键态能量更低，反相叠加的反键态能量更高（和石墨烯笔记 1.1 节里 $\sigma$、$\sigma^{*}$ 的分裂是同一件事）。
+原子越多，分裂出来的能级越多。$N$ 个原子就有 $N$ 个能级，但它们挤在一个有限的能量范围里（几个 eV）。一块硅里 $N\sim10^{23}$，相邻能级的间隔只有 $10^{-23}$ eV 量级，实际上连成了一片，这就是能带。不同的原子能级展宽成不同的能带，能带之间可能留下电子不能待的能量区间，叫禁带或带隙。
+每个能级（计入自旋）最多容纳 2 个电子（泡利不相容原理，见原子结构与粒子统计）。电子从低到高把能带填满，填到哪里，决定了材料是导体还是绝缘体。
+1.2 价带、导带与带隙 价带：绝对零度时被电子填满的最高能带，它的顶端记作价带顶 $E_v$。 导带：价带上方最低的空能带，它的底端记作导带底 $E_c$。 带隙：$E_g=E_c-E_v$。 一个填满的能带不导电：每个状态都有电子占着，加电场时电子无处可&quot;挪&quot;，没有净的电流。一个空能带里没有电子，也不导电。只有部分填充的能带才能导电。
+金属：最高的有电子的能带只填了一部分，天然导电。 绝缘体：价带全满、导带全空，带隙很大（SiO$_2$ 约 9 eV），常温下几乎没有电子能跳上去。 半导体：结构和绝缘体一样，但带隙小（硅 1.12 eV），常温下有少量电子被热激发到导带。 热激发的多少由玻尔兹曼因子决定。室温下 $kT\approx0.0259$ eV，本征硅的载流子浓度
+" />
+  
+  
+  <meta name="keywords" content="">
+  
+  
+  
+  <meta name="generator" content="Hugo 0.170.1">
+  
+  
+  <meta property="og:url" content="https://elusivekaze.github.io/posts/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/">
+	<meta property="og:site_name" content="ElusiveKaze&#39;s Blog">
+	<meta property="og:title" content="ElusiveKaze&#39;s Blog">
+	<meta property="og:description" content="从能带到芯片与图像传感器 这篇笔记是从两场讲座里延伸出来的：激光等离子体光源及其应用讲到 EUV 光刻机靠 13.5 nm 的光在硅片上&#34;刻&#34;出晶体管，也讲到水窗显微镜最后要用一台&#34;成像探测器&#34;拍下软 X 射线图像。顺着这两条线往下追问，就是这篇笔记的内容：芯片里的晶体管怎样工作，图像传感器（CMOS 和 CCD）又怎样把光变成数字。
+全篇沿着一条链往下走：
+能带 → 电压怎样改变电子的能量 → PN 结 → MOSFET（nMOS、pMOS）→ CMOS → 晶体管的微缩（FinFET、GAA）→ 硅怎样吸收光 → CMOS 图像传感器 → CCD
+文中有几张可交互的图（拖动旋转、拖滑块改参数），用 &lt;iframe&gt; 嵌在文档里，Typora 中可以直接操作。
+一、能带：电子在固体里能待在哪些能量上 1.1 从原子能级到能带 单个原子里，电子只能待在一些分立的能级上。两个原子靠近时，它们的轨道发生重叠，一个能级会分裂成两个：同相叠加的成键态能量更低，反相叠加的反键态能量更高（和石墨烯笔记 1.1 节里 $\sigma$、$\sigma^{*}$ 的分裂是同一件事）。
+原子越多，分裂出来的能级越多。$N$ 个原子就有 $N$ 个能级，但它们挤在一个有限的能量范围里（几个 eV）。一块硅里 $N\sim10^{23}$，相邻能级的间隔只有 $10^{-23}$ eV 量级，实际上连成了一片，这就是能带。不同的原子能级展宽成不同的能带，能带之间可能留下电子不能待的能量区间，叫禁带或带隙。
+每个能级（计入自旋）最多容纳 2 个电子（泡利不相容原理，见原子结构与粒子统计）。电子从低到高把能带填满，填到哪里，决定了材料是导体还是绝缘体。
+1.2 价带、导带与带隙 价带：绝对零度时被电子填满的最高能带，它的顶端记作价带顶 $E_v$。 导带：价带上方最低的空能带，它的底端记作导带底 $E_c$。 带隙：$E_g=E_c-E_v$。 一个填满的能带不导电：每个状态都有电子占着，加电场时电子无处可&#34;挪&#34;，没有净的电流。一个空能带里没有电子，也不导电。只有部分填充的能带才能导电。
+金属：最高的有电子的能带只填了一部分，天然导电。 绝缘体：价带全满、导带全空，带隙很大（SiO$_2$ 约 9 eV），常温下几乎没有电子能跳上去。 半导体：结构和绝缘体一样，但带隙小（硅 1.12 eV），常温下有少量电子被热激发到导带。 热激发的多少由玻尔兹曼因子决定。室温下 $kT\approx0.0259$ eV，本征硅的载流子浓度">
+	<meta property="og:locale" content="zh">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+
+  
+  
+  
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="ElusiveKaze&#39;s Blog">
+	<meta name="twitter:description" content="从能带到芯片与图像传感器 这篇笔记是从两场讲座里延伸出来的：激光等离子体光源及其应用讲到 EUV 光刻机靠 13.5 nm 的光在硅片上&#34;刻&#34;出晶体管，也讲到水窗显微镜最后要用一台&#34;成像探测器&#34;拍下软 X 射线图像。顺着这两条线往下追问，就是这篇笔记的内容：芯片里的晶体管怎样工作，图像传感器（CMOS 和 CCD）又怎样把光变成数字。
+全篇沿着一条链往下走：
+能带 → 电压怎样改变电子的能量 → PN 结 → MOSFET（nMOS、pMOS）→ CMOS → 晶体管的微缩（FinFET、GAA）→ 硅怎样吸收光 → CMOS 图像传感器 → CCD
+文中有几张可交互的图（拖动旋转、拖滑块改参数），用 &lt;iframe&gt; 嵌在文档里，Typora 中可以直接操作。
+一、能带：电子在固体里能待在哪些能量上 1.1 从原子能级到能带 单个原子里，电子只能待在一些分立的能级上。两个原子靠近时，它们的轨道发生重叠，一个能级会分裂成两个：同相叠加的成键态能量更低，反相叠加的反键态能量更高（和石墨烯笔记 1.1 节里 $\sigma$、$\sigma^{*}$ 的分裂是同一件事）。
+原子越多，分裂出来的能级越多。$N$ 个原子就有 $N$ 个能级，但它们挤在一个有限的能量范围里（几个 eV）。一块硅里 $N\sim10^{23}$，相邻能级的间隔只有 $10^{-23}$ eV 量级，实际上连成了一片，这就是能带。不同的原子能级展宽成不同的能带，能带之间可能留下电子不能待的能量区间，叫禁带或带隙。
+每个能级（计入自旋）最多容纳 2 个电子（泡利不相容原理，见原子结构与粒子统计）。电子从低到高把能带填满，填到哪里，决定了材料是导体还是绝缘体。
+1.2 价带、导带与带隙 价带：绝对零度时被电子填满的最高能带，它的顶端记作价带顶 $E_v$。 导带：价带上方最低的空能带，它的底端记作导带底 $E_c$。 带隙：$E_g=E_c-E_v$。 一个填满的能带不导电：每个状态都有电子占着，加电场时电子无处可&#34;挪&#34;，没有净的电流。一个空能带里没有电子，也不导电。只有部分填充的能带才能导电。
+金属：最高的有电子的能带只填了一部分，天然导电。 绝缘体：价带全满、导带全空，带隙很大（SiO$_2$ 约 9 eV），常温下几乎没有电子能跳上去。 半导体：结构和绝缘体一样，但带隙小（硅 1.12 eV），常温下有少量电子被热激发到导带。 热激发的多少由玻尔兹曼因子决定。室温下 $kT\approx0.0259$ eV，本征硅的载流子浓度">
+
+  
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/output.min.css" />
+  
+  
+  
+  
+</head>
+<style>
+    code.has-jax {
+      -webkit-font-smoothing: antialiased;
+      background: inherit !important;
+      border: none !important;
+      font-size: 100%;
+    }
+</style>
+
+
+    
+
+
+<style>
+  pre {
+    padding: 1em;
+    overflow: auto;
+  }
+</style>
+
+
+
+
+
+
+
+
+
+    
+
+    <script>
+      window.lightTheme = 'emerald'
+      window.darkTheme = 'forest'
+
+      ;(function() {
+        const isDark = ('hugo-theme-dream-is-dark' in localStorage)
+          ? window.localStorage.getItem('hugo-theme-dream-is-dark') === 'y'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+        const theme = isDark ? window.darkTheme : window.lightTheme
+
+        document.documentElement.setAttribute('data-theme', theme)
+      })()
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.12/dist/cdn.min.js" integrity="sha256-V7N9fK6aJ9ll/a5K3MhEJF39xAfmVa7oXc//OggDaj8=" crossorigin="anonymous"></script>
+  </head>
+
+  <body x-data="{
+    flip: false,
+  }">
+    
+
+    
+<nav x-data="{ isSticky: false }"
+  x-init="window.addEventListener('scroll', () => { isSticky = window.scrollY > 30 })"
+  class="sticky top-0 z-30 mt-4 lg:mt-8 py-4"
+  :class="{ 'bg-base-100 shadow-lg dark:border-b dark:border-base-content/30': isSticky }">
+
+  
+  <div class="container flex justify-between px-4">
+  
+    <section class="flex items-center gap-2">
+      <div class="avatar cursor-pointer hover:avatar-online" @click="flip = !flip" title="翻转一下！">
+        <div class="w-12 h-12 rounded-full select-none">
+          <img src="/img/avatar.png" alt="ElusiveKaze&#39;s Blog" />
+        </div>
+      </div>
+
+      
+      <div>
+        
+        <a href="https://elusivekaze.github.io/" class="text-lg font-semibold cursor-pointer">
+          ElusiveKaze&#39;s Blog
+        </a>
+        
+        
+        <div class="text-base-content/60 text-sm">向远方</div>
+        
+      </div>
+      
+    </section>
+
+    
+    
+      
+    
+
+    <div class="dropdown dropdown-end sm:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="Select an option">
+        <ion-icon name="menu" class="text-2xl"></ion-icon>
+      </div>
+      <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-10 shadow-md">
+        
+
+
+
+
+
+
+
+
+<li>
+  <div role="link" tabindex="0" class="inline-flex items-center p-2 cursor-pointer" @click="flip = !flip" title="关于">
+    <ion-icon name="information-circle"></ion-icon>关于</div>
+</li>
+
+
+
+
+
+
+
+
+
+<li>
+  <a class="group inline-flex items-center p-2 cursor-pointer" href="/search" title="搜索">
+    <ion-icon name="search"></ion-icon>
+    搜索
+  </a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+    
+    <ion-icon name="logo-github"></ion-icon>
+    
+    GitHub
+  </a>
+</li>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="归档">
+    <ion-icon name="archive"></ion-icon>
+    归档
+  </a>
+</li>
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/categories" title="所有分类">
+    <ion-icon name="grid"></ion-icon>
+    所有分类
+  </a>
+</li>
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/tags" title="所有标签">
+    <ion-icon name="pricetags"></ion-icon>
+    所有标签
+  </a>
+</li>
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/index.xml" title="RSS">
+    <ion-icon name="logo-rss"></ion-icon>
+    RSS
+  </a>
+</li>
+
+
+
+
+
+      </ul>
+    </div>
+    <section class="hidden sm:flex sm:items-center sm:gap-2 md:gap-4">
+      
+
+      
+      
+      
+      
+
+
+
+
+<div role="link" tabindex="0" class="text-sm font-semibold cursor-pointer hover:underline" @click="flip = !flip" title="关于">关于</div>
+
+
+
+
+
+      
+      
+<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/search" title="搜索">
+  <ion-icon class="group-hover:text-primary-content" name="search"></ion-icon>
+</a>
+
+
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+  
+    
+
+
+
+
+  
+  <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+    <ion-icon class="group-hover:text-primary-content" name="logo-github"></ion-icon>
+  </a>
+  
+
+
+
+
+  
+
+
+      
+
+      <div class="dropdown dropdown-end dropdown-hover">
+        <div tabindex="0" role="button" class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" aria-label="Select an option">
+          <ion-icon class="group-hover:text-primary-content text-xl" name="menu"></ion-icon>
+        </div>
+        <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-10 shadow-xl">
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="归档">
+    <ion-icon name="archive"></ion-icon>
+    归档
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/categories" title="所有分类">
+    <ion-icon name="grid"></ion-icon>
+    所有分类
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/tags" title="所有标签">
+    <ion-icon name="pricetags"></ion-icon>
+    所有标签
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/index.xml" title="RSS">
+    <ion-icon name="logo-rss"></ion-icon>
+    RSS
+  </a>
+</li>
+
+
+          
+        </ul>
+      </div>
+      
+    </section>
+  </div>
+</nav>
+
+
+    <div class="flip-container" :class="{ 'flip-it': flip }">
+      <div class="flipper">
+        <div class="front">
+          <div class="container">
+            
+<div class="lg:grid lg:grid-cols-4 gap-4 mt-4 px-4">
+  <div class="hidden lg:block">
+    
+  </div>
+
+  <div class="lg:col-span-2">
+    <article class="mx-auto prose prose-quoteless dark:prose-invert" id="dream-single-post-main" itemscope itemtype="http://schema.org/Article">
+      
+	<meta itemprop="name" content="ElusiveKaze&#39;s Blog">
+	<meta itemprop="description" content="从能带到芯片与图像传感器 这篇笔记是从两场讲座里延伸出来的：激光等离子体光源及其应用讲到 EUV 光刻机靠 13.5 nm 的光在硅片上&#34;刻&#34;出晶体管，也讲到水窗显微镜最后要用一台&#34;成像探测器&#34;拍下软 X 射线图像。顺着这两条线往下追问，就是这篇笔记的内容：芯片里的晶体管怎样工作，图像传感器（CMOS 和 CCD）又怎样把光变成数字。
+全篇沿着一条链往下走：
+能带 → 电压怎样改变电子的能量 → PN 结 → MOSFET（nMOS、pMOS）→ CMOS → 晶体管的微缩（FinFET、GAA）→ 硅怎样吸收光 → CMOS 图像传感器 → CCD
+文中有几张可交互的图（拖动旋转、拖滑块改参数），用 &lt;iframe&gt; 嵌在文档里，Typora 中可以直接操作。
+一、能带：电子在固体里能待在哪些能量上 1.1 从原子能级到能带 单个原子里，电子只能待在一些分立的能级上。两个原子靠近时，它们的轨道发生重叠，一个能级会分裂成两个：同相叠加的成键态能量更低，反相叠加的反键态能量更高（和石墨烯笔记 1.1 节里 $\sigma$、$\sigma^{*}$ 的分裂是同一件事）。
+原子越多，分裂出来的能级越多。$N$ 个原子就有 $N$ 个能级，但它们挤在一个有限的能量范围里（几个 eV）。一块硅里 $N\sim10^{23}$，相邻能级的间隔只有 $10^{-23}$ eV 量级，实际上连成了一片，这就是能带。不同的原子能级展宽成不同的能带，能带之间可能留下电子不能待的能量区间，叫禁带或带隙。
+每个能级（计入自旋）最多容纳 2 个电子（泡利不相容原理，见原子结构与粒子统计）。电子从低到高把能带填满，填到哪里，决定了材料是导体还是绝缘体。
+1.2 价带、导带与带隙 价带：绝对零度时被电子填满的最高能带，它的顶端记作价带顶 $E_v$。 导带：价带上方最低的空能带，它的底端记作导带底 $E_c$。 带隙：$E_g=E_c-E_v$。 一个填满的能带不导电：每个状态都有电子占着，加电场时电子无处可&#34;挪&#34;，没有净的电流。一个空能带里没有电子，也不导电。只有部分填充的能带才能导电。
+金属：最高的有电子的能带只填了一部分，天然导电。 绝缘体：价带全满、导带全空，带隙很大（SiO$_2$ 约 9 eV），常温下几乎没有电子能跳上去。 半导体：结构和绝缘体一样，但带隙小（硅 1.12 eV），常温下有少量电子被热激发到导带。 热激发的多少由玻尔兹曼因子决定。室温下 $kT\approx0.0259$ eV，本征硅的载流子浓度">
+	<meta itemprop="wordCount" content="1799">
+
+      <header>
+        <h1 itemprop="headline"></h1>
+        <p class="text-sm">
+          
+            <span data-format="luxon">0001-01-01T00:00:00Z</span>
+          
+
+          | <span>9分钟阅读</span>
+
+          
+            | <span>更新于
+              
+                <span data-format="luxon">0001-01-01T00:00:00Z</span>
+              
+            </span>
+          
+        </p>
+
+        
+        <div class="flex justify-between">
+          
+            <div class="flex items-center">
+  
+  <span>@</span>
+  
+
+  <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+  
+    <span itemprop="name">ElusiveKaze</span>
+  
+  </span>
+</div>
+
+          
+
+          <div class="flex items-center gap-2">
+  
+  
+
+  
+  
+  
+  
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://x.com/intent/post?text=&amp;url=https://elusivekaze.github.io/posts/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/" target="_blank" rel="noopener noreferrer"
+      title="Share on X">
+      <ion-icon class="group-hover:text-primary-content" name="logo-x"></ion-icon>
+    </a>
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://facebook.com/sharer/sharer.php?u=https://elusivekaze.github.io/posts/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/" target="_blank" rel="noopener noreferrer"
+      title="Share on Facebook">
+      <ion-icon class="group-hover:text-primary-content" name="logo-facebook"></ion-icon>
+    </a>
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://wa.me/?text=%20https://elusivekaze.github.io/posts/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/" target="_blank" rel="noopener noreferrer"
+      title="Share on WhatsApp">
+      <ion-icon class="group-hover:text-primary-content" name="logo-whatsapp"></ion-icon>
+    </a>
+  
+
+  
+  
+</div>
+
+        </div>
+      </header>
+
+      <section id="dream-single-post-content" itemprop="articleBody">
+        
+
+        <h1 id="从能带到芯片与图像传感器">从能带到芯片与图像传感器</h1>
+<p>这篇笔记是从两场讲座里延伸出来的：<a href="https://elusivekaze.github.io/posts/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/" target="_blank">激光等离子体光源及其应用</a>讲到 EUV 光刻机靠 13.5 nm 的光在硅片上&quot;刻&quot;出晶体管，也讲到水窗显微镜最后要用一台&quot;成像探测器&quot;拍下软 X 射线图像。顺着这两条线往下追问，就是这篇笔记的内容：芯片里的晶体管怎样工作，图像传感器（CMOS 和 CCD）又怎样把光变成数字。</p>
+<p>全篇沿着一条链往下走：</p>
+
+
+
+  <blockquote>
+    <p>能带 → 电压怎样改变电子的能量 → PN 结 → MOSFET（nMOS、pMOS）→ CMOS → 晶体管的微缩（FinFET、GAA）→ 硅怎样吸收光 → CMOS 图像传感器 → CCD</p>
+
+  </blockquote>
+
+<p>文中有几张可交互的图（拖动旋转、拖滑块改参数），用 <code>&lt;iframe&gt;</code> 嵌在文档里，Typora 中可以直接操作。</p>
+<hr>
+<h2 id="一能带电子在固体里能待在哪些能量上">一、能带：电子在固体里能待在哪些能量上</h2>
+<h3 id="11-从原子能级到能带">1.1 从原子能级到能带</h3>
+<p>单个原子里，电子只能待在一些分立的能级上。两个原子靠近时，它们的轨道发生重叠，一个能级会分裂成两个：同相叠加的<strong>成键态</strong>能量更低，反相叠加的<strong>反键态</strong>能量更高（和<a href="https://elusivekaze.github.io/posts/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/#11--%E6%9D%82%E5%8C%96%E4%B8%8E--%E9%94%AE" target="_blank">石墨烯笔记 1.1 节</a>里 $\sigma$、$\sigma^{*}$ 的分裂是同一件事）。</p>
+<p>原子越多，分裂出来的能级越多。$N$ 个原子就有 $N$ 个能级，但它们挤在一个有限的能量范围里（几个 eV）。一块硅里 $N\sim10^{23}$，相邻能级的间隔只有 $10^{-23}$ eV 量级，实际上连成了一片，这就是<strong>能带</strong>。不同的原子能级展宽成不同的能带，能带之间可能留下电子不能待的能量区间，叫<strong>禁带</strong>或<strong>带隙</strong>。</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-1.png" alt="Figure-1"></p>
+<p>每个能级（计入自旋）最多容纳 2 个电子（泡利不相容原理，见<a href="https://elusivekaze.github.io/posts/%E5%8E%9F%E5%AD%90%E7%BB%93%E6%9E%84%E4%B8%8E%E7%B2%92%E5%AD%90%E7%BB%9F%E8%AE%A1/#%E6%B3%A1%E5%88%A9%E4%B8%8D%E7%9B%B8%E5%AE%B9%E5%8E%9F%E7%90%86" target="_blank">原子结构与粒子统计</a>）。电子从低到高把能带填满，填到哪里，决定了材料是导体还是绝缘体。</p>
+<h3 id="12-价带导带与带隙">1.2 价带、导带与带隙</h3>
+<ul>
+<li><strong>价带</strong>：绝对零度时被电子填满的最高能带，它的顶端记作价带顶 $E_v$。</li>
+<li><strong>导带</strong>：价带上方最低的空能带，它的底端记作导带底 $E_c$。</li>
+<li><strong>带隙</strong>：$E_g=E_c-E_v$。</li>
+</ul>
+<p>一个<strong>填满的能带不导电</strong>：每个状态都有电子占着，加电场时电子无处可&quot;挪&quot;，没有净的电流。一个空能带里没有电子，也不导电。只有部分填充的能带才能导电。</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-2.png" alt="Figure-2"></p>
+<ul>
+<li>金属：最高的有电子的能带只填了一部分，天然导电。</li>
+<li>绝缘体：价带全满、导带全空，带隙很大（SiO$_2$ 约 9 eV），常温下几乎没有电子能跳上去。</li>
+<li>半导体：结构和绝缘体一样，但带隙小（硅 1.12 eV），常温下有少量电子被热激发到导带。</li>
+</ul>
+<p>热激发的多少由玻尔兹曼因子决定。室温下 $kT\approx0.0259$ eV，本征硅的载流子浓度</p>
+$$
+n_i=\sqrt{N_cN_v}\,e^{-E_g/2kT}\approx1.0\times10^{10}\ \text{cm}^{-3}
+$$<p>其中 $N_c\approx2.8\times10^{19}\ \text{cm}^{-3}$、$N_v\approx1\times10^{19}\ \text{cm}^{-3}$ 是导带和价带的有效态密度。硅原子密度是 $5\times10^{22}\ \text{cm}^{-3}$，所以纯硅里大约每 $10^{12}$ 个原子才有一个电子被激发，导电性很差。</p>
+<h3 id="13-电子与空穴">1.3 电子与空穴</h3>
+<p>一个电子从价带跳到导带，价带里就留下一个空位，叫<strong>空穴</strong>。价带几乎是满的，与其追踪 $10^{22}$ 个电子怎么挪，不如只追踪这一个空位：旁边的电子填进来，空位就移到了旁边。电场把电子往一个方向推，空位就往反方向走，所以空穴表现得像一个带 $+e$ 电荷的粒子。</p>
+<p>半导体里同时有两种载流子：导带里的电子和价带里的空穴。</p>
+<h3 id="14-掺杂n-型与-p-型">1.4 掺杂：n 型与 p 型</h3>
+<p>纯硅的载流子太少。往硅里掺入少量杂质，就能精确地控制载流子：</p>
+<ul>
+<li><strong>n 型</strong>：掺磷（P）等第 V 族元素。磷有 5 个价电子，4 个和周围的硅成键，多出的 1 个束缚得很弱，能级（施主能级）只在 $E_c$ 下方约 0.045 eV，室温下几乎全部跑进导带。导电主要靠电子，电子是<strong>多数载流子</strong>。</li>
+<li><strong>p 型</strong>：掺硼（B）等第 III 族元素。硼只有 3 个价电子，成键时缺一个，附近价带的电子很容易跳过来填上（受主能级在 $E_v$ 上方约 0.045 eV），于是在价带里留下空穴。导电主要靠空穴。</li>
+</ul>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-3.png" alt="Figure-3"></p>
+<p>无论怎么掺杂，热平衡下电子浓度和空穴浓度的乘积不变（质量作用定律）：</p>
+$$
+np=n_i^2
+$$<p>例如掺磷 $N_D=10^{16}\ \text{cm}^{-3}$：$n\approx10^{16}$，$p=n_i^2/n\approx10^{4}\ \text{cm}^{-3}$，电子比空穴多 12 个数量级。</p>
+<h3 id="15-费米能级">1.5 费米能级</h3>
+<p>电子占据能量为 $E$ 的状态的概率由费米-狄拉克分布给出：</p>
+$$
+f(E)=\frac{1}{1+e^{(E-E_F)/kT}}
+$$<p>$E_F$ 是<strong>费米能级</strong>，可以理解成&quot;电子填到哪儿&quot;的标尺：比 $E_F$ 低几个 $kT$ 的状态几乎全满，高几个 $kT$ 的几乎全空。半导体的 $E_F$ 落在带隙里，它离哪条带边越近，那一边的载流子越多：</p>
+$$
+n=N_c\,e^{-(E_c-E_F)/kT},\qquad p=N_v\,e^{-(E_F-E_v)/kT}
+$$<ul>
+<li>本征硅：$n=p$，$E_F$ 在带隙中间附近，记作 $E_i$。</li>
+<li>n 型：$E_F$ 靠近 $E_c$，$E_F-E_i=kT\ln(N_D/n_i)$。</li>
+<li>p 型：$E_F$ 靠近 $E_v$，$E_i-E_F=kT\ln(N_A/n_i)$。</li>
+</ul>
+<p>例如 $N_D=10^{16}\ \text{cm}^{-3}$ 时，$E_F-E_i=0.0259\times\ln10^{6}\approx0.36$ eV。</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-4.png" alt="Figure-4"></p>
+<p><strong>※ 后面反复要用的一条规则：热平衡（没有净电流）时，整块材料里的费米能级处处相等。</strong> PN 结的能带为什么会弯，就是从这条规则来的。</p>
+<hr>
+<h2 id="二电压与能量读懂能带图">二、电压与能量：读懂能带图</h2>
+<h3 id="21-电子的电势能是">2.1 电子的电势能是 $-e\varphi$</h3>
+<p>电荷 $q$ 在电势为 $\varphi$ 的地方，电势能是</p>
+$$
+E_p=q\varphi
+$$<p>电子的电荷 $q=-e$，所以</p>
+$$
+E_p=-e\varphi
+$$<p><strong>电势越高，电子的能量越低。</strong> 这和&quot;正电荷在高电势处能量高&quot;恰好相反，只因为电子带负电。</p>
+<p>本文的记号：$\varphi$ 表示某一点的电势；$V$ 表示两点之间的电压，例如外加电压 $V$、栅压 $V_G$、内建电势差 $V_{bi}$。</p>
+<p>用做功来验证。电荷从 A 移到 B，电场力做的功是 $W_{AB}=q(\varphi_A-\varphi_B)$，电势能的变化是 $\Delta E_p=-W_{AB}$。让电子从电势 0 V 处移到 +1 V 处：</p>
+$$
+W=(-e)(0-1\ \text{V})=+1\ \text{eV}
+$$<p>电场力做<strong>正功</strong>，电势能减少 1 eV。容易出错的地方是把电子当成正电荷：电场方向从高电势指向低电势，但电子受力与电场方向相反，所以电子被拉<strong>向</strong>高电势，从低电势走到高电势是&quot;顺着力&quot;走的。</p>
+<p>电子伏（eV）就是这样定义的：一个电子穿过 1 V 电压差，能量变化 1 eV。</p>
+<h3 id="22-能带图的纵轴是电子能量">2.2 能带图的纵轴是电子能量</h3>
+<p>能带图的纵轴永远是<strong>电子</strong>的能量，往上能量越高。给某块区域加电压 $V$，它的电势升高 $V$，这里所有的能级（$E_c$、$E_v$、$E_F$）都整体移动 $-eV$：加正电压，能带往下沉。</p>
+<p>如果一段硅两端电势不同，能带就是倾斜的：</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-5.png" alt="Figure-5"></p>
+<p>能带的斜率就是电场。导带底随位置变化 $E_c(x)=E_{c0}-e\varphi(x)$，而 $\mathcal{E}=-\dfrac{d\varphi}{dx}$，所以</p>
+$$
+\mathcal{E}=\frac{1}{e}\frac{dE_c}{dx}
+$$<p>读能带图只需要记住两句话：<strong>电子往下滚，空穴往上浮。</strong></p>
+<h3 id="23-为什么空穴反过来">2.3 为什么空穴&quot;反过来&quot;</h3>
+<p>空穴是价带里缺了一个电子。把空穴往下（往价带深处）移，意味着从更深的、束缚更紧的能级拿走一个电子，代价更大，所以<strong>空穴的能量往下是增加的</strong>，空穴自然往上&quot;浮&quot;。</p>
+<p>换一种说法：空穴带 $+e$ 电荷，它的电势能是 $E_p=+e\varphi$，电势越低能量越低，所以空穴往低电势跑。</p>
+<table>
+	<thead>
+			<tr>
+					<th></th>
+					<th>电荷</th>
+					<th>电势能</th>
+					<th>往哪里跑</th>
+					<th>在能带图上</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>电子</td>
+					<td>$-e$</td>
+					<td>$-e\varphi$</td>
+					<td>高电势</td>
+					<td>往下滚</td>
+			</tr>
+			<tr>
+					<td>空穴</td>
+					<td>$+e$</td>
+					<td>$+e\varphi$</td>
+					<td>低电势</td>
+					<td>往上浮</td>
+			</tr>
+	</tbody>
+</table>
+<p>两种说法是同一件事，底层原因只有一个：电势能 $E_p=q\varphi$，而两者的电荷符号相反。</p>
+<h3 id="24-费米能级与外加电压">2.4 费米能级与外加电压</h3>
+<p>两点之间的电压，正是它们费米能级之差：</p>
+$$
+E_{F1}-E_{F2}=e(\varphi_2-\varphi_1)
+$$<p>电池的电压就是把两边的费米能级拉开。费米能级处处平，说明没有电压降，也就没有净电流。</p>
+<hr>
+<h2 id="三pn-结两块硅接在一起出现的能量坡">三、PN 结：两块硅接在一起出现的能量坡</h2>
+<h3 id="31-形成过程">3.1 形成过程</h3>
+<p>把 p 型硅和 n 型硅接在一起：</p>
+<ol>
+<li>n 区电子多，向 p 区扩散；p 区空穴多，向 n 区扩散。它们在交界处相遇复合。</li>
+<li>载流子跑掉后，n 区留下带正电的施主离子，p 区留下带负电的受主离子。这些离子固定在晶格里不能动，交界附近形成一个没有自由载流子的<strong>耗尽区</strong>。</li>
+<li>离子电荷产生从 n 指向 p 的<strong>内建电场</strong>，把电子推回 n 区、把空穴推回 p 区，与扩散相抗衡。</li>
+<li>扩散和漂移平衡时，费米能级拉平。原来 n 区的 $E_F$ 比 p 区高，拉平后 p 区的能带整体被抬高，交界处出现一道&quot;能量坡&quot;。</li>
+</ol>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-6.png" alt="Figure-6"></p>
+<p>所以&quot;两块硅粘在一起出现能量坡&quot;，本质是费米能级必须相等。</p>
+<h3 id="32-内建电势">3.2 内建电势</h3>
+<p>接触前两边的费米能级相差</p>
+$$
+E_{Fn}-E_{Fp}=(E_{Fn}-E_i)+(E_i-E_{Fp})=kT\ln\frac{N_D}{n_i}+kT\ln\frac{N_A}{n_i}
+$$<p>接触后这个差值全部变成能带的高度差，即<strong>内建电势</strong> $V_{bi}$：</p>
+$$
+eV_{bi}=kT\ln\frac{N_AN_D}{n_i^2}
+$$<p>例如 $N_A=N_D=10^{16}\ \text{cm}^{-3}$：$V_{bi}=0.0259\times\ln10^{12}\approx0.72$ V。</p>
+<h3 id="33-耗尽区宽度">3.3 耗尽区宽度</h3>
+<p>耗尽区里电荷密度是常数（$p$ 侧 $-eN_A$，$n$ 侧 $+eN_D$），由泊松方程</p>
+$$
+\frac{d^2\varphi}{dx^2}=-\frac{\rho}{\varepsilon_s}
+$$<p>积分两次，电势在耗尽区里是抛物线，所以能带图上的那道坡是两段抛物线拼起来的。推导步骤：</p>
+<ol>
+<li>电中性：两侧离子电荷相等，$N_Ax_p=N_Dx_n$，$W=x_p+x_n$。</li>
+<li>积分一次，电场在交界处最大：$\mathcal{E}_{\max}=eN_Ax_p/\varepsilon_s$。</li>
+<li>电场对位置的积分就是总电压：$V_{bi}-V=\tfrac12\mathcal{E}_{\max}W$（电场是三角形分布）。</li>
+<li>联立消去 $x_p$、$x_n$，得到</li>
+</ol>
+$$
+W=\sqrt{\frac{2\varepsilon_s(V_{bi}-V)}{e}\left(\frac1{N_A}+\frac1{N_D}\right)}
+$$<p>$V$ 是外加电压（p 接正为正）。$N_A=N_D=10^{16}\ \text{cm}^{-3}$、$V=0$ 时，$W\approx0.43\ \mu\text{m}$。掺杂越淡，耗尽区越宽；反向电压越大，耗尽区越宽。</p>
+<h3 id="34-正偏与反偏">3.4 正偏与反偏</h3>
+<ul>
+<li><strong>正偏</strong>（p 接正）：p 区电压升高，能带下沉，势垒从 $eV_{bi}$ 降到 $e(V_{bi}-V)$。能翻过势垒的电子数按玻尔兹曼因子增长，电流随电压指数上升：</li>
+</ul>
+$$
+I=I_s\left(e^{eV/kT}-1\right)
+$$<p>室温下电压每增加约 60 mV，电流增大 10 倍。</p>
+<ul>
+<li><strong>反偏</strong>（p 接负）：势垒升高、耗尽区变宽，只剩极小的反向饱和电流 $I_s$（来自热激发的少数载流子）。光电二极管就工作在这个状态。</li>
+</ul>
+<iframe src="从能带到芯片与图像传感器.assets/I1-pn-junction.html" width="100%" height="560" frameborder="0" style="border:1px solid #e5e5e5;border-radius:8px"></iframe>
+
+
+
+  <blockquote>
+    <p>交互图：拖动滑块改变偏压，看势垒高度、耗尽区宽度和电流怎样变化。</p>
+
+  </blockquote>
+
+<h3 id="35-光电二极管">3.5 光电二极管</h3>
+<p>能量大于带隙的光子被硅吸收，产生一对电子和空穴。如果这发生在耗尽区里（或离它不远，能扩散进来），内建电场会立刻把它们分开：电子被推向 n 区，空穴被推向 p 区。光照越强，攒下的电子越多。</p>
+<p>反偏能把耗尽区拉宽，收集更多的光生电荷。图像传感器的每个像素，核心就是这样一个光电二极管（第八章）。</p>
+<h3 id="36-npn-与-pnp">3.6 npn 与 pnp</h3>
+<p>把两个 PN 结背靠背接起来：</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-7.png" alt="Figure-7"></p>
+<ul>
+<li><strong>npn</strong>：中间的 p 区让导带鼓起一个包，挡住两边 n 区的电子。</li>
+<li><strong>pnp</strong>：中间的 n 区让价带凹下一个坑。空穴往上浮，这个&quot;坑&quot;对它来说就是势垒。把 pnp 的图上下翻过来看，和 npn 是同一个形状。</li>
+</ul>
+<p>这两种结构是<strong>双极型晶体管</strong>（BJT）：给中间的&quot;基区&quot;注入电流，就能降低这道势垒，让两端导通。BJT 和下面要讲的 MOSFET 是两种不同的器件。不过 MOSFET 沿沟道方向看，也是 n+ / p / n+ 三段，同样有一道&quot;npn 式&quot;的势垒，区别在于它是用<strong>隔着绝缘层的栅极电压</strong>来压低势垒的。</p>
+<hr>
+<h2 id="四mosfet源极栅极漏极">四、MOSFET：源极、栅极、漏极</h2>
+<h3 id="41-结构">4.1 结构</h3>
+<p>以 nMOS（n 沟道 MOSFET）为例：</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-8.png" alt="Figure-8"></p>
+<ul>
+<li><strong>衬底</strong>：p 型硅，一般接地。</li>
+<li><strong>源极</strong>（S）和<strong>漏极</strong>（D）：两块重掺杂的 n+ 区。两者结构对称，电子从哪边出发，哪边就叫源极。nMOS 的源极接低电压（通常接地），漏极接正电压。</li>
+<li><strong>栅极</strong>（G）：盖在源、漏之间的硅表面上方，中间隔着一层很薄的绝缘层（早年是 SiO$_2$，现在是 HfO$_2$ 等高介电常数材料，等效厚度约 1 nm）。</li>
+<li><strong>沟道</strong>：栅极正下方、源漏之间那一层很薄的<strong>硅表面</strong>。导通时，电子就在这一层里从源极流到漏极。沟道在硅里，不在栅极里。</li>
+</ul>
+<p>几个容易混淆的地方：</p>
+<ul>
+<li>剖面图只画了沿电流方向的截面，真实器件在垂直纸面的方向还有宽度 $W$。平面晶体管的沟道就是栅极下面那一片硅表面；FinFET 里&quot;表面&quot;变成了竖起来的鳍的侧壁和顶面（第六章）。</li>
+<li>栅极与沟道之间的栅氧化层是起控制作用的那层绝缘体。器件周围还有别的绝缘层（侧墙、浅沟槽隔离、布线之间的介质），用来隔开不同的导体，但它们不参与&quot;控制沟道&quot;。</li>
+<li>栅极和沟道之间不通电流。栅极像电容的一块极板，靠电场隔空影响硅表面。</li>
+</ul>
+<h3 id="42-mos-电容栅压怎样在硅表面变出电子">4.2 MOS 电容：栅压怎样在硅表面&quot;变出&quot;电子</h3>
+<p>栅极、氧化层、p 型硅构成一个电容。栅压不同，硅表面的能带弯曲不同：</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-9.png" alt="Figure-9"></p>
+<ul>
+<li><strong>积累</strong>（$V_G<0$）：负栅压把空穴吸到表面，能带往上弯。</li>
+<li><strong>耗尽</strong>（$0<V_G<V_T$）：正栅压把空穴推开，表面只剩带负电的受主离子，能带往下弯。</li>
+<li><strong>反型</strong>（$V_G>V_T$）：能带弯得足够多，表面的 $E_c$ 靠近 $E_F$，电子在表面变得比空穴还多。p 型硅的表面出现了一层&quot;n 型&quot;的电子层，这就是<strong>反型层</strong>，也就是沟道。</li>
+</ul>
+<p>在 MOSFET 里，反型层的电子几乎瞬间从旁边的 n+ 源漏区补充过来。（如果旁边没有源漏，比如 CCD，电子只能靠热激发慢慢产生，这一点第九章会用到。）</p>
+<p>开始反型的条件通常取表面电势 $\varphi_s=2\varphi_F$，其中 $\varphi_F=\frac{kT}{e}\ln\frac{N_A}{n_i}$ 是体内费米能级与 $E_i$ 的距离。栅压一部分降在氧化层上（由耗尽区电荷决定），一部分用来让硅表面弯曲，由此得到<strong>阈值电压</strong>：</p>
+$$
+V_T=V_{FB}+2\varphi_F+\frac{\sqrt{2\varepsilon_s eN_A(2\varphi_F)}}{C_{ox}}
+$$<ul>
+<li>$V_{FB}$：平带电压，抵消栅极材料与硅的功函数差和氧化层里的固定电荷。</li>
+<li>$2\varphi_F$：硅表面需要弯曲的量。</li>
+<li>最后一项：耗尽区电荷 $Q_{dep}$ 在氧化层电容 $C_{ox}=\varepsilon_{ox}/t_{ox}$ 上造成的电压降。</li>
+</ul>
+<h3 id="43-沿沟道看源漏之间的势垒">4.3 沿沟道看：源漏之间的势垒</h3>
+<p>换个方向，沿着&quot;源 → 沟道 → 漏&quot;看导带底：</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-10.png" alt="Figure-10"></p>
+<ul>
+<li><strong>栅极下方为什么能量高？</strong> 不是栅压造成的。栅极下方的硅是 p 型，它和两边的 n+ 区形成两个 PN 结，内建电势让这里的导带比源漏高出零点几个 eV，和 npn 中间的&quot;包&quot;一模一样。$V_G=0$ 时，这道势垒挡住了源极的电子，晶体管关断。</li>
+<li><strong>栅压的作用</strong>：栅极加正电压，通过氧化层电容把硅表面的电势往上拉，表面的能带往下沉，势垒降低。降到一定程度，源极的电子就能大量翻过来，晶体管导通。</li>
+<li><strong>为什么还要漏极电压？</strong> 势垒降低只是&quot;门开了&quot;。如果源漏电位相同，电子从源到漏和从漏到源的数目一样多，净电流为零。漏极加正电压，漏端能带下沉，形成一个整体往漏极倾斜的坡，电子才有净的流向。</li>
+</ul>
+<iframe src="从能带到芯片与图像传感器.assets/I2-channel-landscape.html" width="100%" height="580" frameborder="0" style="border:1px solid #e5e5e5;border-radius:8px"></iframe>
+
+
+
+  <blockquote>
+    <p>交互图（三维）：曲面高度表示电子能量。调高栅压，硅表面从源到漏的一条&quot;山谷&quot;被打通；调漏压，漏端整体下沉。</p>
+
+  </blockquote>
+
+<h3 id="44-电流有多大开关有多陡">4.4 电流有多大，开关有多&quot;陡&quot;</h3>
+<p><strong>阈值以下</strong>，电流来自热运动翻过势垒的电子，按玻尔兹曼因子变化：$I_D\propto e^{e\varphi_s/kT}$。理想情况下表面电势完全跟随栅压，栅压每变化</p>
+$$
+\frac{kT}{e}\ln10\approx60\ \text{mV}
+$$<p>电流变化 10 倍。实际上栅压还要分一部分给耗尽区电容，<strong>亚阈值摆幅</strong>为</p>
+$$
+S=\frac{kT}{e}\ln10\left(1+\frac{C_{dep}}{C_{ox}}\right)\ \ge 60\ \text{mV/dec}
+$$<p>这个 60 mV/dec 的下限来自热分布本身。晶体管要从&quot;关&quot;到&quot;开&quot;差出 4 到 5 个数量级的电流，栅压至少要变化约 0.3 V，这也是芯片电源电压很难降到 0.5 V 以下的原因之一。</p>
+<p><strong>阈值以上</strong>，长沟道器件的经典公式是：</p>
+$$
+I_D=\mu_nC_{ox}\frac{W}{L}\left[(V_{GS}-V_T)V_{DS}-\frac{V_{DS}^2}{2}\right]\quad(\text{线性区，}V_{DS}<V_{GS}-V_T)
+$$$$
+I_D=\frac12\mu_nC_{ox}\frac{W}{L}(V_{GS}-V_T)^2\quad(\text{饱和区})
+$$<p>今天的短沟道器件受速度饱和等效应影响，不严格符合平方律，但趋势不变：<strong>电流正比于 $W/L$</strong>。所以要把沟道长度 $L$ 做短、宽度 $W$ 做大，第六章的 FinFET 和 GAA 就是围绕这两点展开的。</p>
+<h3 id="45-pmos一切反过来">4.5 pMOS：一切反过来</h3>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-11.png" alt="Figure-11"></p>
+<ul>
+<li>结构：在 n 型区域（n 阱）里做两块 p+ 源漏，靠<strong>空穴</strong>导电。</li>
+<li>空穴从高电势流向低电势，所以 pMOS 的<strong>源极接电源 $V_{DD}$</strong>，漏极接输出。</li>
+<li>栅压要比源极<strong>低</strong>足够多才导通：$V_{GS}<V_{T,p}$（$V_{T,p}$ 是负值，例如 $-0.4$ V）。源极接 $V_{DD}$ 时，栅极接 0 V 就是 $V_{GS}=-V_{DD}$，导通；栅极接 $V_{DD}$ 时 $V_{GS}=0$，关断。</li>
+<li>能带图上（纵轴仍是电子能量）：栅极下方的 n 型区让价带凹下一个坑，空穴沉不过去。栅压降低，这里的能带被抬高（电势低 → 电子能量高），坑被抬平，空穴就浮向漏极。</li>
+</ul>
+<p>空穴的迁移率只有电子的 1/2 到 1/3（体硅中约 450 对 1400 cm²/(V·s)），所以同样的电流，pMOS 往往要做得更宽。</p>
+<hr>
+<h2 id="五cmos把-nmos-和-pmos-配成一对">五、CMOS：把 nMOS 和 pMOS 配成一对</h2>
+<h3 id="51-反相器">5.1 反相器</h3>
+<p>CMOS 电路的基本单元是一个 pMOS 和一个 nMOS 串联：pMOS 接电源，nMOS 接地，两个栅极连在一起作输入，两个漏极连在一起作输出。</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-12.png" alt="Figure-12"></p>
+<ul>
+<li>输入为高：nMOS 导通、pMOS 截止，输出被拉到地，输出 0。</li>
+<li>输入为低：pMOS 导通、nMOS 截止，输出被拉到 $V_{DD}$，输出 1。</li>
+</ul>
+<p>关键在于：<strong>任何稳定状态下，总有一个晶体管是关的</strong>，电源到地之间没有直通电流，电路不翻转时几乎不耗电。功耗主要来自翻转时给负载电容充放电：</p>
+$$
+P_{\text{动态}}=\alpha CV_{DD}^2f
+$$<p>$\alpha$ 是翻转概率，$C$ 是负载电容，$f$ 是时钟频率。功耗与电压的平方成正比，所以芯片一直在降低工作电压。</p>
+<p>在硅片上，nMOS 直接做在 p 型衬底里，pMOS 做在专门掺出来的 n 阱里，两者并排：</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-13.png" alt="Figure-13"></p>
+<p>与非门、或非门、触发器、SRAM 都是用这种互补的 nMOS/pMOS 对搭出来的。一颗手机芯片里有上百亿个这样的晶体管。</p>
+<h3 id="52-名字与常见误解">5.2 名字与常见误解</h3>
+<ul>
+<li><strong>CMOS</strong> = Complementary Metal–Oxide–Semiconductor，互补金属-氧化物-半导体。&ldquo;互补&quot;指 nMOS 和 pMOS 成对使用。</li>
+<li>&ldquo;金属&quot;是历史名称：最早的栅极是铝；1970 年代到 2000 年代改用掺杂多晶硅；2007 年 Intel 45 nm 工艺起又换回金属栅，配高介电常数的 HfO$_2$ 绝缘层（HKMG）。名字一直没改。</li>
+<li>CMOS 不是 npn 或 pnp。那是双极型晶体管（BJT），是另一类器件。CMOS 结构里确实寄生着 npn 和 pnp（它们串起来可能引发&quot;闩锁&quot;故障），但那是要避免的副作用。</li>
+<li><strong>相机里的&quot;CMOS&rdquo;</strong> 是 CMOS 图像传感器：用 CMOS 工艺制造，每个像素里有光电二极管和几个 MOSFET（第八章）。</li>
+<li><strong>电脑主板上的&quot;CMOS&rdquo;</strong> 是一小块保存 BIOS 设置的低功耗存储器，靠纽扣电池供电，叫法同样来自它的制造工艺。</li>
+</ul>
+<h3 id="53-芯片家族">5.3 芯片家族</h3>
+<table>
+	<thead>
+			<tr>
+					<th>类型</th>
+					<th>核心器件</th>
+					<th>例子</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>逻辑芯片</td>
+					<td>CMOS 晶体管</td>
+					<td>CPU、GPU、手机 SoC</td>
+			</tr>
+			<tr>
+					<td>DRAM</td>
+					<td>1 个晶体管 + 1 个电容存 1 位</td>
+					<td>内存</td>
+			</tr>
+			<tr>
+					<td>NAND 闪存</td>
+					<td>电荷陷阱晶体管，3D 堆叠两三百层以上</td>
+					<td>SSD、U 盘</td>
+			</tr>
+			<tr>
+					<td>模拟和射频</td>
+					<td>CMOS、SiGe、GaAs 等</td>
+					<td>放大器、ADC、手机射频前端</td>
+			</tr>
+			<tr>
+					<td>功率器件</td>
+					<td>IGBT、SiC、GaN</td>
+					<td>电动车、快充</td>
+			</tr>
+			<tr>
+					<td>图像传感器</td>
+					<td>光电二极管 + CMOS 读出电路</td>
+					<td>相机、手机</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h2 id="六晶体管怎样越做越小栅长finfet-与-gaa">六、晶体管怎样越做越小：栅长、FinFET 与 GAA</h2>
+<h3 id="61-几纳米到底指什么">6.1 “几纳米”到底指什么</h3>
+<p>早年工艺节点的名字基本等于晶体管的栅长或线宽的一半。大约从 2000 年代后期开始，两者逐渐脱钩，今天的&quot;3 nm&quot;&ldquo;2 nm&quot;已经是代际名称，不对应任何一个实际尺寸。以 3 nm 一代为例，接触栅间距约 45–48 nm，最小金属线间距约 21–24 nm，栅长十几纳米。</p>
+<p>讲座里的 13.5 nm 是 EUV 光刻机光源的<strong>波长</strong>，和&quot;几纳米&quot;节点名不是一回事。光刻能印出的最小半周期由瑞利公式估计：</p>
+$$
+R=k_1\frac{\lambda}{NA}
+$$<p>$\lambda=13.5$ nm、数值孔径 $NA=0.33$、工艺因子 $k_1\approx0.3$ 时，$R\approx12$ nm；新一代高数值孔径 EUV（$NA=0.55$）可到 8 nm 左右。光源本身怎样产生，见<a href="https://elusivekaze.github.io/posts/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/" target="_blank">激光等离子体光源笔记</a>。</p>
+<h3 id="62-平面晶体管为什么做不下去">6.2 平面晶体管为什么做不下去</h3>
+<p>4.3 节说过，晶体管的开关靠栅极压低源漏之间的势垒。沟道越短，漏极离源极越近，<strong>漏极的电场也开始从下方&quot;绕过&quot;栅极去压低这道势垒</strong>（漏致势垒降低，DIBL）。结果是栅极关断时势垒也不够高，漏电流变大；栅极只从上面一个面控制沟道，控制力不够。</p>
+<p>把栅氧化层做薄能增强栅控，但 SiO$_2$ 薄到 1 nm 左右，电子会直接隧穿过去，于是换成更厚但介电常数更高的 HfO$_2$。再往下，就只能改变沟道的形状：<strong>把沟道做薄，让栅极从多个面把它包住</strong>，沟道里没有哪一部分离栅极太远。</p>
+<h3 id="63-finfet栅极包住三面">6.3 FinFET：栅极包住三面</h3>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-14.png" alt="Figure-14"></p>
+<p>把沟道竖起来做成一片很薄的&quot;鳍&rdquo;，栅极从左、右、上三面包住它：</p>
+<ul>
+<li><strong>鳍很薄</strong>（约 5–7 nm）：是为了让栅极的电场贯穿整片鳍，漏极的电场钻不进来。</li>
+<li><strong>鳍做高</strong>（约 40–50 nm）：鳍的两个侧面都是沟道，有效宽度约为 $2H+W_{\text{fin}}$。在同样的占地面积上，竖起来的面比平铺的面更多，电流更大。</li>
+<li><strong>多片鳍并排</strong>：几片鳍共用一个栅极，电流相加。逻辑单元里常见 2 到 3 片鳍并联。</li>
+</ul>
+<p>&ldquo;沟道很薄&quot;不是说只能一个电子一个电子地通过。1 µA 的电流就是每秒 $6\times10^{12}$ 个电子，几纳米宽的鳍的截面里也有成百上千个硅原子。做薄是为了<strong>静电控制</strong>，不是为了&quot;单电子通道&rdquo;。平面晶体管的反型层本来也只有几纳米厚，但它铺得很宽。</p>
+<h3 id="64-gaa栅极包住四面">6.4 GAA：栅极包住四面</h3>
+<p>GAA（Gate-All-Around，环栅）把沟道做成几片上下叠放的水平<strong>纳米片</strong>，栅极材料填满纳米片之间的空隙，把每一片的四面都包住，栅控最强。</p>
+<p>和&quot;多片鳍并排&quot;的区别：</p>
+<ul>
+<li>方向不同：鳍是竖着的薄片、左右并排；纳米片是平躺的薄片、上下叠放。</li>
+<li>包住的面不同：鳍是三面，纳米片是四面。</li>
+<li>宽度调节方式不同：FinFET 只能通过鳍的片数调电流（整数），纳米片的宽度可以连续设计。</li>
+</ul>
+<iframe src="从能带到芯片与图像传感器.assets/I3-planar-finfet-gaa.html" width="100%" height="560" frameborder="0" style="border:1px solid #e5e5e5;border-radius:8px"></iframe>
+
+
+
+  <blockquote>
+    <p>交互图（三维）：切换三种结构，拖动旋转；勾选&quot;隐藏栅极&quot;可以看到里面的沟道，拖动栅压看沟道&quot;亮起&quot;。</p>
+
+  </blockquote>
+
+<p>下一步是 CFET：把 nMOS 和 pMOS 上下叠起来，进一步节省面积。</p>
+<h3 id="65-时间线">6.5 时间线</h3>
+<table>
+	<thead>
+			<tr>
+					<th>年份</th>
+					<th>事件</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>1959</td>
+					<td>贝尔实验室的 Atalla 和 Kahng 做出 MOSFET</td>
+			</tr>
+			<tr>
+					<td>1963</td>
+					<td>仙童公司的 Wanlass 提出 CMOS</td>
+			</tr>
+			<tr>
+					<td>1971</td>
+					<td>Intel 4004：10 µm 工艺，约 2300 个晶体管</td>
+			</tr>
+			<tr>
+					<td>2007</td>
+					<td>Intel 45 nm：高介电常数栅介质 + 金属栅（HKMG）</td>
+			</tr>
+			<tr>
+					<td>2011</td>
+					<td>Intel 22 nm：首个量产 FinFET（Tri-Gate）</td>
+			</tr>
+			<tr>
+					<td>2019</td>
+					<td>EUV 光刻进入量产（7 nm 一代的部分层）</td>
+			</tr>
+			<tr>
+					<td>2022</td>
+					<td>三星 3 nm：首个量产 GAA</td>
+			</tr>
+			<tr>
+					<td>2025</td>
+					<td>台积电 2 nm、Intel 18A 量产，均为 GAA 纳米片</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h2 id="七光怎样变成电子硅的吸收">七、光怎样变成电子：硅的吸收</h2>
+<p>从这一章开始讲图像传感器。不管是 CMOS 还是 CCD，第一步都一样：硅吸收光子，产生电子。</p>
+<h3 id="71-截止波长">7.1 截止波长</h3>
+<p>光子能量与波长的关系：</p>
+$$
+E=\frac{hc}{\lambda},\qquad E\,[\text{eV}]\approx\frac{1240}{\lambda\,[\text{nm}]}
+$$<p>光子能量要大于硅的带隙 1.12 eV，才能把电子从价带打到导带，对应的截止波长约 1107 nm。所以硅相机能看见全部可见光和一部分近红外，对更长波长的红外是透明的。</p>
+<h3 id="72-直接带隙与间接带隙">7.2 直接带隙与间接带隙</h3>
+<p>能带不仅有能量，还和电子的晶体动量 $\hbar k$ 有关，画成 $E$–$k$ 图：</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-15.png" alt="Figure-15"></p>
+<p>光子的动量 $h/\lambda$ 和晶体动量的尺度 $\pi/a$ 相比极小（比值约为 $a/\lambda\sim10^{-3}$），所以光吸收在 $E$–$k$ 图上几乎是一条竖直的跃迁。</p>
+<ul>
+<li><strong>直接带隙</strong>（GaAs）：导带最低点和价带最高点都在 $k=0$，光子竖直一跳就到。吸收强，发光也强，所以 LED 和激光器用 GaAs、GaN、InP 等材料。</li>
+<li><strong>间接带隙</strong>（Si）：价带顶在 $k=0$，导带底却在靠近布里渊区边界的地方（约 0.85 倍处）。能量刚好够的光子还缺一大截动量，要同时吸收或放出一个<strong>声子</strong>（晶格振动）来补，三者凑齐的概率小，所以硅对带隙附近的光吸收很弱。硅在 $k=0$ 的直接跃迁要约 3.4 eV，对应紫外，所以硅对紫外和蓝光吸收很强。</li>
+</ul>
+<p>同样的原因，硅几乎不能发光，硅基 LED 一直很难做。</p>
+<h3 id="73-吸收深度">7.3 吸收深度</h3>
+<p>光进入硅后按指数衰减（比尔-朗伯定律）：</p>
+$$
+I(z)=I_0e^{-\alpha z}
+$$<p>$1/\alpha$ 叫吸收深度，光走过这么远，强度剩下 $1/e\approx37\%$。</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-16.png" alt="Figure-16"></p>
+<table>
+	<thead>
+			<tr>
+					<th>波长（nm）</th>
+					<th>350</th>
+					<th>400</th>
+					<th>450</th>
+					<th>500</th>
+					<th>550</th>
+					<th>600</th>
+					<th>650</th>
+					<th>700</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>吸收深度（µm）</td>
+					<td>0.01</td>
+					<td>0.1</td>
+					<td>0.4</td>
+					<td>0.9</td>
+					<td>1.6</td>
+					<td>2.4</td>
+					<td>3.5</td>
+					<td>5.3</td>
+			</tr>
+	</tbody>
+</table>
+<table>
+	<thead>
+			<tr>
+					<th>波长（nm）</th>
+					<th>750</th>
+					<th>800</th>
+					<th>850</th>
+					<th>900</th>
+					<th>950</th>
+					<th>1000</th>
+					<th>1050</th>
+					<th>1100</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>吸收深度（µm）</td>
+					<td>8</td>
+					<td>11.8</td>
+					<td>18.5</td>
+					<td>33</td>
+					<td>63</td>
+					<td>156</td>
+					<td>610</td>
+					<td>2900</td>
+			</tr>
+	</tbody>
+</table>
+<p>这张表决定了图像传感器的很多设计：</p>
+<ul>
+<li>蓝光在表面 0.4 µm 内就被吸收完，<strong>表面的质量</strong>直接决定蓝光的效率。</li>
+<li>红光要 3.5 µm，所以感光的硅层至少要几微米厚。</li>
+<li>近红外要上百微米，普通传感器看不清；天文 CCD 要专门做成 100–250 µm 厚（9.7 节）。</li>
+</ul>
+<h3 id="74-高能光子一个光子产生很多电子">7.4 高能光子：一个光子产生很多电子</h3>
+<p>可见光光子只能产生 1 对电子-空穴。X 射线光子能量高得多，在硅里平均每消耗</p>
+$$
+\bar\varepsilon\approx3.65\ \text{eV}
+$$<p>就产生一对电子-空穴（比带隙大，因为一部分能量变成了晶格振动）。一个光子产生的电子数为 $N=E/\bar\varepsilon$：</p>
+<ul>
+<li>水窗 2.76 nm 的光子，能量约 449 eV，产生约 123 个电子。</li>
+<li>EUV 13.5 nm 的光子，能量约 92 eV，产生约 25 个电子。</li>
+</ul>
+<p>$N$ 的统计涨落比泊松分布小，$\sigma_N=\sqrt{FN}$，硅的法诺因子 $F\approx0.12$。所以数一数一个像素里有多少电子，就能反推出光子的能量，探测器同时就是能谱仪（9.7 节）。软 X 射线在硅里只走零点几微米就被吸收，比蓝光还&quot;浅&quot;，对表面的要求更高。</p>
+<hr>
+<h2 id="八cmos-图像传感器">八、CMOS 图像传感器</h2>
+<p>一个像素要做三件事：<strong>把光变成电子并攒起来，把电子数变成电压，把电压变成数字。</strong> CMOS 图像传感器（CIS）在每个像素里放一个光电二极管和几个晶体管，电压到数字的转换放在每一列的末端。</p>
+<h3 id="81-钉扎光电二极管">8.1 钉扎光电二极管</h3>
+<p>现代像素用的光电二极管叫<strong>钉扎光电二极管</strong>（pinned photodiode）：一个 n 区埋在硅里，上面再盖一层很薄的 p+ 层。</p>
+<ul>
+<li>表面的 p+ 层把硅表面的缺陷能级用空穴填满，表面产生的热电子（暗电流）大大减少。</li>
+<li>n 区可以被完全耗尽。读出时里面的电子能被<strong>整包倒干净</strong>，不留残余。</li>
+</ul>
+<p>这种结构是 1980 年前后日本 NEC 为行间转移 CCD 发明的（9.6 节），1990 年代被搬进 CMOS 像素。</p>
+<h3 id="82-4t-像素与相关双采样">8.2 4T 像素与相关双采样</h3>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-17.png" alt="Figure-17"></p>
+<p>一个 4T 像素有四个晶体管：</p>
+<ul>
+<li><strong>TG</strong>（转移栅）：把光电二极管里的电子倒进浮置扩散区。</li>
+<li><strong>FD</strong>（浮置扩散）：一个很小的 n+ 区，电容 $C_{FD}$ 只有 1–2 fF，把电荷变成电压。</li>
+<li><strong>RST</strong>（复位管）：把 FD 拉回电源电压，清空。</li>
+<li><strong>SF</strong>（源极跟随器）：把 FD 的电压缓冲后送出去。</li>
+<li><strong>SEL</strong>（行选）：选中这一行时才接到列输出线上。</li>
+</ul>
+<p>读出顺序如下：</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-18.png" alt="Figure-18"></p>
+<ol>
+<li>RST 打开再关上，FD 被复位。</li>
+<li>测一次 FD 的电压：<strong>复位电平</strong>。</li>
+<li>TG 打开，光电二极管里的电子整包倒进 FD，电压下降</li>
+</ol>
+$$
+\Delta V=\frac{Q}{C_{FD}}
+$$<ol start="4">
+<li>再测一次：<strong>信号电平</strong>。</li>
+<li>两次相减，就是信号。</li>
+</ol>
+<p>为什么要测两次？复位本身有噪声。复位管关断的一瞬间，FD 上残留的电荷有随机起伏，叫 <strong>kTC 噪声</strong>：</p>
+$$
+\sigma_Q=\sqrt{kTC}
+$$<p>$C=1.5$ fF、室温时约 16 个电子，比我们想要的 1–2 个电子大得多。但这次复位的随机值在第 2 步和第 4 步里是<strong>同一个</strong>，相减就消掉了。这叫<strong>相关双采样</strong>（CDS）。</p>
+<p>$C_{FD}$ 越小，每个电子造成的电压变化越大（1.5 fF 时约 100 µV/e⁻），后面电路的噪声折算成电子数就越小。现代手机传感器的读出噪声约 1–2 个电子。为了省面积，常常 2 个或 4 个光电二极管共用一组 FD、RST、SF、SEL（共享像素）。</p>
+<h3 id="83-读出列并行-adc-与快门">8.3 读出：列并行 ADC 与快门</h3>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-19.png" alt="Figure-19"></p>
+<p>CMOS 传感器一次选中一整行，这一行所有像素的电压同时送到各自列末端的 ADC，同时转换，然后选下一行。几千个 ADC 并行工作，每个只需慢慢转换，所以又快又安静（为什么&quot;慢&quot;就&quot;安静&quot;，见 9.5 节）。</p>
+<p>逐行读出带来<strong>卷帘快门</strong>：每一行的曝光开始和结束时刻依次错开，拍快速运动的物体会被拉斜，闪光灯也只能照亮一部分行。<strong>全局快门</strong>要求所有像素同时开始、同时结束曝光，需要在像素里多放一个存储节点暂存电荷。工业相机从 2013 年起有全局快门 CMOS（索尼 Pregius 系列），可换镜头相机里，2023 年的索尼 a9 III 第一个用上全局快门全画幅传感器。</p>
+<h3 id="84-颜色微透镜与拜耳阵列">8.4 颜色：微透镜与拜耳阵列</h3>
+<p>硅本身分不出颜色。每个像素上面盖一个滤色片，按 RGGB 的<strong>拜耳阵列</strong>排列（绿色占一半，因为人眼对绿光最敏感），每个像素只记录一种颜色，再由算法插值出全彩图像。滤色片上面是<strong>微透镜</strong>，把落在整个像素上的光聚到光电二极管上。手机传感器常用&quot;四拜耳&quot;：每 2×2 个同色像素一组，暗光下可以合并成一个大像素。</p>
+<h3 id="85-前照式与背照式">8.5 前照式与背照式</h3>
+<p>芯片的制造顺序是先在硅片正面做晶体管，再在上面一层层做金属布线。如果光也从正面进来（<strong>前照式</strong>，FSI），就要穿过 3–5 µm 高的金属布线层才能到达光电二极管。像素只有 1–2 µm 宽，光像是要走进一口深井：斜着进来的光被金属挡住，或者落进隔壁像素。手机镜头很短，画面边缘的光斜射角可达 30° 左右。</p>
+<p><strong>背照式</strong>（BSI）把晶圆翻过来，从背面把硅磨薄，光从原来的背面直接进入硅，金属布线留在光路下面：</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-20.png" alt="Figure-20"></p>
+<iframe src="从能带到芯片与图像传感器.assets/I4-fsi-bsi-angle.html" width="100%" height="560" frameborder="0" style="border:1px solid #e5e5e5;border-radius:8px"></iframe>
+
+
+
+  <blockquote>
+    <p>交互图：拖动入射角，比较两种结构里光线能否落进本像素的光电二极管。</p>
+
+  </blockquote>
+
+<p><strong>为什么要磨到只剩 3–6 µm？</strong> 原来的晶圆约 775 µm 厚。光从背面进来，如果硅很厚，光在离光电二极管很远的地方被吸收，那里没有电场（没有被耗尽），产生的电子只能随机扩散：要么在路上复合掉，要么扩散到隔壁像素造成串扰。所以光必须在离收集区很近的地方被吸收，硅要磨得很薄。但又不能太薄，红光要 3.5 µm 才吸收得差不多。3–6 µm 是两者的折中；专门看近红外的传感器会做得更厚，或在背面做出微结构让光多走几趟。</p>
+<p>工艺大致是：</p>
+<ol>
+<li>在硅片正面做好光电二极管、晶体管和全部布线。</li>
+<li>正面朝下，键合到一片支撑晶圆上。</li>
+<li>从背面研磨、化学机械抛光，再刻蚀到预先埋好的停止层，剩下几微米。</li>
+<li><strong>背面钝化</strong>：磨出来的表面布满缺陷，要么注入一层 p+ 再用激光退火，要么镀一层带负电荷的 Al$_2$O$_3$ 或 HfO$_2$ 膜，在硅表面吸引一层空穴，把缺陷&quot;填住&quot;。蓝光就在这个表面下零点几微米内被吸收，钝化做得好不好直接决定蓝光效率。</li>
+<li>做抗反射膜、滤色片和微透镜。</li>
+</ol>
+<p>像素之间还要刻出<strong>深沟槽隔离</strong>（DTI），挡住斜射光和扩散的电子。</p>
+<p>翻过来之后，原来的正面被键合到另一片晶圆上，这片晶圆可以不只是&quot;支撑&quot;，还可以放逻辑电路，这就是<strong>堆栈式</strong>传感器（索尼 2012 年量产；2017 年又加了一层 DRAM，成为三层堆栈）。</p>
+<p>天文学家从 1980 年代就在用减薄的背照式 CCD，消费级背照式 CMOS 则是 2009 年前后才普及的。</p>
+<h3 id="86-指标速查">8.6 指标速查</h3>
+<table>
+	<thead>
+			<tr>
+					<th>指标</th>
+					<th>含义</th>
+					<th>典型值</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>像素尺寸</td>
+					<td>像素间距</td>
+					<td>手机最小约 0.56 µm，全画幅相机 4–6 µm</td>
+			</tr>
+			<tr>
+					<td>满阱容量</td>
+					<td>一个像素能存多少电子</td>
+					<td>几千到几万个</td>
+			</tr>
+			<tr>
+					<td>读出噪声</td>
+					<td>读一次带来的随机误差</td>
+					<td>1–3 个电子</td>
+			</tr>
+			<tr>
+					<td>量子效率</td>
+					<td>光子变成被收集电子的比例</td>
+					<td>峰值 60–80% 以上</td>
+			</tr>
+			<tr>
+					<td>暗电流</td>
+					<td>不见光时热产生的电子</td>
+					<td>室温每像素每秒几个以下</td>
+			</tr>
+			<tr>
+					<td>动态范围</td>
+					<td>满阱容量 ÷ 读出噪声</td>
+					<td>约 12–14 档</td>
+			</tr>
+	</tbody>
+</table>
+<p>像素越大，满阱越大、收集的光越多，所以同代技术下&quot;底大一级&quot;画质就好一级。</p>
+<hr>
+<h2 id="九ccd把电荷一格一格搬到出口">九、CCD：把电荷一格一格搬到出口</h2>
+<p>CCD（电荷耦合器件）由 Boyle 和 Smith 于 1969 年在贝尔实验室发明，二人因此获得 2009 年诺贝尔物理学奖。它和 CMOS 传感器最大的区别：像素里没有晶体管，<strong>每个像素的电荷被一格一格地搬运，最后全部经过同一个出口、同一个放大器读出。</strong></p>
+<h3 id="91-一个像素的坑mos-电容与深耗尽">9.1 一个像素的&quot;坑&quot;：MOS 电容与深耗尽</h3>
+<p>CCD 的每根电极、下面的氧化层和 p 型硅，就是 4.2 节的 MOS 电容，只是旁边没有源极和漏极。</p>
+<p>给电极突然加上正电压，空穴被推开，能带向下弯，形成一个电子的&quot;坑&quot;。按 4.2 节，平衡态下这里应该出现反型层，但这层电子没有现成的来源，只能靠热激发慢慢产生，室温下要几秒到几分钟才能填满。在这之前，坑是空的，这叫<strong>深耗尽</strong>，是一种不平衡状态。</p>
+<p>CCD 正是利用这段时间：光生电子掉进坑里，在热电子把坑填满之前被读走。由此可以推出：</p>
+<ul>
+<li>暗电流，本质就是热电子在偷偷填坑。</li>
+<li>制冷能把填坑的时间从几秒拉长到很多小时，天文 CCD 冷到 −100 °C 左右，就能连续曝光几个小时。</li>
+<li>CCD 是动态器件，必须按时把电荷挪走。</li>
+</ul>
+<p>坑能装多少电子（满阱）大约是</p>
+$$
+Q_{\max}\approx C_{ox}\,\Delta V\,A
+$$<p>$\Delta V$ 是电极电压摆幅，$A$ 是电极面积。电子越多，负电荷越多地抵消栅压，坑越浅。科学级 CCD 一个 15 µm 的像素通常能装 10–20 万个电子。</p>
+<h3 id="92-表面沟道与埋沟道">9.2 表面沟道与埋沟道</h3>
+<iframe src="从能带到芯片与图像传感器.assets/I5-mos-well.html" width="100%" height="560" frameborder="0" style="border:1px solid #e5e5e5;border-radius:8px"></iframe>
+
+
+
+  <blockquote>
+    <p>交互图：横轴是离开硅/氧化层界面的深度，纵轴是电子能量。切换两种沟道，拖动滑块往坑里加电子，或点&quot;放着不读&quot;看热电子怎样把坑填满。</p>
+
+  </blockquote>
+
+<ul>
+<li><strong>表面沟道</strong>：电子紧贴硅和氧化层的界面。界面上有大量缺陷能级，会抓住电子，过一会儿再放出来。电荷要挪几千次，每次被抓走一点，图像就会拖出尾巴。</li>
+<li><strong>埋沟道</strong>：在表面做一层很薄的 n 型硅，并让它整层被耗尽，电势最低点被推到硅内部 0.3–1 µm 深处。电子待在那里，碰不到界面。代价是满阱变小：电子再多，电子团就会扩到表面。1972 年贝尔实验室提出埋沟道后，几乎所有 CCD 都改用这种结构。</li>
+</ul>
+<p>&ldquo;让电子远离有缺陷的表面&quot;在硅器件里反复出现：钉扎光电二极管的 p+ 层、背照式的背面钝化、CCD 的埋沟道和后面的 MPP 模式，用的都是这个思路。</p>
+<h3 id="93-三相时钟电荷怎样被搬运">9.3 三相时钟：电荷怎样被搬运</h3>
+<p>每个像素下面有 3 根电极，分别接三组时钟信号 φ1、φ2、φ3（这是 CCD 惯用的相位名称，和电势 $\varphi$ 无关），轮流加高电压：</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-21.png" alt="Figure-21"></p>
+<p>关键在第 2 拍这种&quot;两根电极同时为高&quot;的时刻：两个坑连通，电荷摊开；接着前一根降低，电荷被挤进后一个坑。6 拍之后，所有电荷包整体前移一个像素。</p>
+<iframe src="从能带到芯片与图像传感器.assets/I6-ccd-wells-3d.html" width="100%" height="560" frameborder="0" style="border:1px solid #e5e5e5;border-radius:8px"></iframe>
+
+
+
+  <blockquote>
+    <p>交互图（三维）：曲面是硅里电子的能量，凹下去的是势阱，列与列之间的脊是沟道阻断。可以播放、暂停、单步。</p>
+
+  </blockquote>
+
+<p><strong>电荷靠什么流过去？</strong> 有三种机制：</p>
+<ol>
+<li><strong>自感应漂移</strong>：电子之间互相排斥，电荷多时自己就挤进新坑，很快挪走绝大部分。</li>
+<li><strong>边缘电场</strong>：相邻电极的电压差在交界处产生横向电场，把剩下的电子往前推。埋沟道离电极更远，这个横向电场更均匀，转移反而更快。</li>
+<li><strong>热扩散</strong>：最后剩下的极少数电子只能靠热运动晃过去，时间常数约为</li>
+</ol>
+$$
+\tau\approx\frac{4L^2}{\pi^2D}
+$$<p>电极长 $L=5\ \mu\text{m}$、电子扩散系数 $D\approx35\ \text{cm}^2/\text{s}$ 时，$\tau\approx3$ ns。要把残留降到百万分之一，需要约 14 个时间常数，几十纳秒。</p>
+<p>所以电荷转移本身可以达到 MHz 量级，CCD 读得慢的瓶颈不在这里，而在输出端（9.5 节）。</p>
+<p><strong>转移效率</strong>（CTE）是每挪一次保留下来的比例。一包电荷挪 $N$ 次后剩下</p>
+$$
+\text{CTE}^{\,N}
+$$<p>一块 4096×4096 的 CCD，角落的像素要挪约 8000 次。CTE = 0.999999 时剩下 $0.999999^{8000}\approx99.2\%$；CTE 若只有 0.9999，就只剩 45%。</p>
+<p>电极的做法也有讲究：相邻电极之间不能留缝，否则缝下面会形成卡住电子的小坑或小坎，所以 CCD 用两三层多晶硅互相交叠、中间隔着薄氧化层，这是 CCD 需要特殊工艺的原因之一。三相不是唯一的方案：两相 CCD 在每根电极下半部分多注入杂质做出固定台阶，让电荷只能单向流；四相 CCD 每次能让两根电极同时为高，坑更大；虚相 CCD 用注入层代替一根电极，那里没有多晶硅遮挡，蓝光更容易进去。</p>
+<h3 id="94-整块芯片">9.4 整块芯片</h3>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-22.png" alt="Figure-22"></p>
+<ul>
+<li><strong>像素是&quot;围&quot;出来的</strong>：上下边界由低电压的电极（坎）决定，左右边界是重掺杂的 p+ <strong>沟道阻断</strong>。</li>
+<li><strong>溢出</strong>（blooming）：像素满了，多出的电子先越过最低的坎。列方向的坎比沟道阻断低，所以电荷沿着列往上下溢出。天文照片里亮星上下拖出的竖直亮线就是这样来的。消费级 CCD 会加防溢出漏极导走多余电荷，但要牺牲感光面积和线性度，很多科学 CCD 宁可不加。</li>
+<li><strong>MPP 模式</strong>：即使用了埋沟道，界面缺陷仍是室温暗电流的主要来源。MPP（多相钉扎）在曝光时把所有电极都压到负电压，让表面吸满空穴，暗电流可降到原来的百分之几。为了所有电极都为负时还留得出坑，其中一相下面要多注入一层杂质。</li>
+</ul>
+<p>CCD 有三种整体结构：</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-23.png" alt="Figure-23"></p>
+<ul>
+<li><strong>全帧型</strong>：整块面积都感光。读出时电荷要一路挪过其他像素，如果还有光照进来就会拖出亮条，所以要配机械快门。科研 CCD 多是这种。</li>
+<li><strong>帧转移型</strong>：一半面积用金属遮住当&quot;仓库&rdquo;，曝光结束后瞬间把整幅图挪进仓库，再慢慢读出。</li>
+<li><strong>行间转移型</strong>：每列像素旁边有一条被遮住的传输通道，天然是全局快门。早年的相机和摄像机多用这种（9.6 节）。</li>
+</ul>
+<h3 id="95-输出端电荷变电压以及噪声">9.5 输出端：电荷变电压，以及噪声</h3>
+<p>串行寄存器把一行的电荷包逐个往右挪，经过求和阱 SW 和输出栅 OG，倒进浮置扩散 FD。FD 的电压变化 $\Delta V=Q/C$，科学 CCD 一般是每个电子几微伏到十几微伏。FD 接源极跟随器，把电压送到片外，由外部电路放大和模数转换；读完一个，复位管把 FD 拉回复位漏的电压。</p>
+<p>复位同样有 kTC 噪声（$C=10$ fF 时约 40 个电子），同样靠 8.2 节的<strong>相关双采样</strong>消掉。CDS 最早就是为 CCD 发明的。</p>
+<p>剩下的噪声主要来自源极跟随器本身，大致随测量带宽的平方根增长：</p>
+$$
+\sigma\propto\sqrt{B}
+$$<p>读得越快，噪声越大：</p>
+<ul>
+<li>科学 CCD 每秒读几万到几十万个像素，读出噪声约 2–3 个电子。</li>
+<li>一块 4096×4096 的 CCD 只有一个输出端、每秒读 10 万像素，读完一帧要将近 3 分钟。</li>
+<li>想快就多加几个输出端。鲁宾天文台每片 CCD 分成 16 段、各有一个输出端，2 秒读完。</li>
+</ul>
+<p><strong>Skipper CCD：数出每一个电子。</strong> 普通 FD 测一次就要复位，电荷没了。如果换成一个&quot;浮栅&quot;：电荷靠近时只在上面感应出电压，并不被吸走，就可以把同一包电荷来回挪进挪出，测 $N$ 次取平均，噪声降为</p>
+$$
+\sigma_N=\frac{\sigma_1}{\sqrt N}
+$$<p>这个想法 1990 年就有人提出，2017 年真正做成：测 4000 次，读出噪声降到约 0.07 个电子，能清楚分辨一个像素里是 0 个、1 个还是 2 个电子。代价是 4000 倍的读出时间。它现在用在暗物质探测实验（SENSEI、DAMIC-M）里：假想的暗物质粒子撞进硅里，可能只打出一两个电子。</p>
+<iframe src="从能带到芯片与图像传感器.assets/I7-skipper-ccd.html" width="100%" height="560" frameborder="0" style="border:1px solid #e5e5e5;border-radius:8px"></iframe>
+
+
+
+  <blockquote>
+    <p>交互图：拖动测量次数，N 超过约 200 时，整数电子的峰就分开了。</p>
+
+  </blockquote>
+
+<h3 id="96-行间转移-ccd相机里的那一种">9.6 行间转移 CCD：相机里的那一种</h3>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-24.png" alt="Figure-24"></p>
+<ul>
+<li>每个像素的感光部分是<strong>钉扎光电二极管</strong>，不是 MOS 电容。索尼 CCD 宣传的&quot;HAD&quot;（空穴积累二极管）指的就是表面那层 p+。</li>
+<li>光电二极管旁边是一条被金属遮住的竖直 CCD，中间隔着转移栅。</li>
+<li>衬底做成 n 型，上面一层 p 阱，光电二极管在 p 阱里，叫<strong>纵向溢出漏</strong>结构。</li>
+</ul>
+<p>这样做到两件事：</p>
+<ol>
+<li><strong>防溢出</strong>：像素满了，电子越过 p 阱的势垒流进衬底，不会溢到别的像素。</li>
+<li><strong>电子全局快门</strong>：给衬底加一个高电压脉冲，所有光电二极管同时被清空，曝光开始；给转移栅加脉冲，所有像素的电荷同时倒进旁边被遮住的竖直 CCD，曝光结束。</li>
+</ol>
+<p>&ldquo;钉扎光电二极管 → 转移栅 → 浮置扩散&quot;正是 8.2 节 4T 像素的核心。<strong>4T 像素就是在每个像素里放了一个&quot;只挪一步的 CCD&rdquo;</strong>，这个结构是 CMOS 从 CCD 借来的。</p>
+<p>行间转移型特有的毛病是<strong>涂抹</strong>（smear）：竖直 CCD 虽被遮住，仍会漏进一点光，在挪电荷时一路叠加。画面里有强光源时，会出现一条贯穿上下的亮竖线，早年摄像机拍车灯、太阳时常见。</p>
+<h3 id="97-科研为什么还用-ccd">9.7 科研为什么还用 CCD</h3>
+<ol>
+<li><strong>整块面积都能感光，还能做得很大。</strong> 像素里没有晶体管，科学 CCD 的像素常有 10–15 µm，单片可达几厘米。鲁宾天文台 2025 年开始出图，相机由 189 片 CCD 拼成，约 32 亿像素。</li>
+<li><strong>能做成很厚的全耗尽硅，看得见近红外。</strong> 1000 nm 的光要 150 多微米才能吸收（7.3 节）。天文 CCD 用高电阻率硅做到 100–250 µm 厚，加偏压让整层都有电场，电子从哪里产生都会被拉进本像素。鲁宾天文台的 CCD 厚 100 µm。</li>
+<li><strong>制冷后暗电流极低。</strong> −100 °C 左右，每个像素每小时只多出几个甚至不到 1 个电子，可以连续曝光几小时。</li>
+<li><strong>电荷域合并不增加噪声。</strong> 把 4×4 个像素合成一个：CCD 先把 16 包电荷在寄存器里倒在一起，只读一次，读出噪声只加一次（比如 3 个电子）；CMOS 要每个像素各读一次再相加，噪声变成 $3\times\sqrt{16}=12$ 个电子。光谱测量这类弱光场合，差别是决定性的。</li>
+<li><strong>时间延迟积分（TDI）。</strong> 图像在传感器上匀速移动时（卫星扫描、产线上的产品），让电荷以同样的速度同方向挪动，同一目标的光一路累积在同一包电荷里，相当于长曝光又不拖影。盖亚卫星（2013–2025）用 106 片 CCD 这样扫描，测出了十几亿颗恒星的位置。</li>
+<li><strong>能&quot;数&quot;X 射线光子并测能量。</strong> 按 7.4 节，每个光子产生 $E/3.65\ \text{eV}$ 个电子。光够弱、每个像素一次只接到一个光子时，CCD 同时是相机和能谱仪。钱德拉、XMM-Newton 等 X 射线天文卫星都这样用 CCD。</li>
+<li><strong>EMCCD 能看见单个光子。</strong> 在输出端前加一段&quot;倍增寄存器&quot;，电极电压特别高，电子每被推过一级有约 1% 的概率撞出一个新电子，约 500 级后放大上千倍，单光子信号盖过读出噪声。荧光显微、量子光学常用。</li>
+<li><strong>几十年的使用经验。</strong> 线性度、缺陷和校准方法都研究透了，对精确测量恒星亮度来说，&ldquo;知道误差从哪来&quot;本身就很重要。</li>
+</ol>
+<p>CCD 的短处也很明显：读得慢，而且越快越噪；需要机械快门；怕辐射。太空中的高能粒子在硅里打出缺陷，缺陷&quot;截留&quot;电子，转移效率逐年下降，哈勃、盖亚的数据都要专门修正。</p>
+<p>2009 年后出现了科学级 CMOS（sCMOS），读出噪声约 1 个电子、速度快几十倍，占领了大部分显微成像市场；2021 年前后的 qCMOS 读出噪声约 0.3 个电子，能分辨像素里有几个光子。CCD 仍在超长曝光、超大面积、近红外、X 射线能谱和 TDI 这些场合保有优势。</p>
+<h3 id="98-摄影ccd-曾经的特长与-cmos-的全面取代">9.8 摄影：CCD 曾经的特长与 CMOS 的全面取代</h3>
+<p>在摄影领域，CMOS 已经完全取代了 CCD。索尼 2015 年宣布逐步停产 CCD，主流相机早已不用。但 CCD 当年确实有几样 CMOS 做不到的本领：</p>
+<table>
+	<thead>
+			<tr>
+					<th>CCD 曾经的特长</th>
+					<th>原理</th>
+					<th>现在</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>全局快门、高速闪光同步</td>
+					<td>行间转移 CCD 的电子快门同时开始、同时结束。尼康 D70、D40 能在 1/500 秒同步闪光，后来换成 CMOS 的同级机型多为 1/200 秒左右</td>
+					<td>CMOS 也有了全局快门（工业 2013 年起，可换镜头相机 2023 年起）</td>
+			</tr>
+			<tr>
+					<td>低感光度下画面干净均匀</td>
+					<td>整片只有一个放大器，没有早期 CMOS 每列不同的条纹噪声</td>
+					<td>列级 ADC 和 CDS 普及后，CMOS 约 2007 年追平，之后全面超过</td>
+			</tr>
+			<tr>
+					<td>大尺寸中画幅</td>
+					<td>柯达、达尔萨能做整片大面积 CCD；2014 年以前的中画幅数码后背和宾得 645D 都用 CCD</td>
+					<td>2014 年起中画幅全部换成 CMOS</td>
+			</tr>
+			<tr>
+					<td>富士 SuperCCD</td>
+					<td>像素转 45° 排成蜂窝状；SR 版每个位置放一大一小两个光电二极管，分别负责暗部和高光，扩大宽容度</td>
+					<td>CMOS 用双增益、分像素 HDR 做到同样的事</td>
+			</tr>
+			<tr>
+					<td>徕卡 M9 和第一代 M Monochrom</td>
+					<td>2009 年和 2012 年的这两台用柯达 CCD，至今有不少拥趸</td>
+					<td>徕卡 M 自 2013 年起换成 CMOS</td>
+			</tr>
+			<tr>
+					<td>3CCD 摄像机</td>
+					<td>棱镜把光分成红绿蓝三束，各打到一片 CCD 上，不需要滤色阵列</td>
+					<td>广播摄像机改用 3CMOS 或单片大 CMOS</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>&ldquo;CCD 的颜色更好看&quot;吗？</strong> 颜色和&quot;电荷怎么读出来&quot;没有关系，两者的光电二极管都是硅。颜色主要取决于：</p>
+<ul>
+<li><strong>滤色片的染料</strong>：一种常见、也有一定道理的解释是，早年的 CCD（尤其柯达的）滤色染料较浓，红绿蓝分得更开，颜色更纯，代价是挡光多、高感光度噪声大；后来的 CMOS 为了感光度普遍把滤镜做薄，颜色重叠更多，要靠算法把颜色拉开。不同机型差别很大。</li>
+<li><strong>机内处理和相机设计</strong>：那个年代的 JPEG 引擎和色彩曲线，加上小传感器宽容度低、高光易溢出、常开闪光灯，合起来才是大家说的&quot;CCD 味&rdquo;。</li>
+</ul>
+<p><strong>CMOS 为什么能全面取代 CCD？</strong> 根本原因是 9.5 节的 $\sigma\propto\sqrt B$。CCD 的所有电荷要从同一个出口出去，想读得快，这一个放大器就必须很快，噪声就大，这是 CCD 结构上的死结。</p>
+<p>算一下：2400 万像素、每秒 30 帧，就是每秒 7 亿多个像素。</p>
+<ul>
+<li>CCD 只有一个出口的话，放大器要跑到 700 MHz 以上，噪声和功耗都无法接受。当年单反用 CCD 时开 4 个出口，也只能拍每秒 5 张左右。</li>
+<li>CMOS 每列有自己的 ADC，6000 列同时工作，每个 ADC 每秒只需转换约 12 万次，和科学 CCD&quot;慢慢读&quot;的速度差不多，所以能又快又安静。</li>
+</ul>
+<p>功耗也是一样：CCD 每挪一次电荷都要给整片电极充放电，功耗约为 $CV^2f$，电极面积大、电压高（常要 +15 V、−8 V 等几组电源）；CMOS 用 3 V 左右，只有正在读的那一行在工作。再加上 CMOS 能把逻辑电路、ADC、相位对焦像素、堆栈内存做在一起，CCD 的工艺做不到。</p>
+<p>所以科研 CCD 的那些优势（长曝光、电荷合并、TDI、数光子），本质上都建立在&quot;可以慢慢读&quot;之上。一旦需要快，比如拍照和拍视频，CMOS 的并行结构就占了绝对优势。</p>
+<h3 id="99-回到讲座水窗显微镜的探测器">9.9 回到讲座：水窗显微镜的探测器</h3>
+<p>讲座里水窗显微镜光路的最后一环是&quot;成像探测器&rdquo;。这类实验室软 X 射线显微镜的探测器，传统上多是<strong>背照式、不镀抗反射膜的 CCD</strong>，近年也开始用背照式 sCMOS。现在可以完整解释为什么：</p>
+<ul>
+<li>水窗软 X 射线在硅里只走零点几微米就被吸收（7.4 节）。</li>
+<li>从正面进光的话，光在电极、氧化层和布线里就被吃光了，所以必须背照（8.5 节）。</li>
+<li>光子在背表面附近被吸收，<strong>背面钝化</strong>的质量直接决定探测效率。钝化不好，表面有一层&quot;死层&quot;，那里产生的电子会丢失。</li>
+<li>每个光子产生上百个电子，这种 CCD 还能用来数光子、测能谱（9.7 节）。</li>
+</ul>
+<hr>
+<h2 id="十总结一条链">十、总结：一条链</h2>
+<ol>
+<li><strong>能带</strong>：原子能级在固体里展宽成能带。价带满、导带空、中间隔着带隙；硅的带隙 1.12 eV。掺磷得到 n 型（电子多），掺硼得到 p 型（空穴多），费米能级的位置反映载流子多少。</li>
+<li><strong>电压与能量</strong>：电子的电势能 $E_p=-e\varphi$，电势越高能量越低；空穴反过来。能带图里电子往下滚、空穴往上浮，斜率就是电场。</li>
+<li><strong>PN 结</strong>：平衡时费米能级必须相等，所以 p 区能带被抬高，出现 $eV_{bi}=kT\ln(N_AN_D/n_i^2)$ 的能量坡；正偏降低坡、反偏抬高坡。光电二极管靠这个坡分开光生电子和空穴。</li>
+<li><strong>MOSFET</strong>：沿沟道看是 n+ / p / n+，中间的势垒来自 PN 结；栅压隔着绝缘层压低势垒（反型），漏压提供方向。pMOS 一切反号，源极接电源。</li>
+<li><strong>CMOS</strong>：nMOS 与 pMOS 互补成对，稳定状态下总有一个关断，几乎不耗静态电流，所以能把上百亿个晶体管放进一颗芯片。</li>
+<li><strong>微缩</strong>：沟道变短后漏极电场削弱栅控，于是把沟道做薄、从三面（FinFET）到四面（GAA）包住；&ldquo;几纳米&quot;已是代际名称，EUV 的 13.5 nm 是光的波长。</li>
+<li><strong>硅吸收光</strong>：间接带隙让硅对红光、近红外吸收弱，吸收深度从蓝光 0.4 µm 到红光 3.5 µm 再到 1000 nm 的 156 µm；X 射线每 3.65 eV 产生一对电子-空穴。</li>
+<li><strong>CMOS 图像传感器</strong>：钉扎光电二极管攒电子，4T 像素 + CDS 把电荷变成低噪声的电压，列并行 ADC 又快又安静；背照式靠翻转、减薄和背面钝化让光直接进硅。</li>
+<li><strong>CCD</strong>：深耗尽的 MOS 电容做坑，三相时钟把电荷包一格格搬到唯一的出口，埋沟道和 MPP 让电子远离表面缺陷。单一出口带来一致性和&quot;慢读&quot;的低噪声，也注定了它在高速成像中被 CMOS 取代。</li>
+<li><strong>回到讲座</strong>：水窗软 X 射线只走零点几微米，所以探测器必须背照、减薄、做好背面钝化，才能看见它。</li>
+</ol>
+
+
+        
+      </section>
+
+      
+      <div class="divider"></div>
+      <div class="flex flex-col md:flex-row justify-between gap-4 py-4">
+        
+        <a role="button" class="btn btn-outline h-12" href="/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/" title="碳纳米管">
+          <ion-icon name="chevron-back"></ion-icon>
+          <div class="inline-flex flex-col items-start">
+            <span class="text-base-content/60 text-xs font-normal">上一页</span>
+            <span class="max-w-48 truncate">碳纳米管</span>
+          </div>
+        </a>
+        
+
+        
+        <a role="button" class="btn btn-outline h-12" href="/posts/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/" title="">
+          <div class="inline-flex flex-col items-end">
+            <span class="text-base-content/60 text-xs font-normal">下一页</span>
+            <span class="max-w-48 truncate"></span>
+          </div>
+          <ion-icon name="chevron-forward"></ion-icon>
+        </a>
+        
+      </div>
+      
+
+      
+      <div class="divider"></div>
+
+      <section class="space-y-4 not-prose">
+        
+
+
+<template x-if="['localhost', '127.0.0.1'].indexOf(window.location.hostname) == -1">
+  <article>
+    <script
+      src="https://utteranc.es/client.js"
+      repo="elusivekaze/elusivekaze.github.io"
+      issue-term="og:title"
+      theme="github-light"
+      crossorigin="anonymous"
+      async>
+    </script>
+  </article>
+</template>
+
+
+
+
+
+
+
+
+      </section>
+      
+    </article>
+  </div>
+
+  <div
+    x-data="tocHighlighter()"
+    @scroll.window="debouncedScroll"
+    class="hidden lg:flex lg:flex-col lg:items-end"
+  >
+    
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一能带电子在固体里能待在哪些能量上">一、能带：电子在固体里能待在哪些能量上</a>
+      <ul>
+        <li><a href="#11-从原子能级到能带">1.1 从原子能级到能带</a></li>
+        <li><a href="#12-价带导带与带隙">1.2 价带、导带与带隙</a></li>
+        <li><a href="#13-电子与空穴">1.3 电子与空穴</a></li>
+        <li><a href="#14-掺杂n-型与-p-型">1.4 掺杂：n 型与 p 型</a></li>
+        <li><a href="#15-费米能级">1.5 费米能级</a></li>
+      </ul>
+    </li>
+    <li><a href="#二电压与能量读懂能带图">二、电压与能量：读懂能带图</a>
+      <ul>
+        <li><a href="#21-电子的电势能是">2.1 电子的电势能是 $-e\varphi$</a></li>
+        <li><a href="#22-能带图的纵轴是电子能量">2.2 能带图的纵轴是电子能量</a></li>
+        <li><a href="#23-为什么空穴反过来">2.3 为什么空穴&quot;反过来&quot;</a></li>
+        <li><a href="#24-费米能级与外加电压">2.4 费米能级与外加电压</a></li>
+      </ul>
+    </li>
+    <li><a href="#三pn-结两块硅接在一起出现的能量坡">三、PN 结：两块硅接在一起出现的能量坡</a>
+      <ul>
+        <li><a href="#31-形成过程">3.1 形成过程</a></li>
+        <li><a href="#32-内建电势">3.2 内建电势</a></li>
+        <li><a href="#33-耗尽区宽度">3.3 耗尽区宽度</a></li>
+        <li><a href="#34-正偏与反偏">3.4 正偏与反偏</a></li>
+        <li><a href="#35-光电二极管">3.5 光电二极管</a></li>
+        <li><a href="#36-npn-与-pnp">3.6 npn 与 pnp</a></li>
+      </ul>
+    </li>
+    <li><a href="#四mosfet源极栅极漏极">四、MOSFET：源极、栅极、漏极</a>
+      <ul>
+        <li><a href="#41-结构">4.1 结构</a></li>
+        <li><a href="#42-mos-电容栅压怎样在硅表面变出电子">4.2 MOS 电容：栅压怎样在硅表面&quot;变出&quot;电子</a></li>
+        <li><a href="#43-沿沟道看源漏之间的势垒">4.3 沿沟道看：源漏之间的势垒</a></li>
+        <li><a href="#44-电流有多大开关有多陡">4.4 电流有多大，开关有多&quot;陡&quot;</a></li>
+        <li><a href="#45-pmos一切反过来">4.5 pMOS：一切反过来</a></li>
+      </ul>
+    </li>
+    <li><a href="#五cmos把-nmos-和-pmos-配成一对">五、CMOS：把 nMOS 和 pMOS 配成一对</a>
+      <ul>
+        <li><a href="#51-反相器">5.1 反相器</a></li>
+        <li><a href="#52-名字与常见误解">5.2 名字与常见误解</a></li>
+        <li><a href="#53-芯片家族">5.3 芯片家族</a></li>
+      </ul>
+    </li>
+    <li><a href="#六晶体管怎样越做越小栅长finfet-与-gaa">六、晶体管怎样越做越小：栅长、FinFET 与 GAA</a>
+      <ul>
+        <li><a href="#61-几纳米到底指什么">6.1 “几纳米”到底指什么</a></li>
+        <li><a href="#62-平面晶体管为什么做不下去">6.2 平面晶体管为什么做不下去</a></li>
+        <li><a href="#63-finfet栅极包住三面">6.3 FinFET：栅极包住三面</a></li>
+        <li><a href="#64-gaa栅极包住四面">6.4 GAA：栅极包住四面</a></li>
+        <li><a href="#65-时间线">6.5 时间线</a></li>
+      </ul>
+    </li>
+    <li><a href="#七光怎样变成电子硅的吸收">七、光怎样变成电子：硅的吸收</a>
+      <ul>
+        <li><a href="#71-截止波长">7.1 截止波长</a></li>
+        <li><a href="#72-直接带隙与间接带隙">7.2 直接带隙与间接带隙</a></li>
+        <li><a href="#73-吸收深度">7.3 吸收深度</a></li>
+        <li><a href="#74-高能光子一个光子产生很多电子">7.4 高能光子：一个光子产生很多电子</a></li>
+      </ul>
+    </li>
+    <li><a href="#八cmos-图像传感器">八、CMOS 图像传感器</a>
+      <ul>
+        <li><a href="#81-钉扎光电二极管">8.1 钉扎光电二极管</a></li>
+        <li><a href="#82-4t-像素与相关双采样">8.2 4T 像素与相关双采样</a></li>
+        <li><a href="#83-读出列并行-adc-与快门">8.3 读出：列并行 ADC 与快门</a></li>
+        <li><a href="#84-颜色微透镜与拜耳阵列">8.4 颜色：微透镜与拜耳阵列</a></li>
+        <li><a href="#85-前照式与背照式">8.5 前照式与背照式</a></li>
+        <li><a href="#86-指标速查">8.6 指标速查</a></li>
+      </ul>
+    </li>
+    <li><a href="#九ccd把电荷一格一格搬到出口">九、CCD：把电荷一格一格搬到出口</a>
+      <ul>
+        <li><a href="#91-一个像素的坑mos-电容与深耗尽">9.1 一个像素的&quot;坑&quot;：MOS 电容与深耗尽</a></li>
+        <li><a href="#92-表面沟道与埋沟道">9.2 表面沟道与埋沟道</a></li>
+        <li><a href="#93-三相时钟电荷怎样被搬运">9.3 三相时钟：电荷怎样被搬运</a></li>
+        <li><a href="#94-整块芯片">9.4 整块芯片</a></li>
+        <li><a href="#95-输出端电荷变电压以及噪声">9.5 输出端：电荷变电压，以及噪声</a></li>
+        <li><a href="#96-行间转移-ccd相机里的那一种">9.6 行间转移 CCD：相机里的那一种</a></li>
+        <li><a href="#97-科研为什么还用-ccd">9.7 科研为什么还用 CCD</a></li>
+        <li><a href="#98-摄影ccd-曾经的特长与-cmos-的全面取代">9.8 摄影：CCD 曾经的特长与 CMOS 的全面取代</a></li>
+        <li><a href="#99-回到讲座水窗显微镜的探测器">9.9 回到讲座：水窗显微镜的探测器</a></li>
+      </ul>
+    </li>
+    <li><a href="#十总结一条链">十、总结：一条链</a></li>
+  </ul>
+</nav>
+    
+  </div>
+</div>
+
+
+            
+<footer class="flex flex-col md:flex-row justify-between items-center gap-4 px-4 py-12">
+
+  <div>
+  
+  <p>
+    © 2026 ElusiveKaze&#39;s Blog
+  </p>
+  
+
+  
+  <p>🌱 Towards the Distance.</p>
+  
+</div>
+
+  <div
+  x-data="{ icons: [
+    { name: 'sunny', status: 'n' },
+    { name: 'moon', status: 'y' },
+    { name: 'desktop', status: 'auto' }
+  ] }"
+  class="flex items-center gap-2 h-8 px-2 bg-base-100 border border-base-content/30 rounded-full"
+>
+  <template x-for="icon in icons">
+    <div
+      role="button"
+      tabindex="0"
+      :aria-label="'Select ' + icon.name + ' mode'"
+      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
+      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
+      @click="$store.darkMode.toggle(icon.status)"
+    >
+      <ion-icon
+        :name="`${icon.name}-outline`"
+        class="group-hover:text-primary-content"
+        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
+      >
+      </ion-icon>
+    </div>
+  </template>
+</div>
+
+</footer>
+
+          </div>
+        </div>
+        
+        <div class="back" data-nosnippet>
+        
+          <div class="container">
+            
+              <div class="dream-grid dream-grid-about">
+  
+  
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">关于我</div>
+
+        <div class="prose dark:prose-invert">
+          <p>Hi，这里是 <strong>ElusiveKaze</strong> 的博客，主要分享一些学习笔记。</p>
+
+        </div>
+      </div>
+    </article>
+  </div>
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">知识共享</div>
+
+        <div class="prose dark:prose-invert">
+          <p>此网站的所有内容都遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank">CC BY-NC-SA 4.0</a>。</p>
+
+        </div>
+      </div>
+    </article>
+  </div>
+  
+  
+
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">社交链接</div>
+
+        <ul class="menu menu-horizontal flex-wrap w-full px-0 [&_ion-icon]:text-lg">
+  
+  <li>
+    <a href="mailto:2915795652@qq.com" title="Email">
+      <ion-icon name="mail"></ion-icon>
+    </a>
+  </li>
+  
+
+  
+  <li>
+    <a href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+      <ion-icon name="logo-github"></ion-icon>
+    </a>
+  </li>
+  
+</ul>
+
+      </div>
+    </article>
+  </div>
+  
+
+  
+</div>
+
+            
+
+            
+<footer class="flex flex-col md:flex-row justify-between items-center gap-4 px-4 py-12">
+
+  <div>
+  
+  <p>
+    © 2026 ElusiveKaze&#39;s Blog
+  </p>
+  
+
+  
+  <p>🌱 Towards the Distance.</p>
+  
+</div>
+
+  <div
+  x-data="{ icons: [
+    { name: 'sunny', status: 'n' },
+    { name: 'moon', status: 'y' },
+    { name: 'desktop', status: 'auto' }
+  ] }"
+  class="flex items-center gap-2 h-8 px-2 bg-base-100 border border-base-content/30 rounded-full"
+>
+  <template x-for="icon in icons">
+    <div
+      role="button"
+      tabindex="0"
+      :aria-label="'Select ' + icon.name + ' mode'"
+      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
+      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
+      @click="$store.darkMode.toggle(icon.status)"
+    >
+      <ion-icon
+        :name="`${icon.name}-outline`"
+        class="group-hover:text-primary-content"
+        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
+      >
+      </ion-icon>
+    </div>
+  </template>
+</div>
+
+</footer>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  <script src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+
+  
+  
+    
+  
+  <script src="/js/grid.min.js"></script>
+
+
+
+
+  
+
+<script src="/js/main.min.js"></script>
+
+    
+
+
+  <script
+  src="https://cdn.jsdelivr.net/npm/luxon@3.7.2/build/global/luxon.min.js"
+  integrity="sha256-UWxf6lyCvfH7XEcrmq/cqc2m3IBrLBLOnWLC4Pw0gQQ="
+  crossorigin="anonymous"
+></script>
+<script>
+  format()
+
+  function format() {
+    document.querySelectorAll('span[data-format="luxon"]').forEach((el) => {
+      const date = el.textContent
+
+      el.textContent = luxon.DateTime.fromISO(date, { locale: 'zh' }).toFormat(
+        'yyyy年MM月dd日',
+      )
+    })
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+<script src="/js/toc.min.js"></script>
+
+
+  
+    <script type="module">
+      import mediumZoom from 'https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/+esm';
+      mediumZoom('#dream-single-post-content img', {
+        background: 'oklch(var(--b1))',
+        margin: 24,
+      })
+    </script>
+  
+
+
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@8.0.13/dist/ionicons/ionicons.esm.js" integrity="sha256-46Vf2l/aX0tBSf2YXcaYMxF7JVJl30zn8Y9L9zZNXMA=" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>nMOS 里的电子能量地形</title><link rel="stylesheet" href="lib/ui.css">
+</head>
+<body><div class="wrap">
+<div id="view"></div>
+<div class="row"><label for="vg">栅压 V<sub>G</sub></label><input id="vg" type="range" min="0" max="1.2" step="0.01" value="0.6"><span class="val" id="vgv"></span></div>
+<div class="row"><label for="vd">漏压 V<sub>D</sub></label><input id="vd" type="range" min="0" max="1" step="0.01" value="0.5"><span class="val" id="vdv"></span></div>
+<div class="cards"><div class="card"><div class="k">源极和沟道之间的势垒（表面）</div><div class="v" id="bar">—</div></div>
+<div class="card"><div class="k">晶体管状态</div><div class="v" id="st">—</div></div></div>
+<div class="hint">拖动画面旋转。曲面高度 = 电子能量（导带底），越低电子越"舒服"。左右是源 → 漏；靠近你的边是硅表面（栅极就在它上面），往里是硅的深处。示意模型，数值不对应真实器件。</div>
+</div>
+<script src="lib/three.min.js"></script><script src="lib/OrbitControls.js"></script><script src="lib/fig3d.js"></script>
+<script>
+const NX = 90, ND = 40, LX = 8, LD = 4, H = 2.2;
+const ss = t => { t = Math.max(0, Math.min(1, t)); return t * t * (3 - 2 * t); };
+// x in [0,1] source->drain, d in [0,1] surface->deep. Energy in eV-like units.
+const B0 = 1.0;
+function E(x, d, vg, vd) {
+  const S = ss((x - 0.16) / 0.12), Dr = ss((x - 0.72) / 0.12), J = 1 - ss((d - 0.3) / 0.16);
+  const nS = (1 - S) * J, nD = Dr * J;
+  const gate = vg * Math.exp(-d / 0.14) * S * (1 - Dr);
+  const slope = vd * ss((x - 0.26) / 0.48) * Math.exp(-d / 0.14) * S * (1 - Dr) * Math.min(1, vg / B0);
+  const Ep = B0 - gate - slope - 0.25 * vd * Dr * (1 - J);
+  return nS * 0 + nD * (-vd) + (1 - nS - nD) * Ep;
+}
+// Framing hull = the envelope of the surface over every slider setting (VG 0-1.2 V, VD 0-1 V), plus label
+// anchors. The camera keeps this whole envelope in view, so no setting can push the surface out of frame,
+// and the picture does not rescale while the sliders move.
+const HULL = [];
+for (let i = 0; i <= 16; i++) for (let j = 0; j <= 8; j++) {
+  const x = i / 16, d = j / 8; let lo = 9, hi = -9;
+  for (let a = 0; a <= 6; a++) for (let b = 0; b <= 4; b++) { const e = E(x, d, 1.2 * a / 6, b / 4); lo = Math.min(lo, e); hi = Math.max(hi, e); }
+  const X = x * LX - LX / 2, Z = LD / 2 - d * LD;
+  HULL.push([X, lo * H - 0.1, Z], [X, hi * H + 0.1, Z]);
+}
+HULL.push([0, 2.8, LD / 2 + 0.2], [0, 2.65, -LD / 2], [-LX / 2 + 0.7, 0.5, LD / 2 + 0.15], [LX / 2 - 0.7, 0.5, LD / 2 + 0.15], [LX / 2 - 0.7, -1.7, LD / 2 + 0.15]);
+const V = makeView(document.getElementById('view'), { cam: [3.4, 7.6, 7.4], box: [[-4, -2.7, -2.2], [4, 2.85, 2.3]], pts: HULL });
+const geo = new THREE.PlaneGeometry(LX, LD, NX, ND); geo.rotateX(-Math.PI / 2);
+geo.setAttribute('color', new THREE.BufferAttribute(new Float32Array((NX + 1) * (ND + 1) * 3), 3));
+const mesh = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ vertexColors: true, side: THREE.DoubleSide, roughness: 0.8, flatShading: false }));
+V.scene.add(mesh);
+const wire = new THREE.LineSegments(new THREE.WireframeGeometry(geo), new THREE.LineBasicMaterial({ color: 0x2C2C2A, transparent: true, opacity: 0.08 }));
+V.scene.add(wire);
+const pos = geo.attributes.position, col = geo.attributes.color;
+function rebuild(vg, vd) {
+  for (let i = 0; i < pos.count; i++) {
+    const X = pos.getX(i), Z = pos.getZ(i);
+    const x = (X + LX / 2) / LX, d = (LD / 2 - Z) / LD;
+    const e = E(x, d, vg, vd);
+    pos.setY(i, e * H);
+    const c = heatColor((e + 1) / 2.1); col.setXYZ(i, c[0], c[1], c[2]);
+  }
+  pos.needsUpdate = true; col.needsUpdate = true; geo.computeVertexNormals();
+  wire.geometry.dispose(); wire.geometry = new THREE.WireframeGeometry(geo);
+}
+// electrons along the surface
+const eGeo = new THREE.SphereGeometry(0.075, 12, 10), eMat = new THREE.MeshStandardMaterial({ color: 0x378ADD, emissive: 0x0C447C, emissiveIntensity: 0.4 });
+const parts = [];
+for (let i = 0; i < 26; i++) { const m = new THREE.Mesh(eGeo, eMat); V.scene.add(m); parts.push({ m, x: Math.random() * 0.17, d: 0.02 + Math.random() * 0.12, v: 0.002 + Math.random() * 0.002, pass: false }); }
+let VG = 0, VD = 0, barrier = 1;
+function surfMax(vg, vd) { let m = -9; for (let x = 0.18; x < 0.6; x += 0.01) m = Math.max(m, E(x, 0.03, vg, vd)); return m; }
+V.onFrame(() => {
+  for (const p of parts) {
+    if (p.x < 0.17) { p.x += p.v * 0.6; if (p.x >= 0.17) p.pass = Math.random() < Math.exp(-Math.max(barrier, 0) / 0.09) * Math.min(1, VD * 6); }
+    else if (p.pass) { p.x += p.v * 1.8; if (p.x > 0.98) { p.x = Math.random() * 0.1; p.pass = false; } }
+    else { p.x = Math.random() * 0.08; }
+    const X = p.x * LX - LX / 2, Z = LD / 2 - p.d * LD;
+    p.m.position.set(X, E(p.x, p.d, VG, VD) * H + 0.09, Z);
+  }
+});
+V.label('源极 n+', [-LX / 2 + 0.7, 0.5, LD / 2 + 0.15], '#185FA5');
+const lD = V.label('漏极 n+', [LX / 2 - 0.7, 0.5, LD / 2 + 0.15], '#185FA5');
+const lS = V.label('栅极正下方的硅表面', [0, 2.75, LD / 2 + 0.2], '#534AB7');
+V.label('硅的深处', [0, 2.6, -LD / 2], '#5F5E5A');
+const vg = document.getElementById('vg'), vd = document.getElementById('vd');
+function upd() {
+  VG = +vg.value; VD = +vd.value; rebuild(VG, VD);
+  lD.pos.y = -VD * H + 0.5; lS.pos.y = E(0.5, 0, VG, VD) * H + 0.55;
+  barrier = surfMax(VG, VD);
+  document.getElementById('vgv').textContent = VG.toFixed(2) + ' V';
+  document.getElementById('vdv').textContent = VD.toFixed(2) + ' V';
+  document.getElementById('bar').textContent = Math.max(barrier, 0).toFixed(2) + '（相对源极）';
+  document.getElementById('st').textContent = VD < 0.02 ? '源漏没有电压差：没有净电流' : barrier > 0.45 ? '关断：电子翻不过去' : barrier > 0.15 ? '刚开始导通' : '导通：电子沿表面流向漏极';
+}
+vg.addEventListener('input', upd); vd.addEventListener('input', upd); upd();
+</script></body></html>

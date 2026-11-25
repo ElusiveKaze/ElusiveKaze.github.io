@@ -607,6 +607,92 @@
 
   <div class="card-body">
     <h2 class="card-title">
+      <a class="after:absolute after:inset-0" href="/posts/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/"></a>
+    </h2>
+
+    <p class="date text-base-content/60">
+      
+        <span data-format="luxon">0001-01-01T00:00:00Z</span>
+      
+    </p>
+
+    <p class="[&_a]:font-medium [&_a]:underline z-10"><h1 id="从能带到芯片与图像传感器">从能带到芯片与图像传感器</h1>
+<p>这篇笔记是从两场讲座里延伸出来的：<a href="https://elusivekaze.github.io/posts/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/" target="_blank">激光等离子体光源及其应用</a>讲到 EUV 光刻机靠 13.5 nm 的光在硅片上&quot;刻&quot;出晶体管，也讲到水窗显微镜最后要用一台&quot;成像探测器&quot;拍下软 X 射线图像。顺着这两条线往下追问，就是这篇笔记的内容：芯片里的晶体管怎样工作，图像传感器（CMOS 和 CCD）又怎样把光变成数字。</p>
+<p>全篇沿着一条链往下走：</p>
+
+
+
+  <blockquote>
+    <p>能带 → 电压怎样改变电子的能量 → PN 结 → MOSFET（nMOS、pMOS）→ CMOS → 晶体管的微缩（FinFET、GAA）→ 硅怎样吸收光 → CMOS 图像传感器 → CCD</p>
+
+  </blockquote>
+
+<p>文中有几张可交互的图（拖动旋转、拖滑块改参数），用 <code>&lt;iframe&gt;</code> 嵌在文档里，Typora 中可以直接操作。</p>
+<hr>
+<h2 id="一能带电子在固体里能待在哪些能量上">一、能带：电子在固体里能待在哪些能量上</h2>
+<h3 id="11-从原子能级到能带">1.1 从原子能级到能带</h3>
+<p>单个原子里，电子只能待在一些分立的能级上。两个原子靠近时，它们的轨道发生重叠，一个能级会分裂成两个：同相叠加的<strong>成键态</strong>能量更低，反相叠加的<strong>反键态</strong>能量更高（和<a href="https://elusivekaze.github.io/posts/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/#11--%E6%9D%82%E5%8C%96%E4%B8%8E--%E9%94%AE" target="_blank">石墨烯笔记 1.1 节</a>里 $\sigma$、$\sigma^{*}$ 的分裂是同一件事）。</p>
+<p>原子越多，分裂出来的能级越多。$N$ 个原子就有 $N$ 个能级，但它们挤在一个有限的能量范围里（几个 eV）。一块硅里 $N\sim10^{23}$，相邻能级的间隔只有 $10^{-23}$ eV 量级，实际上连成了一片，这就是<strong>能带</strong>。不同的原子能级展宽成不同的能带，能带之间可能留下电子不能待的能量区间，叫<strong>禁带</strong>或<strong>带隙</strong>。</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-1.png" alt="Figure-1"></p>
+<p>每个能级（计入自旋）最多容纳 2 个电子（泡利不相容原理，见<a href="https://elusivekaze.github.io/posts/%E5%8E%9F%E5%AD%90%E7%BB%93%E6%9E%84%E4%B8%8E%E7%B2%92%E5%AD%90%E7%BB%9F%E8%AE%A1/#%E6%B3%A1%E5%88%A9%E4%B8%8D%E7%9B%B8%E5%AE%B9%E5%8E%9F%E7%90%86" target="_blank">原子结构与粒子统计</a>）。电子从低到高把能带填满，填到哪里，决定了材料是导体还是绝缘体。</p>
+<h3 id="12-价带导带与带隙">1.2 价带、导带与带隙</h3>
+<ul>
+<li><strong>价带</strong>：绝对零度时被电子填满的最高能带，它的顶端记作价带顶 $E_v$。</li>
+<li><strong>导带</strong>：价带上方最低的空能带，它的底端记作导带底 $E_c$。</li>
+<li><strong>带隙</strong>：$E_g=E_c-E_v$。</li>
+</ul>
+<p>一个<strong>填满的能带不导电</strong>：每个状态都有电子占着，加电场时电子无处可&quot;挪&quot;，没有净的电流。一个空能带里没有电子，也不导电。只有部分填充的能带才能导电。</p>
+<p><img src="%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-2.png" alt="Figure-2"></p>
+<ul>
+<li>金属：最高的有电子的能带只填了一部分，天然导电。</li>
+<li>绝缘体：价带全满、导带全空，带隙很大（SiO$_2$ 约 9 eV），常温下几乎没有电子能跳上去。</li>
+<li>半导体：结构和绝缘体一样，但带隙小（硅 1.12 eV），常温下有少量电子被热激发到导带。</li>
+</ul>
+<p>热激发的多少由玻尔兹曼因子决定。室温下 $kT\approx0.0259$ eV，本征硅的载流子浓度</p>
+
+    
+    <div class="card-actions justify-between items-center mt-4">
+      
+        <div class="flex items-center">
+  
+  <span>@</span>
+  
+
+  <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+  
+    <span itemprop="name">ElusiveKaze</span>
+  
+  </span>
+</div>
+
+      
+
+      <div class="flex items-center">
+        <ion-icon name="time" class="mr-1"></ion-icon>
+        <span>9分钟阅读</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <div class="card bg-base-100 hover:bg-base-content/10 shadow-xl cursor-pointer dark:border dark:border-base-content/30">
+  
+  <figure>
+    
+    
+    <picture>
+      <source srcset="/images/default4_hu_15dcecd535951044.webp" type="image/webp" />
+      <img src="/images/default4.jpg" alt="/images/default4.jpg" />
+    </picture>
+    
+  </figure>
+  
+
+  <div class="card-body">
+    <h2 class="card-title">
       <a class="after:absolute after:inset-0" href="/posts/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/"></a>
     </h2>
 

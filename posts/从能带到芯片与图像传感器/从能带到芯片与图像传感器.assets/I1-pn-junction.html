@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>PN 结的能带随偏压变化</title><link rel="stylesheet" href="lib/ui.css"></head>
+<body><div class="wrap">
+<div class="fig"><svg id="s" viewBox="0 0 760 330"></svg></div>
+<div class="row"><label for="v">外加电压 V（p 区相对 n 区）</label><input id="v" type="range" min="-1" max="0.65" step="0.01" value="0"><span class="val" id="vv">0.00 V</span></div>
+<div class="cards">
+<div class="card"><div class="k">状态</div><div class="v" id="st">平衡</div></div>
+<div class="card"><div class="k">势垒高度 e(V<sub>bi</sub> − V)</div><div class="v" id="bh">—</div></div>
+<div class="card"><div class="k">耗尽区宽度 W</div><div class="v" id="w">—</div></div>
+<div class="card"><div class="k">电流 I = I<sub>s</sub>(e<sup>eV/kT</sup> − 1)</div><div class="v" id="cur">—</div></div>
+</div>
+<div class="hint">按 N<sub>A</sub> = N<sub>D</sub> = 10<sup>16</sup> cm<sup>−3</sup>、室温估算（V<sub>bi</sub> ≈ 0.72 V，I<sub>s</sub> 取 10<sup>−14</sup> A）。纵轴是电子能量，n 区接地作为参考，所以加电压时只有 p 区一侧整体上下移动。</div>
+</div>
+<script>
+const NS = 'http://www.w3.org/2000/svg', S = document.getElementById('s');
+const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); (p || S).appendChild(e); return e; };
+const txt = (x, y, s, a) => { const e = el('text', Object.assign({ x, y, 'font-size': 13, fill: '#2C2C2A', 'dominant-baseline': 'central' }, a || {})); e.textContent = s; return e; };
+// Fixed energy scale (px per eV). With V from -1 to 0.65 V the p-side Ec spans y = 57 ... 169 and
+// the n-side Ev sits at y = 250, so every state fits inside the 0..296 drawing area.
+const VBI = 0.72, EV = 68, GAP = 1.12 * EV, XJ = 380, X0 = 40, X1 = 720, ECN = 174;
+el('rect', { x: X0, y: 300, width: XJ - X0, height: 18, fill: '#FAECE7', stroke: '#B4B2A9' });
+el('rect', { x: XJ, y: 300, width: X1 - XJ, height: 18, fill: '#E6F1FB', stroke: '#B4B2A9' });
+txt((X0 + XJ) / 2, 309, 'p 区', { 'text-anchor': 'middle', fill: '#993C1D', 'font-size': 12 });
+txt((XJ + X1) / 2, 309, 'n 区', { 'text-anchor': 'middle', fill: '#185FA5', 'font-size': 12 });
+const dep = el('rect', { y: 22, height: 276, fill: '#EEEDFE' });
+const depT = txt(0, 33, '耗尽区', { 'text-anchor': 'middle', fill: '#534AB7', 'font-size': 12 });
+const ec = el('path', { fill: 'none', stroke: '#2C2C2A', 'stroke-width': 2 });
+const ev = el('path', { fill: 'none', stroke: '#2C2C2A', 'stroke-width': 2 });
+const fp = el('line', { stroke: '#BA7517', 'stroke-width': 1.8, 'stroke-dasharray': '7 4' });
+const fn = el('line', { stroke: '#BA7517', 'stroke-width': 1.8, 'stroke-dasharray': '7 4' });
+const lEc = txt(X1 + 6, 0, 'Ec'), lEv = txt(X1 + 6, 0, 'Ev'), lFn = txt(X1 + 6, 0, 'EFn', { fill: '#854F0B', 'font-size': 12 }), lFp = txt(X0 - 4, 0, 'EFp', { fill: '#854F0B', 'font-size': 12, 'text-anchor': 'end' });
+const bar = el('line', { stroke: '#E24B4A', 'stroke-width': 1.4 }), barT = txt(0, 0, '', { fill: '#A32D2D', 'font-size': 12, 'text-anchor': 'end', stroke: '#fff', 'stroke-width': 4, 'paint-order': 'stroke' });
+const flow = el('path', { fill: 'none', stroke: '#378ADD', 'stroke-width': 1.6, 'stroke-dasharray': '4 3' });
+const G = el('g', {});
+const dots = [], holes = [], inj = [];
+for (let i = 0; i < 7; i++) dots.push(el('circle', { r: 4.5, fill: '#378ADD', stroke: '#0C447C', 'stroke-width': 0.8 }, G));
+for (let i = 0; i < 7; i++) holes.push(el('circle', { r: 4.5, fill: '#fff', stroke: '#D85A30', 'stroke-width': 1.6 }, G));
+for (let i = 0; i < 5; i++) inj.push(el('circle', { r: 3.6, fill: '#378ADD', stroke: '#0C447C', 'stroke-width': 0.8 }, G));
+const vI = document.getElementById('v');
+function upd() {
+  const V = +vI.value, d = (VBI - V) * EV, W = 120 * Math.sqrt(Math.max(VBI - V, 0.02) / VBI), wp = W / 2, wn = W / 2;
+  const ecp = ECN - d;
+  const E = x => x < XJ - wp ? ecp : x < XJ ? ecp + d / 2 * Math.pow((x - XJ + wp) / wp, 2) : x < XJ + wn ? ECN - d / 2 * Math.pow((XJ + wn - x) / wn, 2) : ECN;
+  let a = '', b = '';
+  for (let x = X0; x <= X1; x += 3) { a += (x === X0 ? 'M' : 'L') + x + ' ' + E(x).toFixed(1); b += (x === X0 ? 'M' : 'L') + x + ' ' + (E(x) + GAP).toFixed(1); }
+  ec.setAttribute('d', a); ev.setAttribute('d', b);
+  dep.setAttribute('x', XJ - wp); dep.setAttribute('width', W); depT.setAttribute('x', XJ);
+  const efn = ECN + 0.206 * EV, efp = ecp + (1.12 - 0.19) * EV;
+  fn.setAttribute('x1', XJ); fn.setAttribute('x2', X1); fn.setAttribute('y1', efn); fn.setAttribute('y2', efn);
+  fp.setAttribute('x1', X0); fp.setAttribute('x2', XJ); fp.setAttribute('y1', efp); fp.setAttribute('y2', efp);
+  lEc.setAttribute('y', ECN - 9); lEv.setAttribute('y', ECN + GAP); lFn.setAttribute('y', efn + 9); lFp.setAttribute('y', efp);
+  // barrier height marker, drawn just left of the depletion region
+  const bx = XJ - wp - 26;
+  bar.setAttribute('x1', bx); bar.setAttribute('x2', bx); bar.setAttribute('y1', ecp + 1); bar.setAttribute('y2', ECN - 1);
+  // halfway up the barrier, but kept clear of the Ec line above and the EFp line below
+  barT.setAttribute('x', bx - 6); barT.setAttribute('y', Math.max(ecp + 14, Math.min(ecp + d / 2, efp - 13)));
+  barT.textContent = '势垒 ' + (VBI - V).toFixed(2) + ' eV';
+  // majority carriers stay inside their own neutral regions
+  const nA = XJ + wn + 18, nB = X1 - 14, pA = X0 + 16, pB = XJ - wp - 44;
+  dots.forEach((c, i) => { c.setAttribute('cx', nA + (nB - nA) * i / (dots.length - 1)); c.setAttribute('cy', ECN - 8 - (i % 2) * 6); });
+  holes.forEach((c, i) => { c.setAttribute('cx', pA + (pB - pA) * i / (holes.length - 1)); c.setAttribute('cy', ecp + GAP + 8 + (i % 2) * 6); });
+  const strength = Math.max(0, Math.min(1, (V - 0.2) / 0.4));
+  inj.forEach((c, i) => { c.setAttribute('cx', XJ - wp - 22 - i * 26); c.setAttribute('cy', ecp - 8 - (i % 2) * 5); c.setAttribute('opacity', i < Math.round(strength * inj.length) ? 1 : 0); });
+  flow.setAttribute('d', `M${XJ + wn + 10} ${ECN - 22} Q${XJ} ${ecp - 40} ${XJ - wp - 30} ${ecp - 20}`);
+  flow.setAttribute('opacity', strength);
+  document.getElementById('vv').textContent = V.toFixed(2) + ' V';
+  document.getElementById('st').textContent = V > 0.02 ? '正偏（p 接正）' : V < -0.02 ? '反偏（p 接负）' : '平衡';
+  document.getElementById('bh').textContent = (VBI - V).toFixed(2) + ' eV';
+  document.getElementById('w').textContent = (0.43 * Math.sqrt(Math.max(VBI - V, 0.02) / VBI)).toFixed(2) + ' µm';
+  const I = 1e-14 * (Math.exp(V / 0.02585) - 1);
+  document.getElementById('cur').textContent = I.toExponential(1) + ' A';
+}
+vI.addEventListener('input', upd); upd();
+</script></body></html>

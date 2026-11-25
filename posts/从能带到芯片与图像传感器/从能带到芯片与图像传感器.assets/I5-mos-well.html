@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CCD 的势阱：表面沟道与埋沟道</title><link rel="stylesheet" href="lib/ui.css"></head>
+<body><div class="wrap">
+<div class="row"><button id="mS" onclick="setMode('s')">表面沟道</button><button id="mB" onclick="setMode('b')">埋沟道</button><button id="dk" onclick="darkFill()">放着不读：热电子填坑</button></div>
+<div class="fig" style="flex-grow:360"><svg viewBox="0 0 680 360">
+<rect x="40" y="40" width="36" height="250" fill="#D3D1C7" stroke="#888780" stroke-width="0.5"/>
+<rect x="76" y="40" width="20" height="250" fill="#FAC775" stroke="#BA7517" stroke-width="0.5"/>
+<rect id="dep" x="96" y="40" width="346" height="250" fill="#CECBF6" opacity="0.45"/>
+<rect id="nl" x="96" y="40" width="194" height="250" fill="#9FE1CB" opacity="0"/>
+<g stroke="#E24B4A" stroke-width="2" stroke-linecap="round">
+<line x1="97" y1="150" x2="105" y2="150"/><line x1="97" y1="168" x2="105" y2="168"/><line x1="97" y1="186" x2="105" y2="186"/><line x1="97" y1="204" x2="105" y2="204"/><line x1="97" y1="222" x2="105" y2="222"/><line x1="97" y1="240" x2="105" y2="240"/></g>
+<path id="ec" fill="none" stroke="#2C2C2A" stroke-width="2"/>
+<g id="el"></g>
+<line x1="96" y1="290" x2="640" y2="290" stroke="#B4B2A9" stroke-width="0.8"/>
+<g font-size="12" fill="#5F5E5A" text-anchor="middle"><text x="96" y="306">0</text><text x="204" y="306">0.5</text><text x="312" y="306">1</text><text x="420" y="306">1.5</text><text x="528" y="306">2</text><text x="636" y="306">2.5 µm</text></g>
+<g font-size="12" fill="#5F5E5A"><text x="630" y="58" text-anchor="end">导带底 Ec（电子能量）</text><text x="630" y="100" text-anchor="end">p 型硅：远处不受栅压影响</text><text x="112" y="56">↑ 电子能量高</text>
+<text x="40" y="330">灰：多晶硅栅（加正电压）　黄：SiO₂　紫：耗尽区　绿：n 型埋层</text>
+<text x="40" y="348">红短线：硅和氧化层界面的缺陷能级　蓝点：信号电子　横轴：离开界面的深度</text></g>
+</svg></div>
+<div class="row"><label for="qs">坑里的信号电荷</label><input type="range" id="qs" min="0" max="100" value="0" step="1"><span class="val" id="qv">0%</span></div>
+<div class="cards">
+<div class="card"><div class="k">电子离界面多远</div><div class="v" id="r1">—</div></div>
+<div class="card"><div class="k">坑还剩多深（相对）</div><div class="v" id="r2">—</div></div>
+<div class="card"><div class="k">电子碰到界面缺陷吗</div><div class="v" id="r3">—</div></div>
+</div></div>
+<script>
+const X0=96,YB=70,PX=216;let mode='s',q=0,tm=null;
+let sd=12345;const rnd=()=>{sd=(sd*16807)%2147483647;return sd/2147483647};
+const P=[];for(let i=0;i<60;i++)P.push([rnd(),rnd()]);
+const elG=document.getElementById('el');const C=[];
+for(let i=0;i<60;i++){const c=document.createElementNS('http://www.w3.org/2000/svg','circle');c.setAttribute('r','3.2');c.setAttribute('fill','#378ADD');c.setAttribute('opacity','0');elG.appendChild(c);C.push(c);}
+const sm=t=>t*t*(3-2*t);const qs=document.getElementById('qs'),qv=document.getElementById('qv');
+function draw(){let Ec,dep,r1,r2,r3;const n=Math.round(q*60);
+ if(mode==='s'){const d=200*(1-0.8*q),W=346*Math.sqrt(d/200);Ec=x=>x<W?YB+d*Math.pow(1-x/W,2):YB;dep=W;const top=YB+d-(6+30*q);
+  C.forEach((c,i)=>{if(i>=n){c.setAttribute('opacity','0');return;}const xx=2+P[i][0]*(4+22*q),base=Ec(xx)-4,yy=base>top?base-P[i][1]*(base-top):base;c.setAttribute('cx',(X0+xx).toFixed(1));c.setAttribute('cy',yy.toFixed(1));c.setAttribute('opacity','1');});
+  r1='≈ 0，贴着界面';r2=Math.round(d/2)+'%';r3=q>0?'会，一直贴着':'还没有电子';
+ }else{const xm=97,xl=xm*(1-q),xr=xm+q*110,ymin=250-70*q,Es=170+10*q,xd=432;
+  Ec=x=>{if(x<xl&&xl>0.5)return ymin-(ymin-Es)*Math.pow((xl-x)/xl,2);if(x<=xr)return ymin;if(x<xd)return ymin+(YB-ymin)*sm((x-xr)/(xd-xr));return YB;};
+  dep=xd;const span=Math.max(4,xr-xl),x0=xr-xl<4?xm-2:xl;
+  C.forEach((c,i)=>{if(i>=n){c.setAttribute('opacity','0');return;}const xx=x0+P[i][0]*span,yy=ymin-4-P[i][1]*(4+18*q);c.setAttribute('cx',(X0+xx).toFixed(1));c.setAttribute('cy',yy.toFixed(1));c.setAttribute('opacity','1');});
+  r1=q>=0.95?'0，已经碰到表面':(xl/PX).toFixed(2)+' µm';r2=Math.round((ymin-YB)/2)+'%';r3=q>=0.95?'会，电子团扩到表面了':q>0?'不会':'还没有电子';}
+ let dd='';for(let x=0;x<=544;x+=3){dd+=(x?'L':'M')+(X0+x)+' '+Ec(x).toFixed(1);}
+ document.getElementById('ec').setAttribute('d',dd);document.getElementById('dep').setAttribute('width',Math.min(dep,544).toFixed(1));
+ document.getElementById('nl').setAttribute('opacity',mode==='b'?'0.45':'0');
+ document.getElementById('r1').textContent=r1;document.getElementById('r2').textContent=r2;
+ const e3=document.getElementById('r3');e3.textContent=r3;e3.style.color=r3.startsWith('会')?'#A32D2D':(r3==='不会'?'#3B6D11':'#2C2C2A');
+ qv.textContent=Math.round(q*100)+'%';
+ document.getElementById('mS').classList.toggle('on',mode==='s');document.getElementById('mB').classList.toggle('on',mode==='b');}
+function setMode(m){mode=m;draw();}
+qs.addEventListener('input',()=>{if(tm){clearInterval(tm);tm=null;}q=qs.value/100;draw();});
+function darkFill(){if(tm)clearInterval(tm);tm=setInterval(()=>{q=Math.min(1,q+0.01);qs.value=Math.round(q*100);draw();if(q>=1){clearInterval(tm);tm=null;}},40);}
+draw();
+</script></body></html>
