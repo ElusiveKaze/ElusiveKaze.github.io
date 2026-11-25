@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="zh"
+  x-data
+  :class="$store.darkMode.isDark() ? 'dark' : 'light'"
+  :data-theme="$store.darkMode.theme()">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> | ElusiveKaze&#39;s Blog</title>
+
+    <head>  
+  
+    
+      <link href="/logo.svg" rel="icon" type="image/x-icon" />
+    
+  
+  
+  <link rel="canonical" href="https://elusivekaze.github.io/posts/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/" />
+  
+  
+  
+  <meta name="author" content="ElusiveKaze" />
+  <meta name="description" content="激光等离子体光源及其应用 用一束强激光打在固体靶上，几纳秒内就能把靶面的一小块材料加热成几十万度的等离子体，它会发出极紫外光（EUV）和软 X 射线。这种光源叫激光产生等离子体（Laser-Produced Plasma，LPP）光源。本文整理自都柏林大学（UCD）激光等离子体团队的一场学术报告，并补充了相关的物理背景。主线是同一种光源沿着波长变短的方向走了三步：13.5 nm 的芯片光刻光源（锡），约 6.7 nm 的下一代光刻候选（钆、铽），以及 2.3–4.4 nm 的&quot;水窗&quot;，用来给细胞拍三维照片（钼）。
+相关笔记：千新星与重元素光谱（同一团队把等离子体当作样品来测原子光谱）、从能带到芯片与图像传感器（光刻刻出来的晶体管、显微镜用的探测器）。
+波段 靶材 用途 关键数字 13.5 nm 锡 Sn EUV 光刻 最佳电子温度约 30–35 eV；短脉冲 CO$_2$ 激光转换效率约 4%，碰撞等离子体 3.6% 约 6.7 nm 钆 Gd、铽 Tb 下一代光刻候选 需要约 100 eV；反射镜带宽只有约 0.6%；转换效率约 0.5% 2.3–4.4 nm（水窗） 钼 Mo 冷冻细胞三维成像 光源要小、亮、稳；防碎屑设计让系统能连续运行数月 1.5–2 nm 锶、钇、铌、钯等 更短波长光刻？ 仍处在光谱筛选阶段 一、激光等离子体光源的基本物理 1.1 从激光脉冲到发光的等离子体 一个持续 5–10 ns 的激光脉冲聚焦到固体靶上，靶面迅速被加热、电离，形成高温高密的等离子体。等离子体随即向外膨胀，密度和温度都随时间和位置变化。EUV 和软 X 射线主要来自电子密度、温度恰好合适的那一小块区域，所以 LPP 光源有三个特点：
+小而亮：发光区只有几十到几百微米，持续时间短，亮度高。 不是静止的灯泡：发光区的位置、尺寸和密度分布一直在变，光源性能对激光和靶的条件很敏感。 伴随碎屑：膨胀时喷出的高速离子、电子和靶材微粒会打坏附近的光学元件。光学元件靠得近，收光多但寿命短；离得远，安全但收光少。早期实验中，靠近等离子体的透镜十分钟左右就会严重损坏。 EUV 和软 X 射线在空气里走不远，所以从等离子体到光谱仪、反射镜、样品和相机，整条光路都要在真空中。
+" />
+  
+  
+  <meta name="keywords" content="">
+  
+  
+  
+  <meta name="generator" content="Hugo 0.170.1">
+  
+  
+  <meta property="og:url" content="https://elusivekaze.github.io/posts/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/">
+	<meta property="og:site_name" content="ElusiveKaze&#39;s Blog">
+	<meta property="og:title" content="ElusiveKaze&#39;s Blog">
+	<meta property="og:description" content="激光等离子体光源及其应用 用一束强激光打在固体靶上，几纳秒内就能把靶面的一小块材料加热成几十万度的等离子体，它会发出极紫外光（EUV）和软 X 射线。这种光源叫激光产生等离子体（Laser-Produced Plasma，LPP）光源。本文整理自都柏林大学（UCD）激光等离子体团队的一场学术报告，并补充了相关的物理背景。主线是同一种光源沿着波长变短的方向走了三步：13.5 nm 的芯片光刻光源（锡），约 6.7 nm 的下一代光刻候选（钆、铽），以及 2.3–4.4 nm 的&#34;水窗&#34;，用来给细胞拍三维照片（钼）。
+相关笔记：千新星与重元素光谱（同一团队把等离子体当作样品来测原子光谱）、从能带到芯片与图像传感器（光刻刻出来的晶体管、显微镜用的探测器）。
+波段 靶材 用途 关键数字 13.5 nm 锡 Sn EUV 光刻 最佳电子温度约 30–35 eV；短脉冲 CO$_2$ 激光转换效率约 4%，碰撞等离子体 3.6% 约 6.7 nm 钆 Gd、铽 Tb 下一代光刻候选 需要约 100 eV；反射镜带宽只有约 0.6%；转换效率约 0.5% 2.3–4.4 nm（水窗） 钼 Mo 冷冻细胞三维成像 光源要小、亮、稳；防碎屑设计让系统能连续运行数月 1.5–2 nm 锶、钇、铌、钯等 更短波长光刻？ 仍处在光谱筛选阶段 一、激光等离子体光源的基本物理 1.1 从激光脉冲到发光的等离子体 一个持续 5–10 ns 的激光脉冲聚焦到固体靶上，靶面迅速被加热、电离，形成高温高密的等离子体。等离子体随即向外膨胀，密度和温度都随时间和位置变化。EUV 和软 X 射线主要来自电子密度、温度恰好合适的那一小块区域，所以 LPP 光源有三个特点：
+小而亮：发光区只有几十到几百微米，持续时间短，亮度高。 不是静止的灯泡：发光区的位置、尺寸和密度分布一直在变，光源性能对激光和靶的条件很敏感。 伴随碎屑：膨胀时喷出的高速离子、电子和靶材微粒会打坏附近的光学元件。光学元件靠得近，收光多但寿命短；离得远，安全但收光少。早期实验中，靠近等离子体的透镜十分钟左右就会严重损坏。 EUV 和软 X 射线在空气里走不远，所以从等离子体到光谱仪、反射镜、样品和相机，整条光路都要在真空中。">
+	<meta property="og:locale" content="zh">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+
+  
+  
+  
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="ElusiveKaze&#39;s Blog">
+	<meta name="twitter:description" content="激光等离子体光源及其应用 用一束强激光打在固体靶上，几纳秒内就能把靶面的一小块材料加热成几十万度的等离子体，它会发出极紫外光（EUV）和软 X 射线。这种光源叫激光产生等离子体（Laser-Produced Plasma，LPP）光源。本文整理自都柏林大学（UCD）激光等离子体团队的一场学术报告，并补充了相关的物理背景。主线是同一种光源沿着波长变短的方向走了三步：13.5 nm 的芯片光刻光源（锡），约 6.7 nm 的下一代光刻候选（钆、铽），以及 2.3–4.4 nm 的&#34;水窗&#34;，用来给细胞拍三维照片（钼）。
+相关笔记：千新星与重元素光谱（同一团队把等离子体当作样品来测原子光谱）、从能带到芯片与图像传感器（光刻刻出来的晶体管、显微镜用的探测器）。
+波段 靶材 用途 关键数字 13.5 nm 锡 Sn EUV 光刻 最佳电子温度约 30–35 eV；短脉冲 CO$_2$ 激光转换效率约 4%，碰撞等离子体 3.6% 约 6.7 nm 钆 Gd、铽 Tb 下一代光刻候选 需要约 100 eV；反射镜带宽只有约 0.6%；转换效率约 0.5% 2.3–4.4 nm（水窗） 钼 Mo 冷冻细胞三维成像 光源要小、亮、稳；防碎屑设计让系统能连续运行数月 1.5–2 nm 锶、钇、铌、钯等 更短波长光刻？ 仍处在光谱筛选阶段 一、激光等离子体光源的基本物理 1.1 从激光脉冲到发光的等离子体 一个持续 5–10 ns 的激光脉冲聚焦到固体靶上，靶面迅速被加热、电离，形成高温高密的等离子体。等离子体随即向外膨胀，密度和温度都随时间和位置变化。EUV 和软 X 射线主要来自电子密度、温度恰好合适的那一小块区域，所以 LPP 光源有三个特点：
+小而亮：发光区只有几十到几百微米，持续时间短，亮度高。 不是静止的灯泡：发光区的位置、尺寸和密度分布一直在变，光源性能对激光和靶的条件很敏感。 伴随碎屑：膨胀时喷出的高速离子、电子和靶材微粒会打坏附近的光学元件。光学元件靠得近，收光多但寿命短；离得远，安全但收光少。早期实验中，靠近等离子体的透镜十分钟左右就会严重损坏。 EUV 和软 X 射线在空气里走不远，所以从等离子体到光谱仪、反射镜、样品和相机，整条光路都要在真空中。">
+
+  
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/output.min.css" />
+  
+  
+  
+  
+</head>
+<style>
+    code.has-jax {
+      -webkit-font-smoothing: antialiased;
+      background: inherit !important;
+      border: none !important;
+      font-size: 100%;
+    }
+</style>
+
+
+    
+
+
+<style>
+  pre {
+    padding: 1em;
+    overflow: auto;
+  }
+</style>
+
+
+
+
+
+
+
+
+
+    
+
+    <script>
+      window.lightTheme = 'emerald'
+      window.darkTheme = 'forest'
+
+      ;(function() {
+        const isDark = ('hugo-theme-dream-is-dark' in localStorage)
+          ? window.localStorage.getItem('hugo-theme-dream-is-dark') === 'y'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+        const theme = isDark ? window.darkTheme : window.lightTheme
+
+        document.documentElement.setAttribute('data-theme', theme)
+      })()
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.12/dist/cdn.min.js" integrity="sha256-V7N9fK6aJ9ll/a5K3MhEJF39xAfmVa7oXc//OggDaj8=" crossorigin="anonymous"></script>
+  </head>
+
+  <body x-data="{
+    flip: false,
+  }">
+    
+
+    
+<nav x-data="{ isSticky: false }"
+  x-init="window.addEventListener('scroll', () => { isSticky = window.scrollY > 30 })"
+  class="sticky top-0 z-30 mt-4 lg:mt-8 py-4"
+  :class="{ 'bg-base-100 shadow-lg dark:border-b dark:border-base-content/30': isSticky }">
+
+  
+  <div class="container flex justify-between px-4">
+  
+    <section class="flex items-center gap-2">
+      <div class="avatar cursor-pointer hover:avatar-online" @click="flip = !flip" title="翻转一下！">
+        <div class="w-12 h-12 rounded-full select-none">
+          <img src="/img/avatar.png" alt="ElusiveKaze&#39;s Blog" />
+        </div>
+      </div>
+
+      
+      <div>
+        
+        <a href="https://elusivekaze.github.io/" class="text-lg font-semibold cursor-pointer">
+          ElusiveKaze&#39;s Blog
+        </a>
+        
+        
+        <div class="text-base-content/60 text-sm">向远方</div>
+        
+      </div>
+      
+    </section>
+
+    
+    
+      
+    
+
+    <div class="dropdown dropdown-end sm:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="Select an option">
+        <ion-icon name="menu" class="text-2xl"></ion-icon>
+      </div>
+      <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-10 shadow-md">
+        
+
+
+
+
+
+
+
+
+<li>
+  <div role="link" tabindex="0" class="inline-flex items-center p-2 cursor-pointer" @click="flip = !flip" title="关于">
+    <ion-icon name="information-circle"></ion-icon>关于</div>
+</li>
+
+
+
+
+
+
+
+
+
+<li>
+  <a class="group inline-flex items-center p-2 cursor-pointer" href="/search" title="搜索">
+    <ion-icon name="search"></ion-icon>
+    搜索
+  </a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+    
+    <ion-icon name="logo-github"></ion-icon>
+    
+    GitHub
+  </a>
+</li>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="归档">
+    <ion-icon name="archive"></ion-icon>
+    归档
+  </a>
+</li>
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/categories" title="所有分类">
+    <ion-icon name="grid"></ion-icon>
+    所有分类
+  </a>
+</li>
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/tags" title="所有标签">
+    <ion-icon name="pricetags"></ion-icon>
+    所有标签
+  </a>
+</li>
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/index.xml" title="RSS">
+    <ion-icon name="logo-rss"></ion-icon>
+    RSS
+  </a>
+</li>
+
+
+
+
+
+      </ul>
+    </div>
+    <section class="hidden sm:flex sm:items-center sm:gap-2 md:gap-4">
+      
+
+      
+      
+      
+      
+
+
+
+
+<div role="link" tabindex="0" class="text-sm font-semibold cursor-pointer hover:underline" @click="flip = !flip" title="关于">关于</div>
+
+
+
+
+
+      
+      
+<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/search" title="搜索">
+  <ion-icon class="group-hover:text-primary-content" name="search"></ion-icon>
+</a>
+
+
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+  
+    
+
+
+
+
+  
+  <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+    <ion-icon class="group-hover:text-primary-content" name="logo-github"></ion-icon>
+  </a>
+  
+
+
+
+
+  
+
+
+      
+
+      <div class="dropdown dropdown-end dropdown-hover">
+        <div tabindex="0" role="button" class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" aria-label="Select an option">
+          <ion-icon class="group-hover:text-primary-content text-xl" name="menu"></ion-icon>
+        </div>
+        <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-10 shadow-xl">
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="归档">
+    <ion-icon name="archive"></ion-icon>
+    归档
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/categories" title="所有分类">
+    <ion-icon name="grid"></ion-icon>
+    所有分类
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/tags" title="所有标签">
+    <ion-icon name="pricetags"></ion-icon>
+    所有标签
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/index.xml" title="RSS">
+    <ion-icon name="logo-rss"></ion-icon>
+    RSS
+  </a>
+</li>
+
+
+          
+        </ul>
+      </div>
+      
+    </section>
+  </div>
+</nav>
+
+
+    <div class="flip-container" :class="{ 'flip-it': flip }">
+      <div class="flipper">
+        <div class="front">
+          <div class="container">
+            
+<div class="lg:grid lg:grid-cols-4 gap-4 mt-4 px-4">
+  <div class="hidden lg:block">
+    
+  </div>
+
+  <div class="lg:col-span-2">
+    <article class="mx-auto prose prose-quoteless dark:prose-invert" id="dream-single-post-main" itemscope itemtype="http://schema.org/Article">
+      
+	<meta itemprop="name" content="ElusiveKaze&#39;s Blog">
+	<meta itemprop="description" content="激光等离子体光源及其应用 用一束强激光打在固体靶上，几纳秒内就能把靶面的一小块材料加热成几十万度的等离子体，它会发出极紫外光（EUV）和软 X 射线。这种光源叫激光产生等离子体（Laser-Produced Plasma，LPP）光源。本文整理自都柏林大学（UCD）激光等离子体团队的一场学术报告，并补充了相关的物理背景。主线是同一种光源沿着波长变短的方向走了三步：13.5 nm 的芯片光刻光源（锡），约 6.7 nm 的下一代光刻候选（钆、铽），以及 2.3–4.4 nm 的&#34;水窗&#34;，用来给细胞拍三维照片（钼）。
+相关笔记：千新星与重元素光谱（同一团队把等离子体当作样品来测原子光谱）、从能带到芯片与图像传感器（光刻刻出来的晶体管、显微镜用的探测器）。
+波段 靶材 用途 关键数字 13.5 nm 锡 Sn EUV 光刻 最佳电子温度约 30–35 eV；短脉冲 CO$_2$ 激光转换效率约 4%，碰撞等离子体 3.6% 约 6.7 nm 钆 Gd、铽 Tb 下一代光刻候选 需要约 100 eV；反射镜带宽只有约 0.6%；转换效率约 0.5% 2.3–4.4 nm（水窗） 钼 Mo 冷冻细胞三维成像 光源要小、亮、稳；防碎屑设计让系统能连续运行数月 1.5–2 nm 锶、钇、铌、钯等 更短波长光刻？ 仍处在光谱筛选阶段 一、激光等离子体光源的基本物理 1.1 从激光脉冲到发光的等离子体 一个持续 5–10 ns 的激光脉冲聚焦到固体靶上，靶面迅速被加热、电离，形成高温高密的等离子体。等离子体随即向外膨胀，密度和温度都随时间和位置变化。EUV 和软 X 射线主要来自电子密度、温度恰好合适的那一小块区域，所以 LPP 光源有三个特点：
+小而亮：发光区只有几十到几百微米，持续时间短，亮度高。 不是静止的灯泡：发光区的位置、尺寸和密度分布一直在变，光源性能对激光和靶的条件很敏感。 伴随碎屑：膨胀时喷出的高速离子、电子和靶材微粒会打坏附近的光学元件。光学元件靠得近，收光多但寿命短；离得远，安全但收光少。早期实验中，靠近等离子体的透镜十分钟左右就会严重损坏。 EUV 和软 X 射线在空气里走不远，所以从等离子体到光谱仪、反射镜、样品和相机，整条光路都要在真空中。">
+	<meta itemprop="wordCount" content="758">
+
+      <header>
+        <h1 itemprop="headline"></h1>
+        <p class="text-sm">
+          
+            <span data-format="luxon">0001-01-01T00:00:00Z</span>
+          
+
+          | <span>4分钟阅读</span>
+
+          
+            | <span>更新于
+              
+                <span data-format="luxon">0001-01-01T00:00:00Z</span>
+              
+            </span>
+          
+        </p>
+
+        
+        <div class="flex justify-between">
+          
+            <div class="flex items-center">
+  
+  <span>@</span>
+  
+
+  <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+  
+    <span itemprop="name">ElusiveKaze</span>
+  
+  </span>
+</div>
+
+          
+
+          <div class="flex items-center gap-2">
+  
+  
+
+  
+  
+  
+  
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://x.com/intent/post?text=&amp;url=https://elusivekaze.github.io/posts/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/" target="_blank" rel="noopener noreferrer"
+      title="Share on X">
+      <ion-icon class="group-hover:text-primary-content" name="logo-x"></ion-icon>
+    </a>
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://facebook.com/sharer/sharer.php?u=https://elusivekaze.github.io/posts/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/" target="_blank" rel="noopener noreferrer"
+      title="Share on Facebook">
+      <ion-icon class="group-hover:text-primary-content" name="logo-facebook"></ion-icon>
+    </a>
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://wa.me/?text=%20https://elusivekaze.github.io/posts/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/" target="_blank" rel="noopener noreferrer"
+      title="Share on WhatsApp">
+      <ion-icon class="group-hover:text-primary-content" name="logo-whatsapp"></ion-icon>
+    </a>
+  
+
+  
+  
+</div>
+
+        </div>
+      </header>
+
+      <section id="dream-single-post-content" itemprop="articleBody">
+        
+
+        <h1 id="激光等离子体光源及其应用">激光等离子体光源及其应用</h1>
+<p>用一束强激光打在固体靶上，几纳秒内就能把靶面的一小块材料加热成几十万度的等离子体，它会发出极紫外光（EUV）和软 X 射线。这种光源叫<strong>激光产生等离子体</strong>（Laser-Produced Plasma，LPP）光源。本文整理自都柏林大学（UCD）激光等离子体团队的一场学术报告，并补充了相关的物理背景。主线是同一种光源沿着波长变短的方向走了三步：13.5 nm 的芯片光刻光源（锡），约 6.7 nm 的下一代光刻候选（钆、铽），以及 2.3–4.4 nm 的&quot;水窗&quot;，用来给细胞拍三维照片（钼）。</p>
+
+
+
+  <blockquote>
+    <p>相关笔记：<a href="https://elusivekaze.github.io/posts/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/" target="_blank">千新星与重元素光谱</a>（同一团队把等离子体当作样品来测原子光谱）、<a href="https://elusivekaze.github.io/posts/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/" target="_blank">从能带到芯片与图像传感器</a>（光刻刻出来的晶体管、显微镜用的探测器）。</p>
+
+  </blockquote>
+
+<p><img src="%e6%bf%80%e5%85%89%e7%ad%89%e7%a6%bb%e5%ad%90%e4%bd%93%e5%85%89%e6%ba%90%e5%8f%8a%e5%85%b6%e5%ba%94%e7%94%a8.assets/Figure-1.png" alt="Figure-1"></p>
+<table>
+	<thead>
+			<tr>
+					<th>波段</th>
+					<th>靶材</th>
+					<th>用途</th>
+					<th>关键数字</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>13.5 nm</td>
+					<td>锡 Sn</td>
+					<td>EUV 光刻</td>
+					<td>最佳电子温度约 30–35 eV；短脉冲 CO$_2$ 激光转换效率约 4%，碰撞等离子体 3.6%</td>
+			</tr>
+			<tr>
+					<td>约 6.7 nm</td>
+					<td>钆 Gd、铽 Tb</td>
+					<td>下一代光刻候选</td>
+					<td>需要约 100 eV；反射镜带宽只有约 0.6%；转换效率约 0.5%</td>
+			</tr>
+			<tr>
+					<td>2.3–4.4 nm（水窗）</td>
+					<td>钼 Mo</td>
+					<td>冷冻细胞三维成像</td>
+					<td>光源要小、亮、稳；防碎屑设计让系统能连续运行数月</td>
+			</tr>
+			<tr>
+					<td>1.5–2 nm</td>
+					<td>锶、钇、铌、钯等</td>
+					<td>更短波长光刻？</td>
+					<td>仍处在光谱筛选阶段</td>
+			</tr>
+	</tbody>
+</table>
+<hr>
+<h2 id="一激光等离子体光源的基本物理">一、激光等离子体光源的基本物理</h2>
+<h3 id="11-从激光脉冲到发光的等离子体">1.1 从激光脉冲到发光的等离子体</h3>
+<p><img src="%e6%bf%80%e5%85%89%e7%ad%89%e7%a6%bb%e5%ad%90%e4%bd%93%e5%85%89%e6%ba%90%e5%8f%8a%e5%85%b6%e5%ba%94%e7%94%a8.assets/Figure-2.png" alt="Figure-2"></p>
+<p>一个持续 5–10 ns 的激光脉冲聚焦到固体靶上，靶面迅速被加热、电离，形成高温高密的等离子体。等离子体随即向外膨胀，密度和温度都随时间和位置变化。EUV 和软 X 射线主要来自电子密度、温度恰好合适的那一小块区域，所以 LPP 光源有三个特点：</p>
+<ul>
+<li><strong>小而亮</strong>：发光区只有几十到几百微米，持续时间短，亮度高。</li>
+<li><strong>不是静止的灯泡</strong>：发光区的位置、尺寸和密度分布一直在变，光源性能对激光和靶的条件很敏感。</li>
+<li><strong>伴随碎屑</strong>：膨胀时喷出的高速离子、电子和靶材微粒会打坏附近的光学元件。光学元件靠得近，收光多但寿命短；离得远，安全但收光少。早期实验中，靠近等离子体的透镜十分钟左右就会严重损坏。</li>
+</ul>
+<p>EUV 和软 X 射线在空气里走不远，所以从等离子体到光谱仪、反射镜、样品和相机，整条光路都要在真空中。</p>
+<h3 id="12-电离态决定波长温度决定电离态">1.2 电离态决定波长，温度决定电离态</h3>
+<p>原子被剥掉几个电子就是几价离子，例如 Sn$^{10+}$ 是少了 10 个电子的锡。<strong>不同价态的离子有不同的能级结构，发出的谱线波长也不同</strong>，这是理解 LPP 光源的关键。</p>
+<p>等离子体的温度通常用电子伏特表示，$1\ \text{eV}\approx11600\ \text{K}$。电子温度越高，碰撞电离越剧烈，离子平均被剥掉的电子越多。而电子温度主要由<strong>激光功率密度</strong>（单位面积上的激光功率）决定：聚焦越紧、脉冲越短、能量越大，功率密度越高。于是有一条控制链：</p>
+$$
+\text{功率密度}\ \longrightarrow\ \text{电子温度}\ \longrightarrow\ \text{哪种价态最多}\ \longrightarrow\ \text{哪个波段最亮}
+$$<p>后面每一个实验，几乎都是在这条链上做文章：选靶材决定&quot;有哪些谱线可用&quot;，调激光决定&quot;哪种价态最多&quot;。</p>
+<h3 id="13-光要能被用上转换效率带宽与自吸收">1.3 光要能被用上：转换效率、带宽与自吸收</h3>
+<p>衡量光源的核心指标是<strong>转换效率</strong>（Conversion Efficiency，CE）：激光能量有多大比例变成了&quot;目标波段&quot;里的光。目标波段通常指后面反射镜能反射的那一窄段，13.5 nm 时一般取 2% 的带宽，即 13.5 nm ± 0.135 nm。等离子体总共发出多少光并不重要，<strong>重要的是落进这个窄窗口里的有多少</strong>。</p>
+<p>有两个物理效应会限制可用的光：</p>
+<ul>
+<li><strong>自吸收</strong>：等离子体太稠密时，里面发出的光在出来的路上又被别的离子吸收。所以&quot;更稠密&quot;不等于&quot;更亮&quot;，很多改进方案的目标正是降低发光区的密度。</li>
+<li><strong>临界密度</strong>：激光只能钻到等离子体里电子密度等于临界密度的位置，能量主要在那附近被吸收。临界密度由等离子体频率等于激光频率给出：</li>
+</ul>
+$$
+n_c=\frac{\varepsilon_0m_e\omega^2}{e^2}\approx\frac{1.1\times10^{21}}{\lambda^2\,[\mu\text{m}]}\ \text{cm}^{-3}
+$$<p>它与激光波长的平方成反比。1 µm 激光在约 $10^{21}\ \text{cm}^{-3}$ 处加热，10 µm 的 CO$_2$ 激光在约 $10^{19}\ \text{cm}^{-3}$ 处加热，密度低约 100 倍，自吸收也就弱得多。这是第二章改用 CO$_2$ 激光的物理原因。</p>
+<p>LPP 光源还有几个常被问到的性质：</p>
+<ul>
+<li><strong>相干性</strong>：发光区足够小、只取很小的立体角时，空间相干性可以不错，能用于干涉实验；但等离子体同时发出很多谱线，时间相干性通常较差。</li>
+<li><strong>时间特性</strong>：辐射跟着驱动激光走，激光一停，发光很快衰减，所以光源本身是纳秒级脉冲光。它能做一部分时间分辨和激发态寿命测量，但在脉宽、亮度和相干性上不如同步辐射，不是所有时间分辨实验的最佳选择。</li>
+</ul>
+<p><strong>好光源不是一味加大激光功率，而是让等离子体的辐射特性和后面的光学系统精确匹配。</strong></p>
+<hr>
+<h2 id="二135-nmeuv-光刻光源">二、13.5 nm：EUV 光刻光源</h2>
+<h3 id="21-为什么是-135-nm">2.1 为什么是 13.5 nm</h3>
+<p>EUV 几乎会被所有材料吸收，做不了透镜，光刻机只能用反射镜。正入射反射镜靠几十对极薄的两种材料交替叠成的<strong>多层膜</strong>（钼/硅 Mo/Si，约 50–80 对）实现干涉增强，它在 13.5 nm 附近反射率最高，约 70%。</p>
+<p>70% 听起来不低，但光刻机的照明和投影系统要连续反射很多次。以 11 面反射镜为例：</p>
+$$
+T=(0.70)^{11}\approx2\%
+$$<p><img src="%e6%bf%80%e5%85%89%e7%ad%89%e7%a6%bb%e5%ad%90%e4%bd%93%e5%85%89%e6%ba%90%e5%8f%8a%e5%85%b6%e5%ba%94%e7%94%a8.assets/Figure-3.png" alt="Figure-3"></p>
+<p>只有约 2% 的光能走完全程，这还没算其他损失。所以光源必须把尽可能多的能量放进反射镜的有效带宽里。</p>
+<p>（13.5 nm 是光的波长，和&quot;3 nm&quot;&ldquo;2 nm&quot;这类工艺节点名不是一回事，见<a href="https://elusivekaze.github.io/posts/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/#61-%E5%87%A0%E7%BA%B3%E7%B1%B3%E5%88%B0%E5%BA%95%E6%8C%87%E4%BB%80%E4%B9%88" target="_blank">半导体笔记 6.1 节</a>。）</p>
+<h3 id="22-温度要调到最佳">2.2 温度要调到最佳</h3>
+<p>锡之所以适合 13.5 nm，是因为 Sn$^{8+}$ 到 Sn$^{14+}$ 这一串离子的 $4p^64d^n\to4p^54d^{n+1}$ 和 $4d^{n-1}4f$ 跃迁都落在 13.5 nm 附近，彼此重叠成一个很强的&quot;不可分辨跃迁阵列&rdquo;（UTA）。几种价态的光挤在同一个窄波段里，这是锡的独特优势。</p>
+<p>改变激光功率密度、测量 13.5 nm 附近的发射，会看到一个最佳点：</p>
+<ul>
+<li>功率密度较低时，目标波段辐射较弱；</li>
+<li>功率密度增加，目标波段发射逐渐增强；</li>
+<li>超过某个值后，13.5 nm 附近的发射反而下降。</li>
+</ul>
+<p>原因在价态分布。电子温度约 30–35 eV（约 35–40 万 K）时，主要发光的是 Sn$^{10+}$–Sn$^{12+}$；温度再高，锡被电离到 Sn$^{15+}$ 以上，它们的辐射不再集中在 13.5 nm。</p>
+<iframe src="激光等离子体光源及其应用.assets/I1-charge-state.html" width="100%" height="520" frameborder="0" style="border:1px solid #e5e5e5;border-radius:8px"></iframe>
+
+
+
+  <blockquote>
+    <p>交互图：拖动电子温度，看各价态离子的比例怎样移动；切换到&quot;钆&quot;可以对照第三章。价态分布用钟形简化，曲线形状不是实验数据。</p>
+
+  </blockquote>
+
+<p>调功率密度就是调电子温度，也就是调&quot;哪种价态最多&quot;。价态对了，谱线才对。</p>
+<h3 id="23-co-激光与等离子体快门">2.3 CO$_2$ 激光与等离子体快门</h3>
+<p>UCD 团队约 2010 年引进了一台 CO$_2$ 激光器：波长约 10 µm，重复频率约 10 Hz，典型单脉冲能量约 0.5 J，最高约 1.2 J，靠改变放电电压调节能量。按 1.3 节的临界密度，10 µm 激光在低得多的密度处加热等离子体，自吸收弱，光谱更&quot;干净&quot;。今天商用 EUV 光刻机的光源，用的正是 CO$_2$ 激光打锡液滴。</p>
+<p>但原始 CO$_2$ 脉冲有一个问题：它由一个尖峰和一段很长的尾巴组成。前段能有效加热等离子体，后段的能量却很难再提高有用辐射，只会继续烧蚀靶材、增加碎屑和热负荷。</p>
+<p><strong>等离子体快门</strong>（Plasma Shutter）解决了这个问题：让激光先打在一个辅助靶上，脉冲前沿在那里产生的等离子体会改变后续光的透射，相当于把脉冲后半截自动挡掉。调节辅助靶上的聚焦和功率密度，就能控制留下多长。UCD 团队用小孔形式的快门，把脉冲切成约 34 ns、140 mJ。</p>
+<p><img src="%e6%bf%80%e5%85%89%e7%ad%89%e7%a6%bb%e5%ad%90%e4%bd%93%e5%85%89%e6%ba%90%e5%8f%8a%e5%85%b6%e5%ba%94%e7%94%a8.assets/Figure-4.png" alt="Figure-4"></p>
+<p>脉冲变短、能量变少，并不意味着功率密度变低：</p>
+$$
+P=\frac{E}{\Delta t}
+$$<p>能量和持续时间同比例减少时，峰值功率基本不变。用这样的短脉冲，团队得到约 <strong>4%</strong> 的转换效率，光谱也更集中：总辐射可能更少，但落进反射镜可用波段的比例更高。</p>
+<h3 id="24-碰撞等离子体">2.4 碰撞等离子体</h3>
+<p>降低自吸收的另一条路，是先造一个密度较低、温度仍够高的发光介质。UCD 团队为此研究了<strong>碰撞等离子体</strong>（Colliding Plasmas）：在靶上相邻两点同时产生两团等离子体，让它们相向膨胀，在中间相遇。根据碰撞性和平均自由程，有两种结果：</p>
+<ul>
+<li><strong>相互穿透</strong>（Interpenetration）：两团等离子体互相穿过；</li>
+<li><strong>碰撞停滞</strong>（Stagnation）：两团猛烈相撞，在中间形成一层<strong>滞止层</strong>，它能持续发光数百纳秒，即使最初的两团等离子体已明显衰减也还在。</li>
+</ul>
+<p>滞止层的密度比固体表面低得多，正好可以当作第二束激光的靶。实验分两步：先用 Nd:YAG 激光经楔形棱镜分成两束，在锡靶上造出两团等离子体，撞出滞止层；等一段延迟 $\Delta t$ 后，再用短脉冲 CO$_2$ 激光在离靶面 $\Delta Z$ 的高度加热它。</p>
+<p><img src="%e6%bf%80%e5%85%89%e7%ad%89%e7%a6%bb%e5%ad%90%e4%bd%93%e5%85%89%e6%ba%90%e5%8f%8a%e5%85%b6%e5%ba%94%e7%94%a8.assets/Figure-5.png" alt="Figure-5"></p>
+<p>靶有两种形式：平面靶上用楔形棱镜把激光分成两束；或者在旋转圆盘上加工约 90° 的楔形槽，让等离子体从两个斜面向中间膨胀。楔形结构能把一部分膨胀动能重新汇聚到碰撞区，圆盘旋转则不断送上新鲜的靶面。</p>
+<p>延迟时间非常关键。比较 0、10、20、60 ns 等延迟的光谱，会发现第二束激光的时刻明显改变光谱：延迟合适时目标波段增强，太长又会下降。已发表的结果是：按两束激光的总能量算，13.5 nm（±1% 带宽）的转换效率为 3.6%；只算 CO$_2$ 的能量，则为 5.1%（Cummins 等，2014）。</p>
+<p>和直接打固体靶相比，碰撞等离子体多出了几个调节密度、温度和空间结构的自由度，但它不一定带来更高的效率，仍要针对具体波段优化。</p>
+<p>13.5 nm 这一章的主线是<strong>同时控制温度和密度</strong>：功率密度控制温度，让价态对上；CO$_2$ 长波长、短脉冲和碰撞等离子体控制密度，减少自吸收和无效的能量输入。</p>
+<hr>
+<h2 id="三走向-6x-nm钆与铽">三、走向 6.x nm：钆与铽</h2>
+<h3 id="31-为什么想要更短的波长">3.1 为什么想要更短的波长</h3>
+<p>光刻能刻多细，大致和波长成正比。约 2010–2012 年，针对 6.x nm 的多层膜反射镜（如 La/B$_4$C）峰值反射率被认为有望接近 50%。6.7 nm 差不多是 13.5 nm 的一半，于是锡的经验被搬到了更短的波长。</p>
+<h3 id="32-换元素就能换波长">3.2 换元素，就能换波长</h3>
+<p>对 Bi、Pb、Au、Pt、Ir、W、Ta、Er、Tb、Gd、Nd 等一系列元素的实验光谱表明：同类的跃迁阵列，随原子序数变化会整体移向更短或更长的波长。这和特征 X 射线的<strong>莫塞莱定律</strong>很像：</p>
+$$
+\sqrt{\nu}\propto Z-\sigma
+$$<p>原子序数越大，同类跃迁的发射波长越短。锡（$Z=50$）在 13.5 nm，钆（$Z=64$）就到了约 6.7 nm。</p>
+<h3 id="33-钆和铽要高得多的温度">3.3 钆和铽：要高得多的温度</h3>
+<p>钆（Gd）和铽（Tb）是重点研究的两种稀土元素。用原子结构程序 FAC（Flexible Atomic Code）计算各价态的能级和跃迁，结合实验，确认约 Gd$^{18+}$–Gd$^{20+}$ 能在 6.7 nm 附近产生较强辐射。要剥到这么高的价态，电子温度必须高得多：</p>
+<table>
+	<thead>
+			<tr>
+					<th></th>
+					<th>锡 Sn</th>
+					<th>钆 Gd</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>波段</td>
+					<td>13.5 nm</td>
+					<td>约 6.7 nm</td>
+			</tr>
+			<tr>
+					<td>主要发光价态</td>
+					<td>约 10+–12+</td>
+					<td>约 18+–20+</td>
+			</tr>
+			<tr>
+					<td>所需电子温度</td>
+					<td>约 30–35 eV</td>
+					<td>约 100 eV（约 116 万 K）</td>
+			</tr>
+			<tr>
+					<td>激光功率密度要求</td>
+					<td>较低</td>
+					<td>更高</td>
+			</tr>
+	</tbody>
+</table>
+<p>在 2.2 节的交互图里切换到&quot;钆&quot;，就能看到这个差别。</p>
+<h3 id="34-降低密度稀释靶与双脉冲">3.4 降低密度：稀释靶与双脉冲</h3>
+<ul>
+<li><strong>更短的激光波长不一定更好</strong>：比较 1064 nm 和更短波长的驱动激光，短波长反而不占优，因为它在更稠密的地方加热（1.3 节的临界密度），自吸收更严重。</li>
+<li><strong>稀释靶</strong>：降低靶材里的钆含量，例如降到约 30%，靠改变靶材组成来降低密度。</li>
+<li><strong>双脉冲</strong>：先用一个预脉冲（例如 532 nm）把靶打成低密度等离子体，再用 1064 nm 主脉冲加热。已发表的结果是：低密度钆靶加双脉冲，在 0.6% 带宽内得到 0.54% 的转换效率（换算到 2% 带宽约 1.8%），是实心靶的 1.6 倍（Higashiguchi 等，2011）。</li>
+</ul>
+<p>0.54% 远低于锡的约 4%，不过两者的带宽、目标波段和实验条件都不一样，不能只凭这两个数字比较光源的好坏。</p>
+<h3 id="35-反射镜带宽与前景">3.5 反射镜带宽与前景</h3>
+<p>13.5 nm 的反射镜带宽约 2%，6.7 nm 的多层膜只有约 0.6%。换成绝对宽度更直观：前者约 0.27 nm，后者只有约 0.04 nm。带宽越窄，等离子体辐射中能被用上的比例越小。</p>
+<p><img src="%e6%bf%80%e5%85%89%e7%ad%89%e7%a6%bb%e5%ad%90%e4%bd%93%e5%85%89%e6%ba%90%e5%8f%8a%e5%85%b6%e5%ba%94%e7%94%a8.assets/Figure-6.png" alt="Figure-6"></p>
+<p>密度同样关键。在日本大阪大学的大型多束激光装置 GEKKO XII（12 束、波长约 1 µm）上，研究者用 532 nm 探测光做干涉测量，比较等离子体出现前后的干涉条纹，再用 <strong>Abel 反演</strong>（假设等离子体轴对称，从沿视线的累加量反推随半径的分布）重建电子密度。结果显示：初始靶密度增加时，电子密度峰的位置向中心移动；某些条件下峰值出现在距中心约 300 µm 处。电子密度约 $10^{19}\ \text{cm}^{-3}$ 是这类实验中值得关注的量级，明显更低时软 X 射线发射会迅速减弱。</p>
+<p>所以 6.7 nm 有三重困难：要约 100 eV 的高温，反射镜带宽只有约 0.6%，转换效率目前约 0.5%。它能否走向商用还不确定。不过 13.5 nm EUV 光刻当年也被很多人认为不可能实用，最终靠长期坚持实现了产业化，所以也不能只凭早期效率就判定更短波长没有前途。</p>
+<hr>
+<h2 id="四水窗软-x-射线显微">四、水窗软 X 射线显微</h2>
+<p>同样是&quot;打等离子体发光&quot;，换一个波段就能用来看细胞。显微镜要的光源和光刻机很不一样：不要大功率，要<strong>小、亮、稳</strong>。</p>
+<h3 id="41-水窗与天然对比度">4.1 水窗与天然对比度</h3>
+<p>碳的 K 吸收边在 284 eV（4.4 nm），氧的 K 吸收边在 543 eV（2.3 nm）。夹在两者之间的软 X 射线，碳&quot;吃得多&quot;，氧（也就是水）&ldquo;吃得少&rdquo;，这一段就叫<strong>水窗</strong>（Water Window）。光子能量与波长的换算是 $E\,[\text{eV}]\approx1240/\lambda\,[\text{nm}]$。</p>
+<p><img src="%e6%bf%80%e5%85%89%e7%ad%89%e7%a6%bb%e5%ad%90%e4%bd%93%e5%85%89%e6%ba%90%e5%8f%8a%e5%85%b6%e5%ba%94%e7%94%a8.assets/Figure-7.png" alt="Figure-7"></p>
+<p>图中是用原子散射因子算出的吸收长度（强度衰减到 $1/e$ 的距离）。在水窗里，水的吸收长度有 2–10 µm，蛋白质只有 0.3–0.8 µm，相差约 10 倍。这带来几个好处：</p>
+<ul>
+<li><strong>天然对比度</strong>：不用染色，细胞核、线粒体、脂滴等富含碳的结构自然显得暗。</li>
+<li><strong>合适的穿透深度</strong>：能穿透约 10 µm 厚的整个细胞，不用切片。</li>
+<li><strong>可以做三维</strong>：从不同角度拍投影，再做断层重建，相当于细胞尺度的 CT。</li>
+</ul>
+<p>代价是：要高亮度的光源，并且对光源和样品的稳定性要求极其苛刻。实际成像用的是<strong>冷冻细胞</strong>：冷冻既能减轻 X 射线造成的辐射损伤，又能让细胞保持接近天然的含水状态。</p>
+<h3 id="42-显微镜的光路">4.2 显微镜的光路</h3>
+<p>软 X 射线光源 → 聚光系统 → 样品 → 波带片物镜 → 相机。</p>
+<p><strong>波带片</strong>（Zone Plate）是一组越往外越密的同心圆环，靠衍射把软 X 射线聚焦成像，充当显微镜的物镜。样品在成像时旋转，逐个角度拍二维投影，再重建出三维结构。</p>
+<p>相机一般是背照式、减薄的 CCD 或 sCMOS：水窗光子在硅里只走零点几微米就被吸收，前照式根本接收不到，原理见<a href="https://elusivekaze.github.io/posts/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/#99-%E5%9B%9E%E5%88%B0%E8%AE%B2%E5%BA%A7%E6%B0%B4%E7%AA%97%E6%98%BE%E5%BE%AE%E9%95%9C%E7%9A%84%E6%8E%A2%E6%B5%8B%E5%99%A8" target="_blank">半导体笔记 9.9 节</a>。</p>
+<h3 id="43-光源要小而亮">4.3 光源要小而亮</h3>
+<table>
+	<thead>
+			<tr>
+					<th></th>
+					<th>半导体光刻</th>
+					<th>水窗细胞显微镜</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>照明对象</td>
+					<td>大面积掩模，要高总光通量</td>
+					<td>视场只有 10–30 µm，放大约 1000 倍</td>
+			</tr>
+			<tr>
+					<td>关心什么</td>
+					<td>总功率</td>
+					<td>亮度、光源尺寸、发射角度、光学扩展量</td>
+			</tr>
+	</tbody>
+</table>
+<p><strong>光学扩展量</strong>（Étendue）大致等于&quot;光源面积 × 发光立体角&quot;。一个光学系统能接收的扩展量有上限，光源太大，多出来的光根本进不去。一个对比很能说明问题：约 100 W 的激光产生约 10 µm 的小光源，在显微镜的收光条件下，可能比约 150 kW、光源尺寸 400 µm 的系统提供更多<strong>可用</strong>光子。</p>
+<p><img src="%e6%bf%80%e5%85%89%e7%ad%89%e7%a6%bb%e5%ad%90%e4%bd%93%e5%85%89%e6%ba%90%e5%8f%8a%e5%85%b6%e5%ba%94%e7%94%a8.assets/Figure-8.png" alt="Figure-8"></p>
+<p>粗算一下：两者面积相差 $(400/10)^2=1600$ 倍，$150\ \text{kW}/1600\approx94\ \text{W}$。如果光学系统只能接收和小光源一样大的区域，大光源的功率优势几乎被抵消，这还没算发射角度。所以水窗显微镜不追求极高的激光功率，而要小、亮、稳的等离子体。</p>
+<h3 id="44-靶材从液氮射流到钼">4.4 靶材：从液氮射流到钼</h3>
+<ul>
+<li><strong>液氮射流</strong>：斯德哥尔摩 Hans Hertz 组的实验室软 X 射线显微镜，用液氮射流做靶，类氢、类氦氮离子在 2.48 nm 和 2.88 nm 的谱线都落在水窗内，发射很强。液体射流能连续更新靶面，但液氮要在真空里从微小喷嘴喷出，喷嘴附近偶尔结冰，射流位置会变，发光点随之漂移。对高分辨率成像，这种不稳定非常致命。</li>
+<li><strong>改用固体靶</strong>：UCD 团队系统地测试了碳、硅、钽、钨、铼、铂、金、铅、铋和多种稀土元素。许多重元素光谱很丰富，但在水窗里不够强，于是转向周期表第五周期附近的元素。</li>
+<li><strong>第五周期</strong>：比较锶 Sr、锆 Zr、铌 Nb、钼 Mo，并在不同功率密度下记录目标波段的光子计数，锆和钼表现最好，最终选择<strong>钼</strong>作为主要靶材。</li>
+</ul>
+<h3 id="45-钼的多峰光谱选台">4.5 钼的多峰光谱：&ldquo;选台&rdquo;</h3>
+<p>钼的光谱和锡不一样。锡的多个价态在 13.5 nm 重叠成一个集中的强峰；钼、锆在水窗里则有几个彼此分开的发射峰，各自对应不同的价态和跃迁，例如约 2.4 nm、2.73 nm、3.02 nm。单个峰的亮度可能不如锡那么集中，但光源能搭配不同工作波长的多层膜反射镜（如 Cr/Sc 多层膜）。</p>
+<p>想让哪个峰更亮，就把温度调到对应价态最多的位置，还是 1.2 节那条控制链。改变聚焦条件就能做到：</p>
+<table>
+	<thead>
+			<tr>
+					<th>透镜焦距</th>
+					<th>软 X 射线发光区尺寸</th>
+					<th>光谱表现</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>约 50 mm</td>
+					<td>约 80 µm</td>
+					<td>部分长波长特征更明显</td>
+			</tr>
+			<tr>
+					<td>约 20 mm</td>
+					<td>约 25 µm</td>
+					<td>光斑更小、温度更高，短波长辐射增强</td>
+			</tr>
+	</tbody>
+</table>
+<p>焦距短、光斑小，不仅温度更高，发光区也更小，正好符合 4.3 节&quot;小而亮&quot;的要求。</p>
+<h3 id="46-防碎屑">4.6 防碎屑</h3>
+<p>要亮、要收得多，光学元件就得靠近等离子体，但碎屑会很快打坏光学表面。靠近靶的聚焦透镜在某些条件下十分钟左右就会受损，频繁更换透镜，光源就没法长期稳定运行。UCD 团队的两项发明解决了这个问题：</p>
+<p><img src="%e6%bf%80%e5%85%89%e7%ad%89%e7%a6%bb%e5%ad%90%e4%bd%93%e5%85%89%e6%ba%90%e5%8f%8a%e5%85%b6%e5%ba%94%e7%94%a8.assets/Figure-9.png" alt="Figure-9"></p>
+<table>
+	<thead>
+			<tr>
+					<th>发明</th>
+					<th>做法</th>
+					<th>作用</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>液膜保护窗口</td>
+					<td>放在聚焦透镜和等离子体之间；窗口旋转，表面持续覆盖一层液体</td>
+					<td>液膜接住碎屑后被甩离光路，表面不断更新，碎屑不会堆积，保护了后面的透镜</td>
+			</tr>
+			<tr>
+					<td>液体涂层旋转收集器</td>
+					<td>靠近等离子体，以较大的收集角收集软 X 射线；表面覆盖可更新的液体层</td>
+					<td>收光多，碎屑造成的损伤也不会累积</td>
+			</tr>
+	</tbody>
+</table>
+<p>有了这两项技术，系统可以<strong>连续运行数月</strong>，不用频繁停机更换光学元件。</p>
+<h3 id="47-整套显微镜">4.7 整套显微镜</h3>
+<p><img src="%e6%bf%80%e5%85%89%e7%ad%89%e7%a6%bb%e5%ad%90%e4%bd%93%e5%85%89%e6%ba%90%e5%8f%8a%e5%85%b6%e5%ba%94%e7%94%a8.assets/Figure-10.png" alt="Figure-10"></p>
+<p>激光穿过保护窗口，聚焦在旋转的钼靶上产生等离子体。软 X 射线先由收集器汇聚到中间焦点，经过针孔，再由多层膜反射镜选出约 2.7–2.8 nm 的谱线，经聚光镜照射样品，由波带片放大成像，最后由相机记录。驱动激光的重复频率约 5 kHz，单个脉冲约 2.5 ns。整套设备约占 3 m × 2 m 的平台，不是桌面显微镜，但比同步辐射装置紧凑得多。</p>
+<p>这套技术已经做成商用的 SXT-100 显微镜。公开发表的数据是：三维分辨率 54 nm（全周期），测试图案上能分辨 25 nm 的线宽，一套断层数据（121 或 181 个角度）需要 30 分钟到 2 小时（Sci. Rep. 2025）。团队介绍，新一代系统已能在约 15 分钟内拍完一个细胞。</p>
+<hr>
+<h2 id="五产业化与展望">五、产业化与展望</h2>
+<h3 id="51-siriusxt">5.1 SiriusXT</h3>
+<p>这些研究催生了衍生公司 <strong>SiriusXT</strong>（都柏林，约 20 人），前后研发约十五年，已收到美国研究机构的订单。软 X 射线断层成像还能和荧光显微镜配合：荧光负责定位特定的蛋白或细胞器，软 X 射线负责看清它们周围的三维超微结构，两者互补。这种&quot;关联成像&quot;正是 2025 年那篇 Sci. Rep. 论文的主题。</p>
+<h3 id="52-水窗能用来做光刻吗">5.2 水窗能用来做光刻吗？</h3>
+<p>既然水窗能做高分辨率成像，能不能再往前一步，用 2 nm 甚至 1.5 nm 的光做光刻？</p>
+<ul>
+<li><strong>锶</strong>（Sr）：短波长发射有研究价值，但靶材处理和使用上有困难。测量其辐射强度随功率密度的变化，分析不同跃迁和价态，寻找合适的发射峰。</li>
+<li><strong>钇、铌、钯等</strong>：部分材料在约 1.5 nm 附近有较强的光谱特征，可以用&quot;原子结构计算 + 实验光谱&quot;来筛选候选靶材。</li>
+</ul>
+<p>这部分还没有经过充分的实验研究，亮度和转换效率都不确定，属于研究方向，不是已经实现的技术。</p>
+<hr>
+<h2 id="六总结">六、总结</h2>
+<p>LPP 光源的物理可以归结为一条链：<strong>选靶材</strong>决定有哪些谱线可用，<strong>调激光</strong>（功率密度、波长、脉宽、双脉冲时序）决定温度和密度，也就决定哪种价态最多、自吸收多严重，<strong>配光学</strong>决定发出的光有多少能被用上。</p>
+<ul>
+<li>13.5 nm：锡的多个价态在同一波段重叠，是天然的好光源；难点在把温度和密度同时调对，CO$_2$ 激光、等离子体快门和碰撞等离子体都在解决这个问题。</li>
+<li>6.7 nm：换成钆就能换波长，但温度要高到约 100 eV，反射镜带宽又窄，效率还差得远。</li>
+<li>水窗：问题从&quot;总功率&quot;变成&quot;小、亮、稳&quot;，钼靶加防碎屑设计，让实验室里也能给冷冻细胞做三维断层成像。</li>
+</ul>
+<hr>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>T. Cummins 等，<a href="https://doi.org/10.1063/1.4891762" target="_blank">Colliding laser-produced plasmas as targets for laser-generated extreme ultraviolet sources</a>，Applied Physics Letters 105, 044101 (2014)</li>
+<li>T. Higashiguchi 等，<a href="https://doi.org/10.1063/1.3660275" target="_blank">Extreme ultraviolet source at 6.7 nm based on a low-density plasma</a>，Applied Physics Letters 99, 191502 (2011)</li>
+<li>K. O&rsquo;Connor 等，<a href="https://doi.org/10.1038/s41598-025-29385-5" target="_blank">Demonstrating soft X-ray tomography in the lab for correlative cryogenic biological imaging using X-rays and light microscopy</a>，Scientific Reports 15, 45491 (2025)</li>
+<li><a href="https://siriusxt.com/sxt-100" target="_blank">SiriusXT SXT-100 实验室软 X 射线显微镜</a></li>
+<li><a href="https://henke.lbl.gov/optical_constants/" target="_blank">CXRO X-Ray Interactions With Matter</a>：图 7 所用的原子散射因子</li>
+</ul>
+
+
+        
+      </section>
+
+      
+      <div class="divider"></div>
+      <div class="flex flex-col md:flex-row justify-between gap-4 py-4">
+        
+        <a role="button" class="btn btn-outline h-12" href="/posts/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/" title="">
+          <ion-icon name="chevron-back"></ion-icon>
+          <div class="inline-flex flex-col items-start">
+            <span class="text-base-content/60 text-xs font-normal">上一页</span>
+            <span class="max-w-48 truncate"></span>
+          </div>
+        </a>
+        
+
+        
+        <div></div>
+        
+      </div>
+      
+
+      
+      <div class="divider"></div>
+
+      <section class="space-y-4 not-prose">
+        
+
+
+<template x-if="['localhost', '127.0.0.1'].indexOf(window.location.hostname) == -1">
+  <article>
+    <script
+      src="https://utteranc.es/client.js"
+      repo="elusivekaze/elusivekaze.github.io"
+      issue-term="og:title"
+      theme="github-light"
+      crossorigin="anonymous"
+      async>
+    </script>
+  </article>
+</template>
+
+
+
+
+
+
+
+
+      </section>
+      
+    </article>
+  </div>
+
+  <div
+    x-data="tocHighlighter()"
+    @scroll.window="debouncedScroll"
+    class="hidden lg:flex lg:flex-col lg:items-end"
+  >
+    
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一激光等离子体光源的基本物理">一、激光等离子体光源的基本物理</a>
+      <ul>
+        <li><a href="#11-从激光脉冲到发光的等离子体">1.1 从激光脉冲到发光的等离子体</a></li>
+        <li><a href="#12-电离态决定波长温度决定电离态">1.2 电离态决定波长，温度决定电离态</a></li>
+        <li><a href="#13-光要能被用上转换效率带宽与自吸收">1.3 光要能被用上：转换效率、带宽与自吸收</a></li>
+      </ul>
+    </li>
+    <li><a href="#二135-nmeuv-光刻光源">二、13.5 nm：EUV 光刻光源</a>
+      <ul>
+        <li><a href="#21-为什么是-135-nm">2.1 为什么是 13.5 nm</a></li>
+        <li><a href="#22-温度要调到最佳">2.2 温度要调到最佳</a></li>
+        <li><a href="#23-co-激光与等离子体快门">2.3 CO$_2$ 激光与等离子体快门</a></li>
+        <li><a href="#24-碰撞等离子体">2.4 碰撞等离子体</a></li>
+      </ul>
+    </li>
+    <li><a href="#三走向-6x-nm钆与铽">三、走向 6.x nm：钆与铽</a>
+      <ul>
+        <li><a href="#31-为什么想要更短的波长">3.1 为什么想要更短的波长</a></li>
+        <li><a href="#32-换元素就能换波长">3.2 换元素，就能换波长</a></li>
+        <li><a href="#33-钆和铽要高得多的温度">3.3 钆和铽：要高得多的温度</a></li>
+        <li><a href="#34-降低密度稀释靶与双脉冲">3.4 降低密度：稀释靶与双脉冲</a></li>
+        <li><a href="#35-反射镜带宽与前景">3.5 反射镜带宽与前景</a></li>
+      </ul>
+    </li>
+    <li><a href="#四水窗软-x-射线显微">四、水窗软 X 射线显微</a>
+      <ul>
+        <li><a href="#41-水窗与天然对比度">4.1 水窗与天然对比度</a></li>
+        <li><a href="#42-显微镜的光路">4.2 显微镜的光路</a></li>
+        <li><a href="#43-光源要小而亮">4.3 光源要小而亮</a></li>
+        <li><a href="#44-靶材从液氮射流到钼">4.4 靶材：从液氮射流到钼</a></li>
+        <li><a href="#45-钼的多峰光谱选台">4.5 钼的多峰光谱：&ldquo;选台&rdquo;</a></li>
+        <li><a href="#46-防碎屑">4.6 防碎屑</a></li>
+        <li><a href="#47-整套显微镜">4.7 整套显微镜</a></li>
+      </ul>
+    </li>
+    <li><a href="#五产业化与展望">五、产业化与展望</a>
+      <ul>
+        <li><a href="#51-siriusxt">5.1 SiriusXT</a></li>
+        <li><a href="#52-水窗能用来做光刻吗">5.2 水窗能用来做光刻吗？</a></li>
+      </ul>
+    </li>
+    <li><a href="#六总结">六、总结</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+</nav>
+    
+  </div>
+</div>
+
+
+            
+<footer class="flex flex-col md:flex-row justify-between items-center gap-4 px-4 py-12">
+
+  <div>
+  
+  <p>
+    © 2026 ElusiveKaze&#39;s Blog
+  </p>
+  
+
+  
+  <p>🌱 Towards the Distance.</p>
+  
+</div>
+
+  <div
+  x-data="{ icons: [
+    { name: 'sunny', status: 'n' },
+    { name: 'moon', status: 'y' },
+    { name: 'desktop', status: 'auto' }
+  ] }"
+  class="flex items-center gap-2 h-8 px-2 bg-base-100 border border-base-content/30 rounded-full"
+>
+  <template x-for="icon in icons">
+    <div
+      role="button"
+      tabindex="0"
+      :aria-label="'Select ' + icon.name + ' mode'"
+      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
+      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
+      @click="$store.darkMode.toggle(icon.status)"
+    >
+      <ion-icon
+        :name="`${icon.name}-outline`"
+        class="group-hover:text-primary-content"
+        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
+      >
+      </ion-icon>
+    </div>
+  </template>
+</div>
+
+</footer>
+
+          </div>
+        </div>
+        
+        <div class="back" data-nosnippet>
+        
+          <div class="container">
+            
+              <div class="dream-grid dream-grid-about">
+  
+  
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">关于我</div>
+
+        <div class="prose dark:prose-invert">
+          <p>Hi，这里是 <strong>ElusiveKaze</strong> 的博客，主要分享一些学习笔记。</p>
+
+        </div>
+      </div>
+    </article>
+  </div>
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">知识共享</div>
+
+        <div class="prose dark:prose-invert">
+          <p>此网站的所有内容都遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank">CC BY-NC-SA 4.0</a>。</p>
+
+        </div>
+      </div>
+    </article>
+  </div>
+  
+  
+
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">社交链接</div>
+
+        <ul class="menu menu-horizontal flex-wrap w-full px-0 [&_ion-icon]:text-lg">
+  
+  <li>
+    <a href="mailto:2915795652@qq.com" title="Email">
+      <ion-icon name="mail"></ion-icon>
+    </a>
+  </li>
+  
+
+  
+  <li>
+    <a href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+      <ion-icon name="logo-github"></ion-icon>
+    </a>
+  </li>
+  
+</ul>
+
+      </div>
+    </article>
+  </div>
+  
+
+  
+</div>
+
+            
+
+            
+<footer class="flex flex-col md:flex-row justify-between items-center gap-4 px-4 py-12">
+
+  <div>
+  
+  <p>
+    © 2026 ElusiveKaze&#39;s Blog
+  </p>
+  
+
+  
+  <p>🌱 Towards the Distance.</p>
+  
+</div>
+
+  <div
+  x-data="{ icons: [
+    { name: 'sunny', status: 'n' },
+    { name: 'moon', status: 'y' },
+    { name: 'desktop', status: 'auto' }
+  ] }"
+  class="flex items-center gap-2 h-8 px-2 bg-base-100 border border-base-content/30 rounded-full"
+>
+  <template x-for="icon in icons">
+    <div
+      role="button"
+      tabindex="0"
+      :aria-label="'Select ' + icon.name + ' mode'"
+      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
+      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
+      @click="$store.darkMode.toggle(icon.status)"
+    >
+      <ion-icon
+        :name="`${icon.name}-outline`"
+        class="group-hover:text-primary-content"
+        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
+      >
+      </ion-icon>
+    </div>
+  </template>
+</div>
+
+</footer>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  <script src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+
+  
+  
+    
+  
+  <script src="/js/grid.min.js"></script>
+
+
+
+
+  
+
+<script src="/js/main.min.js"></script>
+
+    
+
+
+  <script
+  src="https://cdn.jsdelivr.net/npm/luxon@3.7.2/build/global/luxon.min.js"
+  integrity="sha256-UWxf6lyCvfH7XEcrmq/cqc2m3IBrLBLOnWLC4Pw0gQQ="
+  crossorigin="anonymous"
+></script>
+<script>
+  format()
+
+  function format() {
+    document.querySelectorAll('span[data-format="luxon"]').forEach((el) => {
+      const date = el.textContent
+
+      el.textContent = luxon.DateTime.fromISO(date, { locale: 'zh' }).toFormat(
+        'yyyy年MM月dd日',
+      )
+    })
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+<script src="/js/toc.min.js"></script>
+
+
+  
+    <script type="module">
+      import mediumZoom from 'https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/+esm';
+      mediumZoom('#dream-single-post-content img', {
+        background: 'oklch(var(--b1))',
+        margin: 24,
+      })
+    </script>
+  
+
+
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@8.0.13/dist/ionicons/ionicons.esm.js" integrity="sha256-46Vf2l/aX0tBSf2YXcaYMxF7JVJl30zn8Y9L9zZNXMA=" crossorigin="anonymous"></script>
+  </body>
+</html>

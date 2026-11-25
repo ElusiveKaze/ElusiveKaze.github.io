@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>温度旋钮：哪种离子在发光</title><link rel="stylesheet" href="lib/ui.css"></head>
+<body><div class="wrap">
+<div class="row"><button id="bSn" class="on">锡 Sn → 13.5 nm</button><button id="bGd">钆 Gd → 约 6.7 nm</button></div>
+<div class="fig" style="flex-grow:300"><svg id="s" viewBox="0 0 760 300"></svg></div>
+<div class="row"><label for="t">电子温度 T<sub>e</sub>（由激光功率密度控制）</label><input id="t" type="range" step="1"><span class="val" id="tv"></span></div>
+<div class="cards">
+<div class="card"><div class="k">目标价态</div><div class="v" id="tg">—</div></div>
+<div class="card"><div class="k">目标价态所占比例（≈ 目标波段发光强弱）</div><div class="v" id="fr">—</div></div>
+<div class="card"><div class="k">状态</div><div class="v" id="st">—</div></div>
+</div>
+<div class="hint">简化模型：价态分布取钟形，中心随温度升高右移，曲线形状不是实验数据。锡约 30–35 eV 时以 Sn¹⁰⁺–¹²⁺ 为主，钆约 100 eV 时以 Gd¹⁸⁺–²⁰⁺ 为主。</div>
+</div>
+<script>
+const NS = 'http://www.w3.org/2000/svg', S = document.getElementById('s');
+const el = (t, a, p) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); (p || S).appendChild(e); return e; };
+const M = {
+  Sn: { q0: 4, q1: 22, tg: [10, 12], tmin: 10, tmax: 70, t0: 32, c: T => 11 + (T - 32) * 0.19, best: [30, 35], sym: 'Sn' },
+  Gd: { q0: 10, q1: 28, tg: [18, 20], tmin: 40, tmax: 160, t0: 100, c: T => 19 + (T - 100) * 0.075, best: [90, 110], sym: 'Gd' }
+};
+let cur = 'Sn';
+const tI = document.getElementById('t');
+function draw() {
+  S.innerHTML = '';
+  const m = M[cur], T = +tI.value, c = m.c(T), sig = 1.9;
+  const qs = []; for (let q = m.q0; q <= m.q1; q++) qs.push(q);
+  const w = qs.map(q => Math.exp(-0.5 * Math.pow((q - c) / sig, 2))); const tot = w.reduce((a, b) => a + b, 0);
+  const f = w.map(x => x / tot); const mx = 0.25;
+  const x0 = 50, x1 = 730, y0 = 250, H = 200, bw = (x1 - x0) / qs.length;
+  el('line', { x1: x0, y1: y0, x2: x1, y2: y0, stroke: '#888780' });
+  for (let p = 0; p <= 0.25; p += 0.05) { const y = y0 - H * p / mx; el('line', { x1: x0, y1: y, x2: x1, y2: y, stroke: '#EEEDEA' }); const t = el('text', { x: x0 - 6, y: y + 4, 'font-size': 11, fill: '#5F5E5A', 'text-anchor': 'end' }); t.textContent = Math.round(p * 100) + '%'; }
+  let fr = 0;
+  qs.forEach((q, i) => {
+    const tgt = q >= m.tg[0] && q <= m.tg[1]; if (tgt) fr += f[i];
+    const h = Math.min(H, H * f[i] / mx), x = x0 + i * bw + 3;
+    el('rect', { x, y: y0 - h, width: bw - 6, height: h, rx: 2, fill: tgt ? '#BA7517' : '#B4B2A9' });
+    const t = el('text', { x: x + (bw - 6) / 2, y: y0 + 16, 'font-size': 11, fill: tgt ? '#854F0B' : '#5F5E5A', 'text-anchor': 'middle', 'font-weight': tgt ? 600 : 400 }); t.textContent = q + '+';
+  });
+  const t = el('text', { x: (x0 + x1) / 2, y: y0 + 36, 'font-size': 12, fill: '#5F5E5A', 'text-anchor': 'middle' }); t.textContent = m.sym + ' 离子的价态（被剥掉的电子数）；橙色 = 在目标波段发光的主力';
+  document.getElementById('tv').textContent = T + ' eV ≈ ' + Math.round(T * 11600 / 10000) + ' 万 K';
+  document.getElementById('tg').textContent = m.sym + '^' + m.tg[0] + '+ – ' + m.tg[1] + '+';
+  document.getElementById('tg').textContent = m.sym + ' ' + m.tg[0] + '+ ～ ' + m.tg[1] + '+';
+  document.getElementById('fr').textContent = Math.round(fr * 100) + '%';
+  document.getElementById('st').textContent = T < m.best[0] - 4 ? '温度偏低：价态不够高' : T > m.best[1] + 4 ? '温度过高：被电离到更高价态' : '接近最佳温度';
+}
+function setEl(k) { cur = k; const m = M[k]; tI.min = m.tmin; tI.max = m.tmax; tI.value = m.t0; document.getElementById('bSn').classList.toggle('on', k === 'Sn'); document.getElementById('bGd').classList.toggle('on', k === 'Gd'); draw(); }
+document.getElementById('bSn').onclick = () => setEl('Sn'); document.getElementById('bGd').onclick = () => setEl('Gd');
+tI.addEventListener('input', draw); setEl('Sn');
+</script></body></html>
