@@ -5,7 +5,7 @@
     <description>ElusiveKaze 的个人博客，主要分享学习笔记</description>
     <generator>Hugo</generator>
     <language>zh</language>
-    <lastBuildDate>Wed, 25 Nov 2026 18:02:12 &#43;0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Nov 2026 18:07:28 &#43;0000</lastBuildDate>
     <atom:link href="https://elusivekaze.github.io/index.xml" rel="self" type="application/rss+xml"/>
     
     <item>
@@ -18,9 +18,9 @@
     
     <item>
       <title>千新星与重元素光谱</title>
-      <link>https://elusivekaze.github.io/posts/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/</link>
+      <link>https://elusivekaze.github.io/posts/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/</link>
       <pubDate>Tue, 24 Nov 2026 00:00:00 &#43;0800</pubDate>
-      <guid>https://elusivekaze.github.io/posts/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/</guid>
+      <guid>https://elusivekaze.github.io/posts/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/</guid>
       <description>从中子星并合、r 过程和千新星 AT2017gfo 的光谱出发，说明认出重元素为什么需要实验室原子数据；进而介绍用线状激光等离子体测吸收谱的方法，以及钇、锆、铱、铂、金在极紫外和红外波段的测量与谱线归属。</description>
     </item>
     
