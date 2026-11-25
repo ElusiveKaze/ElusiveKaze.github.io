@@ -5,7 +5,7 @@
     <description>ElusiveKaze 的个人博客，主要分享学习笔记</description>
     <generator>Hugo</generator>
     <language>zh</language>
-    <lastBuildDate>Wed, 25 Nov 2026 17:59:43 &#43;0000</lastBuildDate>
+    <lastBuildDate>Wed, 25 Nov 2026 18:01:09 &#43;0000</lastBuildDate>
     <atom:link href="https://elusivekaze.github.io/index.xml" rel="self" type="application/rss+xml"/>
     
     <item>
@@ -14,6 +14,14 @@
       <pubDate>Wed, 25 Nov 2026 00:00:00 &#43;0800</pubDate>
       <guid>https://elusivekaze.github.io/posts/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/</guid>
       <description>从能带出发，用电子的电势能读懂能带图，依次讲 PN 结、MOSFET（nMOS、pMOS）与 CMOS，以及晶体管怎样微缩到 FinFET 和 GAA；进而说明硅怎样把光变成电子，CMOS 图像传感器与 CCD 各自怎样读出信号、各有什么长处。</description>
+    </item>
+    
+    <item>
+      <title>激光等离子体光源及其应用</title>
+      <link>https://elusivekaze.github.io/posts/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/</link>
+      <pubDate>Mon, 23 Nov 2026 00:00:00 &#43;0800</pubDate>
+      <guid>https://elusivekaze.github.io/posts/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/</guid>
+      <description>从电离态、电子温度、临界密度和自吸收出发，解释 EUV 光刻为什么用锡和 13.5 nm，以及 CO₂ 短脉冲、等离子体快门和碰撞等离子体怎样提高转换效率；进而介绍钆在 6.7 nm 的尝试，以及用钼等离子体做光源、给冷冻细胞拍三维照片的水窗软 X 射线显微镜。</description>
     </item>
     
     <item>
@@ -53,14 +61,6 @@
       <link>https://elusivekaze.github.io/posts/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
       <guid>https://elusivekaze.github.io/posts/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://elusivekaze.github.io/posts/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 &#43;0000</pubDate>
-      <guid>https://elusivekaze.github.io/posts/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/</guid>
       <description></description>
     </item>
     
