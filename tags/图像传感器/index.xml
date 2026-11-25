@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+	<channel>
+		<title>图像传感器 on ElusiveKaze&#39;s Blog</title>
+		<link>https://elusivekaze.github.io/tags/%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/</link>
+		<description>Recent content in 图像传感器 on ElusiveKaze&#39;s Blog</description>
+		<generator>Hugo</generator>
+		<language>zh</language>
+		
+		
+		
+		
+			<lastBuildDate>Thu, 26 Nov 2026 00:00:00 +0800</lastBuildDate>
+		
+			<atom:link href="https://elusivekaze.github.io/tags/%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/index.xml" rel="self" type="application/rss+xml" />
+			<item>
+				<title>从能带到芯片与图像传感器</title>
+				<link>https://elusivekaze.github.io/posts/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/</link>
+				<pubDate>Wed, 25 Nov 2026 00:00:00 +0800</pubDate>
+				<guid>https://elusivekaze.github.io/posts/%E4%BB%8E%E8%83%BD%E5%B8%A6%E5%88%B0%E8%8A%AF%E7%89%87%E4%B8%8E%E5%9B%BE%E5%83%8F%E4%BC%A0%E6%84%9F%E5%99%A8/</guid>
+				<description>&lt;h1 id=&#34;从能带到芯片与图像传感器&#34;&gt;从能带到芯片与图像传感器&lt;/h1&gt;&#xA;&lt;p&gt;这篇笔记是从两场讲座里延伸出来的：&lt;a href=&#34;https://elusivekaze.github.io/posts/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/&#34; target=&#34;_blank&#34;&gt;激光等离子体光源及其应用&lt;/a&gt;讲到 EUV 光刻机靠 13.5 nm 的光在硅片上&amp;quot;刻&amp;quot;出晶体管，也讲到水窗显微镜最后要用一台&amp;quot;成像探测器&amp;quot;拍下软 X 射线图像。顺着这两条线往下追问，就是这篇笔记的内容：芯片里的晶体管怎样工作，图像传感器（CMOS 和 CCD）又怎样把光变成数字。&lt;/p&gt;&#xA;&lt;p&gt;全篇沿着一条链往下走：&lt;/p&gt;&#xA;&#xA;&#xA;&#xA;  &lt;blockquote&gt;&#xA;    &lt;p&gt;能带 → 电压怎样改变电子的能量 → PN 结 → MOSFET（nMOS、pMOS）→ CMOS → 晶体管的微缩（FinFET、GAA）→ 硅怎样吸收光 → CMOS 图像传感器 → CCD&lt;/p&gt;&#xA;&#xA;  &lt;/blockquote&gt;&#xA;&#xA;&lt;p&gt;文中有几张可交互的图（拖动旋转、拖滑块改参数），用 &lt;code&gt;&amp;lt;iframe&amp;gt;&lt;/code&gt; 嵌在文档里，Typora 中可以直接操作。&lt;/p&gt;&#xA;&lt;hr&gt;&#xA;&lt;h2 id=&#34;一能带电子在固体里能待在哪些能量上&#34;&gt;一、能带：电子在固体里能待在哪些能量上&lt;/h2&gt;&#xA;&lt;h3 id=&#34;11-从原子能级到能带&#34;&gt;1.1 从原子能级到能带&lt;/h3&gt;&#xA;&lt;p&gt;单个原子里，电子只能待在一些分立的能级上。两个原子靠近时，它们的轨道发生重叠，一个能级会分裂成两个：同相叠加的&lt;strong&gt;成键态&lt;/strong&gt;能量更低，反相叠加的&lt;strong&gt;反键态&lt;/strong&gt;能量更高（和&lt;a href=&#34;https://elusivekaze.github.io/posts/%E7%9F%B3%E5%A2%A8%E7%83%AF%E4%B9%8B%E5%AD%97%E5%BD%A2%E8%BE%B9%E7%BC%98%E7%9A%84%E7%89%B9%E6%AE%8A%E5%B1%80%E5%9F%9F%E6%80%81/#11--%E6%9D%82%E5%8C%96%E4%B8%8E--%E9%94%AE&#34; target=&#34;_blank&#34;&gt;石墨烯笔记 1.1 节&lt;/a&gt;里 $\sigma$、$\sigma^{*}$ 的分裂是同一件事）。&lt;/p&gt;&#xA;&lt;p&gt;原子越多，分裂出来的能级越多。$N$ 个原子就有 $N$ 个能级，但它们挤在一个有限的能量范围里（几个 eV）。一块硅里 $N\sim10^{23}$，相邻能级的间隔只有 $10^{-23}$ eV 量级，实际上连成了一片，这就是&lt;strong&gt;能带&lt;/strong&gt;。不同的原子能级展宽成不同的能带，能带之间可能留下电子不能待的能量区间，叫&lt;strong&gt;禁带&lt;/strong&gt;或&lt;strong&gt;带隙&lt;/strong&gt;。&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-1.png&#34; alt=&#34;Figure-1&#34;&gt;&lt;/p&gt;&#xA;&lt;p&gt;每个能级（计入自旋）最多容纳 2 个电子（泡利不相容原理，见&lt;a href=&#34;https://elusivekaze.github.io/posts/%E5%8E%9F%E5%AD%90%E7%BB%93%E6%9E%84%E4%B8%8E%E7%B2%92%E5%AD%90%E7%BB%9F%E8%AE%A1/#%E6%B3%A1%E5%88%A9%E4%B8%8D%E7%9B%B8%E5%AE%B9%E5%8E%9F%E7%90%86&#34; target=&#34;_blank&#34;&gt;原子结构与粒子统计&lt;/a&gt;）。电子从低到高把能带填满，填到哪里，决定了材料是导体还是绝缘体。&lt;/p&gt;&#xA;&lt;h3 id=&#34;12-价带导带与带隙&#34;&gt;1.2 价带、导带与带隙&lt;/h3&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;&lt;strong&gt;价带&lt;/strong&gt;：绝对零度时被电子填满的最高能带，它的顶端记作价带顶 $E_v$。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;导带&lt;/strong&gt;：价带上方最低的空能带，它的底端记作导带底 $E_c$。&lt;/li&gt;&#xA;&lt;li&gt;&lt;strong&gt;带隙&lt;/strong&gt;：$E_g=E_c-E_v$。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;一个&lt;strong&gt;填满的能带不导电&lt;/strong&gt;：每个状态都有电子占着，加电场时电子无处可&amp;quot;挪&amp;quot;，没有净的电流。一个空能带里没有电子，也不导电。只有部分填充的能带才能导电。&lt;/p&gt;&#xA;&lt;p&gt;&lt;img src=&#34;%e4%bb%8e%e8%83%bd%e5%b8%a6%e5%88%b0%e8%8a%af%e7%89%87%e4%b8%8e%e5%9b%be%e5%83%8f%e4%bc%a0%e6%84%9f%e5%99%a8.assets/Figure-2.png&#34; alt=&#34;Figure-2&#34;&gt;&lt;/p&gt;&#xA;&lt;ul&gt;&#xA;&lt;li&gt;金属：最高的有电子的能带只填了一部分，天然导电。&lt;/li&gt;&#xA;&lt;li&gt;绝缘体：价带全满、导带全空，带隙很大（SiO$_2$ 约 9 eV），常温下几乎没有电子能跳上去。&lt;/li&gt;&#xA;&lt;li&gt;半导体：结构和绝缘体一样，但带隙小（硅 1.12 eV），常温下有少量电子被热激发到导带。&lt;/li&gt;&#xA;&lt;/ul&gt;&#xA;&lt;p&gt;热激发的多少由玻尔兹曼因子决定。室温下 $kT\approx0.0259$ eV，本征硅的载流子浓度&lt;/p&gt;</description>
+			</item>
+	</channel>
+</rss>
