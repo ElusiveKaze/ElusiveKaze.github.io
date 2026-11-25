@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="zh"
+  x-data
+  :class="$store.darkMode.isDark() ? 'dark' : 'light'"
+  :data-theme="$store.darkMode.theme()">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> | ElusiveKaze&#39;s Blog</title>
+
+    <head>  
+  
+    
+      <link href="/logo.svg" rel="icon" type="image/x-icon" />
+    
+  
+  
+  <link rel="canonical" href="https://elusivekaze.github.io/posts/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/" />
+  
+  
+  
+  <meta name="author" content="ElusiveKaze" />
+  <meta name="description" content="千新星与重元素光谱 金、铂这类比铁重得多的元素，很大一部分来自两颗中子星的并合。2017 年的 GW170817 让人类第一次同时用引力波和光看到这样一次并合，天文学家还从它的余晖&quot;千新星&quot;的光谱里认出了锶。但要从光谱里读出&quot;有哪些元素、各有多少&quot;，必须先知道每种元素、每个电离态的谱线在哪、属于谁、有多强。重元素低电离态在可见光和红外的这类数据大量缺失，都柏林大学（UCD）团队的工作就是在实验室里用激光等离子体把它们一条条测出来。本文整理自该团队的一场讲座，并补充了相关背景。
+相关笔记：激光等离子体光源及其应用。那篇把等离子体当作光源，看它发出的极紫外光；这篇把等离子体当作样品，让外来的光穿过它，看哪些波长被吸收。
+部分 内容 天上 r 过程造重元素；AT2017gfo 的光谱由蓝变红、谱线很宽；认出 Sr II 缺口 重元素低电离态在可见光、红外缺数据。要测三样：波长、归属、跃迁强度 方法 线状激光等离子体；调延迟挑电离态；三次采集算吸光度 $A=\log_{10}(I_0/I)$ 极紫外 钇、锆、铱、铂、金；用等电子序列、等核序列判断谱线归属 红外 超连续谱测钇：55 条线，29 条此前未指认；锆：217 条新谱线；中红外上转换；双光梳 （图中千新星箭头的两端是 6500 K 和 2300 K 黑体的峰值位置，只用来示意颜色变化。）
+一、千新星与 r 过程 1.1 r 过程：快中子俘获 大质量恒星死亡后可能留下中子星。两颗中子星互相绕转，通过引力波损失能量，越靠越近，最后并合，并抛出一部分富含中子的物质。在这种中子极多的环境里，原子核接连吞中子，再经 β$^-$ 衰变变成更重的元素：
+$$ {}^{A}_{Z}X&#43;n\rightarrow{}^{A&#43;1}_{\ \ Z}X&#43;\gamma,\qquad n\rightarrow p&#43;e^{-}&#43;\bar\nu_e $$ 第一式：原子核吞下一个中子，质量数 $A$ 加 1，元素（$Z$）不变。第二式：核里的一个中子变成质子，$Z$ 加 1，变成周期表里的下一种元素。两步交替，就沿着周期表往重的方向爬。
+r 是 rapid 的意思：中子俘获比 β 衰变快，原子核来不及衰变就又吞下了下一个中子，于是路径先往富中子的一侧走得很远，再一步步衰变回稳定核。与之相对的是慢中子俘获（s 过程），发生在恒星内部，中子少、俘获慢。不同元素里 r 过程的贡献差别很大：锶只有一部分来自 r 过程，金、铂则绝大部分来自 r 过程。
+1.2 GW170817 与千新星 AT2017gfo 2017 年，LIGO 和 Virgo 探测到引力波事件 GW170817，来自约 40 Mpc（约 1.3 亿光年）外的一次双中子星并合，它的光学对应体编号 AT2017gfo。欧洲南方天文台甚大望远镜（VLT）的 X-shooter 光谱仪、哈勃空间望远镜等随后跟踪了几天到几周的变化。
+" />
+  
+  
+  <meta name="keywords" content="">
+  
+  
+  
+  <meta name="generator" content="Hugo 0.170.1">
+  
+  
+  <meta property="og:url" content="https://elusivekaze.github.io/posts/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/">
+	<meta property="og:site_name" content="ElusiveKaze&#39;s Blog">
+	<meta property="og:title" content="ElusiveKaze&#39;s Blog">
+	<meta property="og:description" content="千新星与重元素光谱 金、铂这类比铁重得多的元素，很大一部分来自两颗中子星的并合。2017 年的 GW170817 让人类第一次同时用引力波和光看到这样一次并合，天文学家还从它的余晖&#34;千新星&#34;的光谱里认出了锶。但要从光谱里读出&#34;有哪些元素、各有多少&#34;，必须先知道每种元素、每个电离态的谱线在哪、属于谁、有多强。重元素低电离态在可见光和红外的这类数据大量缺失，都柏林大学（UCD）团队的工作就是在实验室里用激光等离子体把它们一条条测出来。本文整理自该团队的一场讲座，并补充了相关背景。
+相关笔记：激光等离子体光源及其应用。那篇把等离子体当作光源，看它发出的极紫外光；这篇把等离子体当作样品，让外来的光穿过它，看哪些波长被吸收。
+部分 内容 天上 r 过程造重元素；AT2017gfo 的光谱由蓝变红、谱线很宽；认出 Sr II 缺口 重元素低电离态在可见光、红外缺数据。要测三样：波长、归属、跃迁强度 方法 线状激光等离子体；调延迟挑电离态；三次采集算吸光度 $A=\log_{10}(I_0/I)$ 极紫外 钇、锆、铱、铂、金；用等电子序列、等核序列判断谱线归属 红外 超连续谱测钇：55 条线，29 条此前未指认；锆：217 条新谱线；中红外上转换；双光梳 （图中千新星箭头的两端是 6500 K 和 2300 K 黑体的峰值位置，只用来示意颜色变化。）
+一、千新星与 r 过程 1.1 r 过程：快中子俘获 大质量恒星死亡后可能留下中子星。两颗中子星互相绕转，通过引力波损失能量，越靠越近，最后并合，并抛出一部分富含中子的物质。在这种中子极多的环境里，原子核接连吞中子，再经 β$^-$ 衰变变成更重的元素：
+$$ {}^{A}_{Z}X&#43;n\rightarrow{}^{A&#43;1}_{\ \ Z}X&#43;\gamma,\qquad n\rightarrow p&#43;e^{-}&#43;\bar\nu_e $$ 第一式：原子核吞下一个中子，质量数 $A$ 加 1，元素（$Z$）不变。第二式：核里的一个中子变成质子，$Z$ 加 1，变成周期表里的下一种元素。两步交替，就沿着周期表往重的方向爬。
+r 是 rapid 的意思：中子俘获比 β 衰变快，原子核来不及衰变就又吞下了下一个中子，于是路径先往富中子的一侧走得很远，再一步步衰变回稳定核。与之相对的是慢中子俘获（s 过程），发生在恒星内部，中子少、俘获慢。不同元素里 r 过程的贡献差别很大：锶只有一部分来自 r 过程，金、铂则绝大部分来自 r 过程。
+1.2 GW170817 与千新星 AT2017gfo 2017 年，LIGO 和 Virgo 探测到引力波事件 GW170817，来自约 40 Mpc（约 1.3 亿光年）外的一次双中子星并合，它的光学对应体编号 AT2017gfo。欧洲南方天文台甚大望远镜（VLT）的 X-shooter 光谱仪、哈勃空间望远镜等随后跟踪了几天到几周的变化。">
+	<meta property="og:locale" content="zh">
+	<meta property="og:type" content="article">
+		<meta property="article:section" content="posts">
+
+  
+  
+  
+	<meta name="twitter:card" content="summary">
+	<meta name="twitter:title" content="ElusiveKaze&#39;s Blog">
+	<meta name="twitter:description" content="千新星与重元素光谱 金、铂这类比铁重得多的元素，很大一部分来自两颗中子星的并合。2017 年的 GW170817 让人类第一次同时用引力波和光看到这样一次并合，天文学家还从它的余晖&#34;千新星&#34;的光谱里认出了锶。但要从光谱里读出&#34;有哪些元素、各有多少&#34;，必须先知道每种元素、每个电离态的谱线在哪、属于谁、有多强。重元素低电离态在可见光和红外的这类数据大量缺失，都柏林大学（UCD）团队的工作就是在实验室里用激光等离子体把它们一条条测出来。本文整理自该团队的一场讲座，并补充了相关背景。
+相关笔记：激光等离子体光源及其应用。那篇把等离子体当作光源，看它发出的极紫外光；这篇把等离子体当作样品，让外来的光穿过它，看哪些波长被吸收。
+部分 内容 天上 r 过程造重元素；AT2017gfo 的光谱由蓝变红、谱线很宽；认出 Sr II 缺口 重元素低电离态在可见光、红外缺数据。要测三样：波长、归属、跃迁强度 方法 线状激光等离子体；调延迟挑电离态；三次采集算吸光度 $A=\log_{10}(I_0/I)$ 极紫外 钇、锆、铱、铂、金；用等电子序列、等核序列判断谱线归属 红外 超连续谱测钇：55 条线，29 条此前未指认；锆：217 条新谱线；中红外上转换；双光梳 （图中千新星箭头的两端是 6500 K 和 2300 K 黑体的峰值位置，只用来示意颜色变化。）
+一、千新星与 r 过程 1.1 r 过程：快中子俘获 大质量恒星死亡后可能留下中子星。两颗中子星互相绕转，通过引力波损失能量，越靠越近，最后并合，并抛出一部分富含中子的物质。在这种中子极多的环境里，原子核接连吞中子，再经 β$^-$ 衰变变成更重的元素：
+$$ {}^{A}_{Z}X&#43;n\rightarrow{}^{A&#43;1}_{\ \ Z}X&#43;\gamma,\qquad n\rightarrow p&#43;e^{-}&#43;\bar\nu_e $$ 第一式：原子核吞下一个中子，质量数 $A$ 加 1，元素（$Z$）不变。第二式：核里的一个中子变成质子，$Z$ 加 1，变成周期表里的下一种元素。两步交替，就沿着周期表往重的方向爬。
+r 是 rapid 的意思：中子俘获比 β 衰变快，原子核来不及衰变就又吞下了下一个中子，于是路径先往富中子的一侧走得很远，再一步步衰变回稳定核。与之相对的是慢中子俘获（s 过程），发生在恒星内部，中子少、俘获慢。不同元素里 r 过程的贡献差别很大：锶只有一部分来自 r 过程，金、铂则绝大部分来自 r 过程。
+1.2 GW170817 与千新星 AT2017gfo 2017 年，LIGO 和 Virgo 探测到引力波事件 GW170817，来自约 40 Mpc（约 1.3 亿光年）外的一次双中子星并合，它的光学对应体编号 AT2017gfo。欧洲南方天文台甚大望远镜（VLT）的 X-shooter 光谱仪、哈勃空间望远镜等随后跟踪了几天到几周的变化。">
+
+  
+  
+  
+    
+  
+  <link rel="stylesheet" href="/css/output.min.css" />
+  
+  
+  
+  
+</head>
+<style>
+    code.has-jax {
+      -webkit-font-smoothing: antialiased;
+      background: inherit !important;
+      border: none !important;
+      font-size: 100%;
+    }
+</style>
+
+
+    
+
+
+<style>
+  pre {
+    padding: 1em;
+    overflow: auto;
+  }
+</style>
+
+
+
+
+
+
+
+
+
+    
+
+    <script>
+      window.lightTheme = 'emerald'
+      window.darkTheme = 'forest'
+
+      ;(function() {
+        const isDark = ('hugo-theme-dream-is-dark' in localStorage)
+          ? window.localStorage.getItem('hugo-theme-dream-is-dark') === 'y'
+          : window.matchMedia('(prefers-color-scheme: dark)').matches
+        const theme = isDark ? window.darkTheme : window.lightTheme
+
+        document.documentElement.setAttribute('data-theme', theme)
+      })()
+    </script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.15.12/dist/cdn.min.js" integrity="sha256-V7N9fK6aJ9ll/a5K3MhEJF39xAfmVa7oXc//OggDaj8=" crossorigin="anonymous"></script>
+  </head>
+
+  <body x-data="{
+    flip: false,
+  }">
+    
+
+    
+<nav x-data="{ isSticky: false }"
+  x-init="window.addEventListener('scroll', () => { isSticky = window.scrollY > 30 })"
+  class="sticky top-0 z-30 mt-4 lg:mt-8 py-4"
+  :class="{ 'bg-base-100 shadow-lg dark:border-b dark:border-base-content/30': isSticky }">
+
+  
+  <div class="container flex justify-between px-4">
+  
+    <section class="flex items-center gap-2">
+      <div class="avatar cursor-pointer hover:avatar-online" @click="flip = !flip" title="翻转一下！">
+        <div class="w-12 h-12 rounded-full select-none">
+          <img src="/img/avatar.png" alt="ElusiveKaze&#39;s Blog" />
+        </div>
+      </div>
+
+      
+      <div>
+        
+        <a href="https://elusivekaze.github.io/" class="text-lg font-semibold cursor-pointer">
+          ElusiveKaze&#39;s Blog
+        </a>
+        
+        
+        <div class="text-base-content/60 text-sm">向远方</div>
+        
+      </div>
+      
+    </section>
+
+    
+    
+      
+    
+
+    <div class="dropdown dropdown-end sm:hidden">
+      <div tabindex="0" role="button" class="btn btn-ghost btn-square" aria-label="Select an option">
+        <ion-icon name="menu" class="text-2xl"></ion-icon>
+      </div>
+      <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-10 shadow-md">
+        
+
+
+
+
+
+
+
+
+<li>
+  <div role="link" tabindex="0" class="inline-flex items-center p-2 cursor-pointer" @click="flip = !flip" title="关于">
+    <ion-icon name="information-circle"></ion-icon>关于</div>
+</li>
+
+
+
+
+
+
+
+
+
+<li>
+  <a class="group inline-flex items-center p-2 cursor-pointer" href="/search" title="搜索">
+    <ion-icon name="search"></ion-icon>
+    搜索
+  </a>
+</li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+    
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+    
+    <ion-icon name="logo-github"></ion-icon>
+    
+    GitHub
+  </a>
+</li>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="归档">
+    <ion-icon name="archive"></ion-icon>
+    归档
+  </a>
+</li>
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/categories" title="所有分类">
+    <ion-icon name="grid"></ion-icon>
+    所有分类
+  </a>
+</li>
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/tags" title="所有标签">
+    <ion-icon name="pricetags"></ion-icon>
+    所有标签
+  </a>
+</li>
+
+
+
+
+
+
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/index.xml" title="RSS">
+    <ion-icon name="logo-rss"></ion-icon>
+    RSS
+  </a>
+</li>
+
+
+
+
+
+      </ul>
+    </div>
+    <section class="hidden sm:flex sm:items-center sm:gap-2 md:gap-4">
+      
+
+      
+      
+      
+      
+
+
+
+
+<div role="link" tabindex="0" class="text-sm font-semibold cursor-pointer hover:underline" @click="flip = !flip" title="关于">关于</div>
+
+
+
+
+
+      
+      
+<a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="/search" title="搜索">
+  <ion-icon class="group-hover:text-primary-content" name="search"></ion-icon>
+</a>
+
+
+      
+
+      
+      
+
+
+
+
+
+
+
+
+
+  
+    
+
+
+
+
+  
+  <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+    <ion-icon class="group-hover:text-primary-content" name="logo-github"></ion-icon>
+  </a>
+  
+
+
+
+
+  
+
+
+      
+
+      <div class="dropdown dropdown-end dropdown-hover">
+        <div tabindex="0" role="button" class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary" aria-label="Select an option">
+          <ion-icon class="group-hover:text-primary-content text-xl" name="menu"></ion-icon>
+        </div>
+        <ul tabindex="0" class="dropdown-content menu w-36 bg-base-100 rounded-box z-10 shadow-xl">
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/posts" title="归档">
+    <ion-icon name="archive"></ion-icon>
+    归档
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/categories" title="所有分类">
+    <ion-icon name="grid"></ion-icon>
+    所有分类
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/tags" title="所有标签">
+    <ion-icon name="pricetags"></ion-icon>
+    所有标签
+  </a>
+</li>
+
+
+          
+          
+<li>
+  <a class="inline-flex items-center p-2 cursor-pointer" href="/index.xml" title="RSS">
+    <ion-icon name="logo-rss"></ion-icon>
+    RSS
+  </a>
+</li>
+
+
+          
+        </ul>
+      </div>
+      
+    </section>
+  </div>
+</nav>
+
+
+    <div class="flip-container" :class="{ 'flip-it': flip }">
+      <div class="flipper">
+        <div class="front">
+          <div class="container">
+            
+<div class="lg:grid lg:grid-cols-4 gap-4 mt-4 px-4">
+  <div class="hidden lg:block">
+    
+  </div>
+
+  <div class="lg:col-span-2">
+    <article class="mx-auto prose prose-quoteless dark:prose-invert" id="dream-single-post-main" itemscope itemtype="http://schema.org/Article">
+      
+	<meta itemprop="name" content="ElusiveKaze&#39;s Blog">
+	<meta itemprop="description" content="千新星与重元素光谱 金、铂这类比铁重得多的元素，很大一部分来自两颗中子星的并合。2017 年的 GW170817 让人类第一次同时用引力波和光看到这样一次并合，天文学家还从它的余晖&#34;千新星&#34;的光谱里认出了锶。但要从光谱里读出&#34;有哪些元素、各有多少&#34;，必须先知道每种元素、每个电离态的谱线在哪、属于谁、有多强。重元素低电离态在可见光和红外的这类数据大量缺失，都柏林大学（UCD）团队的工作就是在实验室里用激光等离子体把它们一条条测出来。本文整理自该团队的一场讲座，并补充了相关背景。
+相关笔记：激光等离子体光源及其应用。那篇把等离子体当作光源，看它发出的极紫外光；这篇把等离子体当作样品，让外来的光穿过它，看哪些波长被吸收。
+部分 内容 天上 r 过程造重元素；AT2017gfo 的光谱由蓝变红、谱线很宽；认出 Sr II 缺口 重元素低电离态在可见光、红外缺数据。要测三样：波长、归属、跃迁强度 方法 线状激光等离子体；调延迟挑电离态；三次采集算吸光度 $A=\log_{10}(I_0/I)$ 极紫外 钇、锆、铱、铂、金；用等电子序列、等核序列判断谱线归属 红外 超连续谱测钇：55 条线，29 条此前未指认；锆：217 条新谱线；中红外上转换；双光梳 （图中千新星箭头的两端是 6500 K 和 2300 K 黑体的峰值位置，只用来示意颜色变化。）
+一、千新星与 r 过程 1.1 r 过程：快中子俘获 大质量恒星死亡后可能留下中子星。两颗中子星互相绕转，通过引力波损失能量，越靠越近，最后并合，并抛出一部分富含中子的物质。在这种中子极多的环境里，原子核接连吞中子，再经 β$^-$ 衰变变成更重的元素：
+$$ {}^{A}_{Z}X&#43;n\rightarrow{}^{A&#43;1}_{\ \ Z}X&#43;\gamma,\qquad n\rightarrow p&#43;e^{-}&#43;\bar\nu_e $$ 第一式：原子核吞下一个中子，质量数 $A$ 加 1，元素（$Z$）不变。第二式：核里的一个中子变成质子，$Z$ 加 1，变成周期表里的下一种元素。两步交替，就沿着周期表往重的方向爬。
+r 是 rapid 的意思：中子俘获比 β 衰变快，原子核来不及衰变就又吞下了下一个中子，于是路径先往富中子的一侧走得很远，再一步步衰变回稳定核。与之相对的是慢中子俘获（s 过程），发生在恒星内部，中子少、俘获慢。不同元素里 r 过程的贡献差别很大：锶只有一部分来自 r 过程，金、铂则绝大部分来自 r 过程。
+1.2 GW170817 与千新星 AT2017gfo 2017 年，LIGO 和 Virgo 探测到引力波事件 GW170817，来自约 40 Mpc（约 1.3 亿光年）外的一次双中子星并合，它的光学对应体编号 AT2017gfo。欧洲南方天文台甚大望远镜（VLT）的 X-shooter 光谱仪、哈勃空间望远镜等随后跟踪了几天到几周的变化。">
+	<meta itemprop="wordCount" content="617">
+
+      <header>
+        <h1 itemprop="headline"></h1>
+        <p class="text-sm">
+          
+            <span data-format="luxon">0001-01-01T00:00:00Z</span>
+          
+
+          | <span>3分钟阅读</span>
+
+          
+            | <span>更新于
+              
+                <span data-format="luxon">0001-01-01T00:00:00Z</span>
+              
+            </span>
+          
+        </p>
+
+        
+        <div class="flex justify-between">
+          
+            <div class="flex items-center">
+  
+  <span>@</span>
+  
+
+  <span itemprop="author" itemscope itemtype="https://schema.org/Person">
+  
+    <span itemprop="name">ElusiveKaze</span>
+  
+  </span>
+</div>
+
+          
+
+          <div class="flex items-center gap-2">
+  
+  
+
+  
+  
+  
+  
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://x.com/intent/post?text=&amp;url=https://elusivekaze.github.io/posts/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/" target="_blank" rel="noopener noreferrer"
+      title="Share on X">
+      <ion-icon class="group-hover:text-primary-content" name="logo-x"></ion-icon>
+    </a>
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://facebook.com/sharer/sharer.php?u=https://elusivekaze.github.io/posts/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/" target="_blank" rel="noopener noreferrer"
+      title="Share on Facebook">
+      <ion-icon class="group-hover:text-primary-content" name="logo-facebook"></ion-icon>
+    </a>
+  
+    <a class="group inline-flex items-center p-2 rounded-full cursor-pointer hover:bg-primary"
+      href="https://wa.me/?text=%20https://elusivekaze.github.io/posts/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/%E5%8D%83%E6%96%B0%E6%98%9F%E4%B8%8E%E9%87%8D%E5%85%83%E7%B4%A0%E5%85%89%E8%B0%B1/" target="_blank" rel="noopener noreferrer"
+      title="Share on WhatsApp">
+      <ion-icon class="group-hover:text-primary-content" name="logo-whatsapp"></ion-icon>
+    </a>
+  
+
+  
+  
+</div>
+
+        </div>
+      </header>
+
+      <section id="dream-single-post-content" itemprop="articleBody">
+        
+
+        <h1 id="千新星与重元素光谱">千新星与重元素光谱</h1>
+<p>金、铂这类比铁重得多的元素，很大一部分来自两颗中子星的并合。2017 年的 GW170817 让人类第一次同时用引力波和光看到这样一次并合，天文学家还从它的余晖&quot;千新星&quot;的光谱里认出了锶。但要从光谱里读出&quot;有哪些元素、各有多少&quot;，必须先知道每种元素、每个电离态的谱线在哪、属于谁、有多强。重元素低电离态在可见光和红外的这类数据大量缺失，都柏林大学（UCD）团队的工作就是在实验室里用激光等离子体把它们一条条测出来。本文整理自该团队的一场讲座，并补充了相关背景。</p>
+
+
+
+  <blockquote>
+    <p>相关笔记：<a href="https://elusivekaze.github.io/posts/%E6%BF%80%E5%85%89%E7%AD%89%E7%A6%BB%E5%AD%90%E4%BD%93%E5%85%89%E6%BA%90%E5%8F%8A%E5%85%B6%E5%BA%94%E7%94%A8/" target="_blank">激光等离子体光源及其应用</a>。那篇把等离子体当作<strong>光源</strong>，看它发出的极紫外光；这篇把等离子体当作<strong>样品</strong>，让外来的光穿过它，看哪些波长被吸收。</p>
+
+  </blockquote>
+
+<p><img src="%e5%8d%83%e6%96%b0%e6%98%9f%e4%b8%8e%e9%87%8d%e5%85%83%e7%b4%a0%e5%85%89%e8%b0%b1.assets/Figure-1.png" alt="Figure-1"></p>
+<table>
+	<thead>
+			<tr>
+					<th>部分</th>
+					<th>内容</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>天上</td>
+					<td>r 过程造重元素；AT2017gfo 的光谱由蓝变红、谱线很宽；认出 Sr II</td>
+			</tr>
+			<tr>
+					<td>缺口</td>
+					<td>重元素低电离态在可见光、红外缺数据。要测三样：波长、归属、跃迁强度</td>
+			</tr>
+			<tr>
+					<td>方法</td>
+					<td>线状激光等离子体；调延迟挑电离态；三次采集算吸光度 $A=\log_{10}(I_0/I)$</td>
+			</tr>
+			<tr>
+					<td>极紫外</td>
+					<td>钇、锆、铱、铂、金；用等电子序列、等核序列判断谱线归属</td>
+			</tr>
+			<tr>
+					<td>红外</td>
+					<td>超连续谱测钇：55 条线，29 条此前未指认；锆：217 条新谱线；中红外上转换；双光梳</td>
+			</tr>
+	</tbody>
+</table>
+<p>（图中千新星箭头的两端是 6500 K 和 2300 K 黑体的峰值位置，只用来示意颜色变化。）</p>
+<hr>
+<h2 id="一千新星与-r-过程">一、千新星与 r 过程</h2>
+<h3 id="11-r-过程快中子俘获">1.1 r 过程：快中子俘获</h3>
+<p>大质量恒星死亡后可能留下中子星。两颗中子星互相绕转，通过引力波损失能量，越靠越近，最后并合，并抛出一部分富含中子的物质。在这种中子极多的环境里，原子核接连吞中子，再经 β$^-$ 衰变变成更重的元素：</p>
+$$
+{}^{A}_{Z}X+n\rightarrow{}^{A+1}_{\ \ Z}X+\gamma,\qquad n\rightarrow p+e^{-}+\bar\nu_e
+$$<p>第一式：原子核吞下一个中子，质量数 $A$ 加 1，元素（$Z$）不变。第二式：核里的一个中子变成质子，$Z$ 加 1，变成周期表里的下一种元素。两步交替，就沿着周期表往重的方向爬。</p>
+<p><img src="%e5%8d%83%e6%96%b0%e6%98%9f%e4%b8%8e%e9%87%8d%e5%85%83%e7%b4%a0%e5%85%89%e8%b0%b1.assets/Figure-2.png" alt="Figure-2"></p>
+<p>r 是 rapid 的意思：<strong>中子俘获比 β 衰变快</strong>，原子核来不及衰变就又吞下了下一个中子，于是路径先往富中子的一侧走得很远，再一步步衰变回稳定核。与之相对的是慢中子俘获（s 过程），发生在恒星内部，中子少、俘获慢。不同元素里 r 过程的贡献差别很大：锶只有一部分来自 r 过程，金、铂则绝大部分来自 r 过程。</p>
+<h3 id="12-gw170817-与千新星-at2017gfo">1.2 GW170817 与千新星 AT2017gfo</h3>
+<p>2017 年，LIGO 和 Virgo 探测到引力波事件 <strong>GW170817</strong>，来自约 40 Mpc（约 1.3 亿光年）外的一次双中子星并合，它的光学对应体编号 <strong>AT2017gfo</strong>。欧洲南方天文台甚大望远镜（VLT）的 X-shooter 光谱仪、哈勃空间望远镜等随后跟踪了几天到几周的变化。</p>
+<p><strong>千新星</strong>（Kilonova）是并合抛出的物质被其中放射性核素的衰变加热而发出的光，亮度约是普通新星的一千倍，几天到几周内由蓝变红。</p>
+<h3 id="13-膨胀降温与谱线展宽">1.3 膨胀、降温与谱线展宽</h3>
+<p>抛射物一边被放射性衰变加热，一边膨胀冷却，光谱从早期偏蓝的可见光逐渐移向红光和近红外。初始膨胀速度约 $c/3\approx10^{8}\ \text{m/s}$，两周后尺度约 $10^{8}\ \text{m/s}\times14\ \text{天}\approx1.2\times10^{14}\ \text{m}$，约 800 个天文单位，远超海王星轨道。</p>
+<p>这里有两种不同的效应。一是<strong>降温</strong>：近似的热连续谱峰值移向长波，满足黑体辐射和维恩位移定律：</p>
+$$
+B_\lambda(T)=\frac{2hc^2}{\lambda^5}\,\frac{1}{e^{hc/(\lambda k_BT)}-1},\qquad \lambda_{\max}T=b\approx2.898\times10^{-3}\ \text{m·K}
+$$<p>二是<strong>多普勒展宽</strong>：抛射物朝各个方向、以不同速度运动，同一条谱线被抹成宽&quot;鼓包&quot;，宽度的量级为</p>
+$$
+\frac{|\Delta\lambda|}{\lambda_0}\sim\frac{|v_\parallel|}{c}
+$$<p>速度达到 $c/3$ 时要用相对论多普勒公式，朝向和背离观测者的两端分别是</p>
+$$
+\lambda=\lambda_0\sqrt{\frac{1-\beta}{1+\beta}},\qquad \lambda=\lambda_0\sqrt{\frac{1+\beta}{1-\beta}},\qquad \beta=\frac{v}{c}
+$$<p>精确拟合还要考虑抛射物的速度分布和辐射输运。</p>
+<iframe src="千新星与重元素光谱.assets/I1-kilonova-cooling.html" width="100%" height="680" frameborder="0" style="border:1px solid #e5e5e5;border-radius:8px"></iframe>
+
+
+
+  <blockquote>
+    <p>交互图：上图拖动温度看黑体峰值怎样移动；下图拖动速度看一条 1000 nm 谱线被展宽成多宽。</p>
+
+  </blockquote>
+
+<p>所以千新星光谱是一个个宽鼓包，不是细线：温度决定整体颜色，速度决定谱线多宽。</p>
+<h3 id="14-锶的指认">1.4 锶的指认</h3>
+<p>Watson 等人（2019）在 AT2017gfo 早期的 X-shooter 光谱里，认出了近红外约 810 nm 附近的宽吸收结构来自 <strong>Sr II</strong>（单电离锶，Sr$^+$）。这是第一次在中子星并合中直接认出一种新合成的元素。认出它需要把电离度、谱线展宽和模型一起比对，前提是锶的谱线数据足够可靠。</p>
+<p>光谱学里用罗马数字表示电离态：I 是中性原子，II 是单电离（Sr II = Sr$^{+}$），III 是二次电离，<strong>罗马数字比电荷数多 1</strong>。</p>
+<hr>
+<h2 id="二为什么需要实验室数据">二、为什么需要实验室数据</h2>
+<h3 id="21-从光谱到元素丰度">2.1 从光谱到元素丰度</h3>
+<p>从千新星光谱推断元素和丰度，要靠一整条计算链：原子数据给出每种离子的能级和跃迁，由此算出抛射物的<strong>不透明度</strong>；再做<strong>辐射输运</strong>计算，算出光从抛射物内部被吸收、再发射、最后跑出来的过程，得到&quot;合成光谱&quot;；最后和观测比对。这条链上最缺的是原子数据。</p>
+<p>欧洲研究理事会（ERC）资助的 <a href="https://heavymetal-erc.eu/about/" target="_blank">HEAVYMETAL</a> 项目把这条链上的各环节放在一起：</p>
+<p><img src="%e5%8d%83%e6%96%b0%e6%98%9f%e4%b8%8e%e9%87%8d%e5%85%83%e7%b4%a0%e5%85%89%e8%b0%b1.assets/Figure-3.png" alt="Figure-3"></p>
+<table>
+	<thead>
+			<tr>
+					<th>合作单位</th>
+					<th>负责人</th>
+					<th>研究内容</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>哥本哈根大学</td>
+					<td>Darach Watson</td>
+					<td>项目协调与观测</td>
+			</tr>
+			<tr>
+					<td>德国达姆施塔特 GSI</td>
+					<td>Andreas Bauswein</td>
+					<td>并合动力学与核物理</td>
+			</tr>
+			<tr>
+					<td>贝尔法斯特女王大学</td>
+					<td>Stuart Sim</td>
+					<td>辐射输运与光谱建模</td>
+			</tr>
+			<tr>
+					<td>都柏林大学（UCD）</td>
+					<td>Padraig Dunne</td>
+					<td>实验室原子光谱与原子数据</td>
+			</tr>
+	</tbody>
+</table>
+<h3 id="22-原子数据库的缺口">2.2 原子数据库的缺口</h3>
+<p><a href="https://www.nist.gov/pml/atomic-spectra-database" target="_blank">NIST 原子光谱数据库</a>（ASD）可以查观测波长、能级，有记录时还能查跃迁概率，但许多重元素低电离态在可见光和红外的谱线数据仍然缺失。每条谱线需要三样东西：</p>
+<ul>
+<li><strong>在哪</strong>：波长，对应两个能级的能量差 $\Delta E=h\nu=hc/\lambda$。</li>
+<li><strong>是谁</strong>：属于哪种元素、哪个电离态、哪两个能级之间。要把同一离子的多条跃迁放进一套自洽的能级结构，也用来检验原子结构计算。</li>
+<li><strong>多强</strong>：跃迁概率、振子强度、吸收截面 $\sigma$。原子一样多时，强度大的谱线更显眼。</li>
+</ul>
+<p>可见光和红外的数据直接对应千新星的观测窗口，最缺也最急需；极紫外的数据则对整理内壳层激发和较高电离态的结构有用，可以给理论计算当基准。</p>
+<hr>
+<h2 id="三实验室怎样测吸收谱">三、实验室怎样测吸收谱</h2>
+<p>思路很直接：用激光在金属靶上打出一小团等离子体，相当于一份可控的&quot;千新星物质&quot;；等它膨胀、冷却到想要的状态，再让一束探测光穿过去，看哪些波长被吃掉。</p>
+<h3 id="31-线状等离子体">3.1 线状等离子体</h3>
+<p><img src="%e5%8d%83%e6%96%b0%e6%98%9f%e4%b8%8e%e9%87%8d%e5%85%83%e7%b4%a0%e5%85%89%e8%b0%b1.assets/Figure-4.png" alt="Figure-4"></p>
+<p>用<strong>柱面透镜</strong>把烧蚀激光在靶上聚成一条细长的线焦斑，烧蚀出线状的等离子体。探测光沿等离子体的长轴穿过，光程长，吸收信号强。典型参数如下：</p>
+<table>
+	<thead>
+			<tr>
+					<th>量</th>
+					<th>典型值</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>线状区宽度与长度</td>
+					<td>约 200 µm；1–15 mm</td>
+			</tr>
+			<tr>
+					<td>初始电子温度</td>
+					<td>约 4–8 eV，10 µs 左右后降到 1–5 eV</td>
+			</tr>
+			<tr>
+					<td>密度</td>
+					<td>约 $10^{18}\ \text{cm}^{-3}$</td>
+			</tr>
+			<tr>
+					<td>早期电离态</td>
+					<td>约 2+ 到 5+，可到 6+</td>
+			</tr>
+			<tr>
+					<td>膨胀速度</td>
+					<td>约 $10^{7}\ \text{cm/s}$</td>
+			</tr>
+			<tr>
+					<td>探测延迟</td>
+					<td>约 100 ns 到 10 µs</td>
+			</tr>
+	</tbody>
+</table>
+<p>千新星抛射物里起作用的主要是中性和低电离态的离子，正好对应等离子体冷却后期的状态。</p>
+<h3 id="32-用延迟挑选电离态">3.2 用延迟挑选电离态</h3>
+<p>烧蚀之后，羽流膨胀，温度和密度下降，电离、复合和激发态布居都随时间变化：</p>
+<ol>
+<li>烧蚀脉冲 $t=0$：等离子体形成，温度、密度高，电离态高；</li>
+<li>膨胀和冷却：离子逐渐复合，各物种的比例随时间改变；</li>
+<li>探测脉冲 $t=\Delta t$：读取这一时刻的吸收谱。</li>
+</ol>
+<p><img src="%e5%8d%83%e6%96%b0%e6%98%9f%e4%b8%8e%e9%87%8d%e5%85%83%e7%b4%a0%e5%85%89%e8%b0%b1.assets/Figure-5.png" alt="Figure-5"></p>
+<p>改变探测的延迟 $\Delta t$ 和离靶面的距离，就能改变看到的各电离态、各激发态的相对贡献，<strong>延迟是挑选电离态的旋钮</strong>。不过微秒以后的等离子体演化和布居建模仍有不少不确定性。</p>
+<h3 id="33-三次采集与吸光度">3.3 三次采集与吸光度</h3>
+<p>探测光是一个独立的连续谱光源。它在设定的延迟下穿过等离子体，经光栅分光后由相机记录。极紫外波段可以用&quot;双激光等离子体&quot;：一团等离子体产生背景连续谱，另一团是吸收体；红外波段等离子体自身几乎不发连续光，必须外加探测光源（第五章）。</p>
+<p>每个波长要采集三次：</p>
+<p><img src="%e5%8d%83%e6%96%b0%e6%98%9f%e4%b8%8e%e9%87%8d%e5%85%83%e7%b4%a0%e5%85%89%e8%b0%b1.assets/Figure-6.png" alt="Figure-6"></p>
+<ol>
+<li>只开探测光：$I_0$，参考连续谱；</li>
+<li>两路光都开：$I_{\text{raw}}$，透射光加上等离子体自己发的光；</li>
+<li>只开烧蚀光：$I_{\text{em}}$，等离子体自发射。</li>
+</ol>
+<p>扣掉自发射后，由比尔-朗伯定律</p>
+$$
+I=I_{\text{raw}}-I_{\text{em}},\qquad I=I_0\,e^{-n\sigma L}
+$$<p>得到光学厚度和吸光度：</p>
+$$
+\tau=\ln\frac{I_0}{I}=n\sigma L,\qquad A=\log_{10}\frac{I_0}{I}=\frac{n\sigma L}{\ln10}
+$$<p>$n$ 是参与吸收的粒子数密度，$\sigma$ 是吸收截面，$L$ 是有效光程。等离子体不均匀时要沿探测路径积分：</p>
+$$
+\tau=\int n(s)\,\sigma(s)\,ds
+$$<p>$A=0.42$ 表示透过的光只剩约 38%。光程越长、吸收粒子越多，吸收越深，所以线状等离子体要让探测光沿长轴走。但要把相对吸收换算成绝对截面，必须先知道柱密度 $\int n\,ds$。</p>
+<iframe src="千新星与重元素光谱.assets/I2-absorbance.html" width="100%" height="460" frameborder="0" style="border:1px solid #e5e5e5;border-radius:8px"></iframe>
+
+
+
+  <blockquote>
+    <p>交互图：调粒子数密度和截面，切换沿长轴（10 mm）或横穿（200 µm），看吸光度怎样变化。数值只用来演示公式。</p>
+
+  </blockquote>
+
+<h3 id="34-记录与校准">3.4 记录与校准</h3>
+<p>每条谱都要记下靶材、烧蚀激光能量、真空或背景气压、靶和透镜的位置、探测延迟 $\Delta t$、探测光离靶面的距离 $\Delta x$ 等。比较谱线时要处理暗信号、自发射、波长校准、背景基线，以及多次曝光之间的波动。</p>
+<hr>
+<h2 id="四极紫外波段钇锆与第三丰度峰">四、极紫外波段：钇、锆与第三丰度峰</h2>
+<h3 id="41-钇和锆">4.1 钇和锆</h3>
+<p>钇（Y，$Z=39$）和锆（Zr，$Z=40$）是周期表上相邻的两个 r 过程元素。把它们的极紫外光吸收谱放在相近波段、可比的延迟下比较，钇能分辨出三个电离阶段，不同延迟下各阶段的谱线此消彼长，正好体现了 3.2 节的&quot;延迟选电离态&quot;。对早期（约 20 ns）谱做模型拟合，最佳温度约 18 eV。</p>
+<p>锆的工作已经扩展到可见光和近红外：UCD 团队用双光梳光谱（390–404 nm、780–808 nm）和超连续谱吸收（500–1100 nm）两种方法测了 Zr 和 Zr$^+$，共指认 384 条谱线，其中 <strong>217 条是新指认的</strong>（193 条 Zr I、24 条 Zr II）（Dowd 等，2026）。</p>
+<h3 id="42-第三丰度峰与重元素">4.2 第三丰度峰与重元素</h3>
+<p>r 过程产物的丰度在质量数约 80、130、195 附近各有一个峰，对应中子数 50、82、126 的&quot;幻数&quot;原子核特别稳定，r 过程的路径在这些地方&quot;堵车&quot;。第三个峰在质量数约 195 附近，正好是锇、铱、铂、金一带。</p>
+<p><img src="%e5%8d%83%e6%96%b0%e6%98%9f%e4%b8%8e%e9%87%8d%e5%85%83%e7%b4%a0%e5%85%89%e8%b0%b1.assets/Figure-7.png" alt="Figure-7"></p>
+<table>
+	<thead>
+			<tr>
+					<th>元素</th>
+					<th>意义</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Sr、Y、Zr、Nb</td>
+					<td>第一丰度峰附近。锶已在千新星中认出，钇、锆是实验重点，铌用于等电子序列对照</td>
+			</tr>
+			<tr>
+					<td>Hf、Ta、W、Re、Os</td>
+					<td>第三丰度峰之前的重元素</td>
+			</tr>
+			<tr>
+					<td>Ir、Pt、Au</td>
+					<td>第三丰度峰的&quot;招牌元素&quot;</td>
+			</tr>
+			<tr>
+					<td>Ce、Tc、U 等</td>
+					<td>部分是放射性元素，靶材难以获得，测谱受限</td>
+			</tr>
+	</tbody>
+</table>
+<p>铂是一个好的切入点：铂离子有类氙的闭合内壳层，外层是 $5d^9$ 构型，电子结构相对好处理。Doyle、Dunne 和 Hayden（2025）用双激光等离子体技术，记录了铱、铂、金在 48–126 eV 的光吸收谱，涵盖中性到四次电离的物种，主要是 $5p$ 和 $4f$ 激发。$5p$ 空穴衰变很快，所以相关吸收结构很宽；$4f$ 吸收则相对尖锐。他们借助原子结构计算和等电子序列分析铱，并和铂、金已有的归属作比对。</p>
+<h3 id="43-怎样判断谱线归属">4.3 怎样判断谱线归属</h3>
+<p>一条吸收峰属于哪个离子，单看一张谱往往判断不了，要拿&quot;亲戚离子&quot;互相对照：</p>
+<ul>
+<li><strong>等电子序列</strong>（isoelectronic sequence）：固定电子数 $N_e=Z-q$，依次增加核电荷和电离度。例如 Y I、Zr II、Nb III、Mo IV 都有 39 个电子；Y II、Zr III、Nb IV 都有 38 个电子（类锶序列）。电子构型相同，谱线位置随核电荷有规律地移动，可以沿序列追踪。</li>
+<li><strong>等核序列</strong>（isonuclear sequence）：固定原子序数 $Z$，比较同一元素的不同电离态。谱线强度随延迟和电离度的变化有助于判断它属于哪个电离态。</li>
+<li><strong>多项证据交叉</strong>：比较相邻元素、不同时刻、同一离子的多条跃迁和计算结果。有规律的位移和强度变化能支持谱线的存在和归属，也能排除噪声和杂质。</li>
+</ul>
+<p><img src="%e5%8d%83%e6%96%b0%e6%98%9f%e4%b8%8e%e9%87%8d%e5%85%83%e7%b4%a0%e5%85%89%e8%b0%b1.assets/Figure-8.png" alt="Figure-8"></p>
+<p>横着比（等电子，换元素）、竖着比（等核，换电离态），再加上时间演化和计算，几条证据互相印证。</p>
+<hr>
+<h2 id="五红外波段千新星真正的观测窗口">五、红外波段：千新星真正的观测窗口</h2>
+<p>千新星后期主要在红光和近红外发光，所以这一段最贴近天文需求。难处在于等离子体在红外几乎不发连续光，没法自己当背景光源，只能外加探测光：近红外用超连续谱，中红外用上转换，更高分辨率用双光梳。</p>
+<h3 id="51-近红外超连续谱吸收">5.1 近红外：超连续谱吸收</h3>
+<p><strong>超连续谱</strong>光源是一种&quot;白光激光&quot;：脉冲激光在光子晶体光纤里经过一连串非线性效应，展宽成覆盖几百到上千纳米的连续谱，亮度高、方向性好。光路是：超连续谱光纤 → 准直器 → 穿过靶面上方的线状等离子体 → 光谱仪分光 → 相机。</p>
+<p><img src="%e5%8d%83%e6%96%b0%e6%98%9f%e4%b8%8e%e9%87%8d%e5%85%83%e7%b4%a0%e5%85%89%e8%b0%b1.assets/Figure-9.png" alt="Figure-9"></p>
+<p>已发表的钇实验装置（Dowd、Doyle 和 Dunne，2025）：</p>
+<table>
+	<thead>
+			<tr>
+					<th>部件</th>
+					<th>参数</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>烧蚀激光与靶</td>
+					<td>Nd:YAG，1064 nm，10 Hz，6 ns，约 736 mJ；柱面透镜焦距 10 mm；99% 纯钇靶</td>
+			</tr>
+			<tr>
+					<td>线状等离子体</td>
+					<td>长、短轴约 10 mm 和 3 mm；在靶面上方 500 µm 以内取样</td>
+			</tr>
+			<tr>
+					<td>探测光</td>
+					<td>NKT SuperK COMPACT 超连续谱，450–2400 nm；与烧蚀同步为 10 Hz，延迟 11 µs</td>
+			</tr>
+			<tr>
+					<td>分光与探测</td>
+					<td>750 mm 焦距光谱仪，300 槽/mm 光栅；近红外增强的 CMOS 相机</td>
+			</tr>
+	</tbody>
+</table>
+<p>这类小型超连续谱光源亮度高、开机即用、重复频率可调。例如在 22 kHz 下平均功率约 110 mW，相当于每个脉冲</p>
+$$
+E_{\text{pulse}}=\frac{P}{f}=\frac{0.110\ \text{W}}{22\,000\ \text{Hz}}\approx5\ \mu\text{J}
+$$<h3 id="52-钇的近红外结果">5.2 钇的近红外结果</h3>
+<p>在 11 µs 延迟下记录的 700–1100 nm 钇吸收谱，以 708–832 nm 为例：</p>
+<p><img src="%e5%8d%83%e6%96%b0%e6%98%9f%e4%b8%8e%e9%87%8d%e5%85%83%e7%b4%a0%e5%85%89%e8%b0%b1.assets/Figure-10.png" alt="Figure-10"></p>
+<ul>
+<li>绝大多数谱线属于 Y I，还有少量 Y II（包括来自亚稳能级的跃迁），没有看到 Y III。</li>
+<li>共 55 条谱线：26 条此前已有指认，<strong>29 条此前未指认</strong>，可以作为后续能级和跃迁归属的候选。</li>
+<li>为了压住超连续谱的逐发波动，每条谱平均 750 个脉冲；用已知钇谱线校准波长；把相互重叠的波段拼接起来。</li>
+<li>吸光度最高约 0.42，噪声底约 ±0.01（<a href="https://link.springer.com/article/10.1007/s10686-025-10009-9/figures/3" target="_blank">论文图 3</a>，<a href="https://zenodo.org/records/15231188" target="_blank">原始数据</a>）。</li>
+<li>同一套装置也测了锆、铂、金；在相同范围内，铂和金的谱线较少。</li>
+</ul>
+<p>下一步是减小时间抖动、减少需要平均的脉冲数，并把覆盖范围往长波推到约 1700 nm。</p>
+<h3 id="53-中红外上转换">5.3 中红外：上转换</h3>
+<p>中红外的等离子体背景连续谱同样很暗，而且多数相机在中红外不灵敏。<strong>上转换</strong>的办法是：让中红外光和一束泵浦光在周期极化的非线性晶体里发生和频，变成探测器容易响应的短波光，相当于把&quot;外语&quot;翻译成相机能读的&quot;母语&quot;。上转换光谱仪的工作范围约 2–5 µm。</p>
+<p><img src="%e5%8d%83%e6%96%b0%e6%98%9f%e4%b8%8e%e9%87%8d%e5%85%83%e7%b4%a0%e5%85%89%e8%b0%b1.assets/Figure-11.png" alt="Figure-11"></p>
+<p>探测光用 50/50 分束器分成两路：参考臂绕过等离子体给出 $I_0$，样品臂穿过等离子体给出 $I$，两路同时测量，可以抵消光源每一发强弱不同带来的误差。</p>
+<h3 id="54-双光梳光谱">5.4 双光梳光谱</h3>
+<p><strong>光学频率梳</strong>是一串频率间隔严格相等的激光谱线，像一把光学的尺子。<strong>双光梳光谱</strong>用两把重复频率略有不同的光梳，把光学频率之间的差拍映射到射频，于是能用普通电子学读出样品对许多光学频率的响应，同时做到宽光谱、高分辨率和时间分辨。可以联想游标卡尺：两把刻度间隔略有不同的尺子叠在一起，能读出比单把尺子更细的差别。</p>
+<p><img src="%e5%8d%83%e6%96%b0%e6%98%9f%e4%b8%8e%e9%87%8d%e5%85%83%e7%b4%a0%e5%85%89%e8%b0%b1.assets/Figure-12.png" alt="Figure-12"></p>
+<p>UCD 团队与美国亚利桑那大学 R. Jason Jones 组合作，已用双光梳测了锆的 390–404 nm 和 780–808 nm 吸收谱（见 4.1 节）。Jones 组早在 2018 年就用双光梳测过激光诱导等离子体的吸收谱（Bergevin 等，2018）。</p>
+<hr>
+<h2 id="六难点与展望">六、难点与展望</h2>
+<ul>
+<li><strong>覆盖波段</strong>：探测光源的亮度、光学器件的透过率、光栅效率、相机响应和上转换效率，共同限定了能测的范围。</li>
+<li><strong>信噪比</strong>：弱吸收、等离子体自发射、逐发波动和谱段拼接都会影响谱线识别，只能靠重复采样和仔细校准。</li>
+<li><strong>离子布居</strong>：温度、密度、焦点、探测位置和延迟一起决定各物种的柱密度。要从相对吸收得到绝对截面，必须把布居弄清楚，这需要诊断和建模。</li>
+<li><strong>指认与验证</strong>：用时间演化、相邻离子序列和原子结构计算互相校验，再把结果送进辐射输运模型。</li>
+</ul>
+<p>这类实验的门槛主要在设备：一台光谱仪约 3.5 万欧元，加上真空系统和几台激光器，起步的整套系统约 30 万欧元。</p>
+<hr>
+<h2 id="七总结">七、总结</h2>
+<ol>
+<li><strong>天文观测</strong>：GW170817 / AT2017gfo 的光谱由蓝变红、谱线很宽，认出了 Sr II。</li>
+<li><strong>缺原子数据</strong>：每条谱线要知道在哪、是谁、多强；重元素低电离态在可见光和红外最缺。</li>
+<li><strong>造样品</strong>：激光烧蚀出线状等离子体，用延迟 $\Delta t$ 和位置挑选温度和电离态。</li>
+<li><strong>测吸收</strong>：三次采集扣掉自发射，$A=\log_{10}(I_0/I)=n\sigma L/\ln10$；极紫外用双激光等离子体，近红外用超连续谱，中红外用上转换，高分辨率用双光梳。</li>
+<li><strong>归属谱线</strong>：等电子序列、等核序列、时间演化和原子结构计算互相印证。</li>
+<li><strong>回到模型</strong>：原子数据 → 不透明度 → 辐射输运 → 合成光谱 → 与观测比对，推断千新星里的元素和丰度。</li>
+</ol>
+<hr>
+<h2 id="参考资料">参考资料</h2>
+<ul>
+<li>D. Watson 等，<a href="https://doi.org/10.1038/s41586-019-1676-3" target="_blank">Identification of strontium in the merger of two neutron stars</a>，Nature 574, 497 (2019)；<a href="https://www.eso.org/public/news/eso1917/" target="_blank">ESO 新闻稿 eso1917</a></li>
+<li>A. Sneppen 等，<a href="https://arxiv.org/abs/2404.08730" target="_blank">AT2017gfo 多仪器光谱汇编</a>，arXiv:2404.08730</li>
+<li><a href="https://heavymetal-erc.eu/about/" target="_blank">HEAVYMETAL 项目介绍</a></li>
+<li><a href="https://www.nist.gov/pml/atomic-spectra-database" target="_blank">NIST Atomic Spectra Database</a></li>
+<li>K. Dowd、E. Doyle、P. Dunne，<a href="https://doi.org/10.1007/s10686-025-10009-9" target="_blank">Near infra-red absorption spectroscopy for astrophysically significant ions</a>，Experimental Astronomy 60, 7 (2025)；<a href="https://zenodo.org/records/15231188" target="_blank">钇吸光度原始数据（Zenodo）</a></li>
+<li>K. Dowd 等，<a href="https://doi.org/10.1093/mnras/stag1197" target="_blank">Valence photoabsorption spectroscopy of Zr and Zr⁺ for astrophysical applications</a>，MNRAS 551 (2026)</li>
+<li>E. Doyle、P. Dunne、P. Hayden，<a href="https://doi.org/10.1103/xk71-4n9b" target="_blank">铱、铂、金的光吸收谱</a>，Physical Review A 112, 042802 (2025)</li>
+<li>B. Bergevin 等，<a href="https://doi.org/10.1038/s41467-018-03703-0" target="_blank">Dual-comb spectroscopy of laser-induced plasmas</a>，Nature Communications 9, 1273 (2018)</li>
+</ul>
+
+
+        
+      </section>
+
+      
+      <div class="divider"></div>
+      <div class="flex flex-col md:flex-row justify-between gap-4 py-4">
+        
+        <a role="button" class="btn btn-outline h-12" href="/posts/%E7%A2%B3%E7%BA%B3%E7%B1%B3%E7%AE%A1/" title="碳纳米管">
+          <ion-icon name="chevron-back"></ion-icon>
+          <div class="inline-flex flex-col items-start">
+            <span class="text-base-content/60 text-xs font-normal">上一页</span>
+            <span class="max-w-48 truncate">碳纳米管</span>
+          </div>
+        </a>
+        
+
+        
+        <div></div>
+        
+      </div>
+      
+
+      
+      <div class="divider"></div>
+
+      <section class="space-y-4 not-prose">
+        
+
+
+<template x-if="['localhost', '127.0.0.1'].indexOf(window.location.hostname) == -1">
+  <article>
+    <script
+      src="https://utteranc.es/client.js"
+      repo="elusivekaze/elusivekaze.github.io"
+      issue-term="og:title"
+      theme="github-light"
+      crossorigin="anonymous"
+      async>
+    </script>
+  </article>
+</template>
+
+
+
+
+
+
+
+
+      </section>
+      
+    </article>
+  </div>
+
+  <div
+    x-data="tocHighlighter()"
+    @scroll.window="debouncedScroll"
+    class="hidden lg:flex lg:flex-col lg:items-end"
+  >
+    
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#一千新星与-r-过程">一、千新星与 r 过程</a>
+      <ul>
+        <li><a href="#11-r-过程快中子俘获">1.1 r 过程：快中子俘获</a></li>
+        <li><a href="#12-gw170817-与千新星-at2017gfo">1.2 GW170817 与千新星 AT2017gfo</a></li>
+        <li><a href="#13-膨胀降温与谱线展宽">1.3 膨胀、降温与谱线展宽</a></li>
+        <li><a href="#14-锶的指认">1.4 锶的指认</a></li>
+      </ul>
+    </li>
+    <li><a href="#二为什么需要实验室数据">二、为什么需要实验室数据</a>
+      <ul>
+        <li><a href="#21-从光谱到元素丰度">2.1 从光谱到元素丰度</a></li>
+        <li><a href="#22-原子数据库的缺口">2.2 原子数据库的缺口</a></li>
+      </ul>
+    </li>
+    <li><a href="#三实验室怎样测吸收谱">三、实验室怎样测吸收谱</a>
+      <ul>
+        <li><a href="#31-线状等离子体">3.1 线状等离子体</a></li>
+        <li><a href="#32-用延迟挑选电离态">3.2 用延迟挑选电离态</a></li>
+        <li><a href="#33-三次采集与吸光度">3.3 三次采集与吸光度</a></li>
+        <li><a href="#34-记录与校准">3.4 记录与校准</a></li>
+      </ul>
+    </li>
+    <li><a href="#四极紫外波段钇锆与第三丰度峰">四、极紫外波段：钇、锆与第三丰度峰</a>
+      <ul>
+        <li><a href="#41-钇和锆">4.1 钇和锆</a></li>
+        <li><a href="#42-第三丰度峰与重元素">4.2 第三丰度峰与重元素</a></li>
+        <li><a href="#43-怎样判断谱线归属">4.3 怎样判断谱线归属</a></li>
+      </ul>
+    </li>
+    <li><a href="#五红外波段千新星真正的观测窗口">五、红外波段：千新星真正的观测窗口</a>
+      <ul>
+        <li><a href="#51-近红外超连续谱吸收">5.1 近红外：超连续谱吸收</a></li>
+        <li><a href="#52-钇的近红外结果">5.2 钇的近红外结果</a></li>
+        <li><a href="#53-中红外上转换">5.3 中红外：上转换</a></li>
+        <li><a href="#54-双光梳光谱">5.4 双光梳光谱</a></li>
+      </ul>
+    </li>
+    <li><a href="#六难点与展望">六、难点与展望</a></li>
+    <li><a href="#七总结">七、总结</a></li>
+    <li><a href="#参考资料">参考资料</a></li>
+  </ul>
+</nav>
+    
+  </div>
+</div>
+
+
+            
+<footer class="flex flex-col md:flex-row justify-between items-center gap-4 px-4 py-12">
+
+  <div>
+  
+  <p>
+    © 2026 ElusiveKaze&#39;s Blog
+  </p>
+  
+
+  
+  <p>🌱 Towards the Distance.</p>
+  
+</div>
+
+  <div
+  x-data="{ icons: [
+    { name: 'sunny', status: 'n' },
+    { name: 'moon', status: 'y' },
+    { name: 'desktop', status: 'auto' }
+  ] }"
+  class="flex items-center gap-2 h-8 px-2 bg-base-100 border border-base-content/30 rounded-full"
+>
+  <template x-for="icon in icons">
+    <div
+      role="button"
+      tabindex="0"
+      :aria-label="'Select ' + icon.name + ' mode'"
+      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
+      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
+      @click="$store.darkMode.toggle(icon.status)"
+    >
+      <ion-icon
+        :name="`${icon.name}-outline`"
+        class="group-hover:text-primary-content"
+        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
+      >
+      </ion-icon>
+    </div>
+  </template>
+</div>
+
+</footer>
+
+          </div>
+        </div>
+        
+        <div class="back" data-nosnippet>
+        
+          <div class="container">
+            
+              <div class="dream-grid dream-grid-about">
+  
+  
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">关于我</div>
+
+        <div class="prose dark:prose-invert">
+          <p>Hi，这里是 <strong>ElusiveKaze</strong> 的博客，主要分享一些学习笔记。</p>
+
+        </div>
+      </div>
+    </article>
+  </div>
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">知识共享</div>
+
+        <div class="prose dark:prose-invert">
+          <p>此网站的所有内容都遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/?ref=chooser-v1" target="_blank">CC BY-NC-SA 4.0</a>。</p>
+
+        </div>
+      </div>
+    </article>
+  </div>
+  
+  
+
+  
+  <div class="w-full md:w-1/2 lg:w-1/3 xl:w-1/4 p-4 dream-column">
+    <article
+      class="card bg-base-100 hover:bg-base-content/10 shadow-xl dark:border dark:border-base-content/30"
+    >
+      <div class="card-body">
+        <div class="card-title">社交链接</div>
+
+        <ul class="menu menu-horizontal flex-wrap w-full px-0 [&_ion-icon]:text-lg">
+  
+  <li>
+    <a href="mailto:2915795652@qq.com" title="Email">
+      <ion-icon name="mail"></ion-icon>
+    </a>
+  </li>
+  
+
+  
+  <li>
+    <a href="https://github.com/ElusiveKaze" target="_blank" title="GitHub">
+      <ion-icon name="logo-github"></ion-icon>
+    </a>
+  </li>
+  
+</ul>
+
+      </div>
+    </article>
+  </div>
+  
+
+  
+</div>
+
+            
+
+            
+<footer class="flex flex-col md:flex-row justify-between items-center gap-4 px-4 py-12">
+
+  <div>
+  
+  <p>
+    © 2026 ElusiveKaze&#39;s Blog
+  </p>
+  
+
+  
+  <p>🌱 Towards the Distance.</p>
+  
+</div>
+
+  <div
+  x-data="{ icons: [
+    { name: 'sunny', status: 'n' },
+    { name: 'moon', status: 'y' },
+    { name: 'desktop', status: 'auto' }
+  ] }"
+  class="flex items-center gap-2 h-8 px-2 bg-base-100 border border-base-content/30 rounded-full"
+>
+  <template x-for="icon in icons">
+    <div
+      role="button"
+      tabindex="0"
+      :aria-label="'Select ' + icon.name + ' mode'"
+      class="group inline-flex justify-center items-center p-1 rounded-full cursor-pointer hover:bg-primary"
+      :class="$store.darkMode.icon() === icon.name && 'bg-primary'"
+      @click="$store.darkMode.toggle(icon.status)"
+    >
+      <ion-icon
+        :name="`${icon.name}-outline`"
+        class="group-hover:text-primary-content"
+        :class="$store.darkMode.icon() === icon.name && 'text-primary-content'"
+      >
+      </ion-icon>
+    </div>
+  </template>
+</div>
+
+</footer>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+    
+  <script src="https://cdn.jsdelivr.net/npm/imagesloaded@5.0.0/imagesloaded.pkgd.min.js" integrity="sha256-htrLFfZJ6v5udOG+3kNLINIKh2gvoKqwEhHYfTTMICc=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/masonry-layout@4.2.2/dist/masonry.pkgd.min.js" integrity="sha256-Nn1q/fx0H7SNLZMQ5Hw5JLaTRZp0yILA/FRexe19VdI=" crossorigin="anonymous"></script>
+
+  
+  
+    
+  
+  <script src="/js/grid.min.js"></script>
+
+
+
+
+  
+
+<script src="/js/main.min.js"></script>
+
+    
+
+
+  <script
+  src="https://cdn.jsdelivr.net/npm/luxon@3.7.2/build/global/luxon.min.js"
+  integrity="sha256-UWxf6lyCvfH7XEcrmq/cqc2m3IBrLBLOnWLC4Pw0gQQ="
+  crossorigin="anonymous"
+></script>
+<script>
+  format()
+
+  function format() {
+    document.querySelectorAll('span[data-format="luxon"]').forEach((el) => {
+      const date = el.textContent
+
+      el.textContent = luxon.DateTime.fromISO(date, { locale: 'zh' }).toFormat(
+        'yyyy年MM月dd日',
+      )
+    })
+  }
+</script>
+
+
+
+
+
+
+
+  
+
+<script src="/js/toc.min.js"></script>
+
+
+  
+    <script type="module">
+      import mediumZoom from 'https://cdn.jsdelivr.net/npm/medium-zoom@1.1.0/+esm';
+      mediumZoom('#dream-single-post-content img', {
+        background: 'oklch(var(--b1))',
+        margin: 24,
+      })
+    </script>
+  
+
+
+
+
+
+
+    
+
+    
+
+    
+
+    
+
+    <script type="module" src="https://cdn.jsdelivr.net/npm/ionicons@8.0.13/dist/ionicons/ionicons.esm.js" integrity="sha256-46Vf2l/aX0tBSf2YXcaYMxF7JVJl30zn8Y9L9zZNXMA=" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,25 @@
+/* Shared styles for the interactive figures.
+   The page fills its iframe exactly: controls keep their natural height,
+   the figure (.fig or #view) takes whatever height is left, so nothing is
+   cut off and nothing floats in empty space, whatever the iframe size. */
+html,body{height:100%;margin:0;padding:0;background:#fff;color:#2C2C2A;font:14px/1.5 "Microsoft YaHei","PingFang SC","Noto Sans CJK SC",sans-serif;overflow:hidden}
+.wrap{box-sizing:border-box;height:100%;display:flex;flex-direction:column;padding:8px 12px 6px}
+.wrap>*{flex:0 0 auto}
+.fig{flex:1 1 0;min-height:120px;position:relative}
+.fig>svg{position:absolute;left:0;top:0;width:100%;height:100%;display:block}
+.row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:4px 0}
+.row label{color:#5F5E5A;font-size:13px;white-space:nowrap}
+.row input[type=range]{flex:1;min-width:120px;accent-color:#534AB7}
+.val{font-weight:600;min-width:70px;text-align:right;font-size:13px}
+button{font:inherit;font-size:13px;padding:3px 10px;border:1px solid #B4B2A9;border-radius:6px;background:#fff;color:#2C2C2A;cursor:pointer}
+button:hover{background:#F1EFE8}
+button.on{border-color:#534AB7;color:#534AB7;background:#EEEDFE}
+.cards{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px}
+.card{flex:1;min-width:130px;background:#F1EFE8;border-radius:8px;padding:5px 10px}
+.card .k{font-size:12px;color:#5F5E5A}
+.card .v{font-size:15px;font-weight:600}
+.hint{font-size:12px;color:#888780;margin-top:2px}
+#view{flex:1 1 0;min-height:160px;position:relative;width:100%;background:#fff;border-radius:8px;overflow:hidden;cursor:grab}
+#view:active{cursor:grabbing}
+#view canvas{display:block;position:absolute;left:0;top:0}
+.lbl{position:absolute;transform:translate(-50%,-50%);font-size:12px;font-weight:600;padding:1px 6px;border-radius:5px;background:rgba(255,255,255,.82);pointer-events:none;white-space:nowrap}
